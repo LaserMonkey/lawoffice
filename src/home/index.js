@@ -3,15 +3,24 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
-const Bar = { template: '<div>bar</div>' }
-import Home from './tpl/Home.vue'
+import Home from './tpl/home.vue'
+import Foot from './tpl/foot.vue'
+import Head from './tpl/head.vue'
 
 const routes = [{
 	path: '/',
-    component: Home
+    components: {
+		default: Home,
+		head: Head,
+		foot: Foot
+	}
 }, {
 	path: '/bar',
-	component: Bar
+    components: {
+		default: Home,
+		head: Head,
+		foot: Foot
+	}
 }]
 
 const router = new VueRouter({

@@ -1,0 +1,23 @@
+<template>
+	<div>
+		<div>
+			<ul>
+				<li>联系我们</li>
+				<li>加入陆通</li>
+			</ul>
+			<ul>
+				<li>中文简体</li>
+				<li>中文繁體</li>
+				<li>ENGLISH</li>
+			</ul>
+		</div>
+		<ul>
+			<li>栏目</li>
+			<li>栏目</li>
+			<li>栏目</li>
+			<li>栏目</li>
+			<li>栏目</li>
+			<li>栏目</li>
+		</ul>
+	</div>
+</template>

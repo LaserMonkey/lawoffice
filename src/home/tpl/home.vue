@@ -1,3 +1,16 @@
 <template>
-	<div>测试测试</div>
+	<div>
+		<ul>
+			<li>轮播图</li>
+			<li>轮播图</li>
+			<li>轮播图</li>
+			<li>轮播图</li>
+		</ul>
+		<ul>
+			<li>业务块</li>
+			<li>业务块</li>
+			<li>业务块</li>
+			<li>业务块</li>
+		</ul>
+	</div>
 </template>
