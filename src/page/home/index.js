@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+require('basecss')
 
 Vue.use(VueRouter)
 

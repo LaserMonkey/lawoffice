@@ -7,10 +7,11 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 // 定义文件夹路径
 var ROOT_PATH = path.resolve(__dirname);
 var SRC_PATH = path.resolve(ROOT_PATH, 'src');
+var PAGE_PATH = path.resolve(SRC_PATH, 'page');
 var BUILD_PATH = path.resolve(ROOT_PATH, 'build');
 
 // 获取所有入口文件
-var entries = getEntries(SRC_PATH);
+var entries = getEntries(PAGE_PATH);
 
 // webpack 配置项
 var config = {
@@ -37,18 +38,15 @@ var config = {
 	devtool: "source-map",
 
 	resolve: {
-		// 路径别名，简化资源的引入
-		// alias: {
-		//     js: path.join(SRC_PATH, 'js'),
-		//     css: path.join(SRC_PATH, 'css'),
-		//     img: path.join(SRC_PATH, 'img'),
-		//     tpl: path.join(SRC_PATH, 'tpl')
-		// },
-		extensions: ['', '.js', '.css', '.scss','.vue', '.html'],
 		alias: {
-			'vue$': path.join(ROOT_PATH, './node_modules/vue/dist/vue.js')
+			'vue$': path.join(ROOT_PATH, './node_modules/vue/dist/vue.js'),
+		    basecss: path.join(SRC_PATH, './common/ui/utilities.scss'),
+		    img: path.join(SRC_PATH, './asset/img'),
+		    vedio: path.join(SRC_PATH, './asset/vedio'),
+		    file: path.join(SRC_PATH, './asset/file'),
+		    tpl: path.join(SRC_PATH, './common/tpl')
 		},
-
+		extensions: ['', '.js', '.css', '.scss','.vue', '.html'],
 		modulesDirectories: ['node_modules']
 	},
 
@@ -56,8 +54,12 @@ var config = {
 		loaders: [
 			{
 				test: /\.scss$/,
-				loader: 'sass-loader',
-				exclude: /node_modules/
+                loaders: ["style", "css", "sass"]
+			},
+
+			{
+				test: /\.css$/,
+				loader: "style-loader!css-loader!postcss-loader"
 			},
 
 			{
@@ -112,7 +114,7 @@ var pages = Object.keys(entries);
 pages.forEach(function(page, index){
 
 	config.plugins.push(new HtmlWebpackPlugin({
-		template: path.join(SRC_PATH, '/', page) + '.html',
+		template: path.join(PAGE_PATH, '/', page) + '.html',
 		filename: page + '.html',
 		chunks: ['commons', page, 'webpack-dev-server'],
 		inject: 'body'
