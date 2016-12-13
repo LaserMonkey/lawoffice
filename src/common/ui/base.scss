@@ -1,11 +1,11 @@
 html {
-	font-size: 14px;
+	font-size: 16px;
 	background-color: $white;
 }
 body {
 	margin: 0 auto;
 	padding: 0;
-	font-family: Arial, Helvetica, Hiragino Sans GB, Microsoft Yahei, sans-serif;
+	font-family: Helvetica, Hiragino Sans GB, SimHei, Microsoft Yahei, sans-serif;
 	color: $text;
 }
 * {
@@ -68,117 +68,16 @@ i {
 	display: inline-block;
 }
 
-// /* 按钮属性 */
-// .btn-l {
-// 	@include btnSize($btnHeight: $button-l);
-// }
-// .btn-m {
-// 	@include btnSize($btnHeight: $button-m);
-// }
-// .btn-s {
-// 	@include btnSize($btnHeight: $button-s);
-// }
+.z-clearfix {
+	zoom: 1;
+    
+    &:before,
+    &:after{
+        content: "";
+        display: table;
+    }
 
-// /* 按钮类型 */
-// .btn-info {
-// 	@include btnType($bgColor: $button-info-normal, $textColor: $white, $borderColor: $button-info-normal, $border-style: solid);
-// 	&:hover {
-// 		@include btnType($bgColor: $button-info-hover, $textColor: $white, $borderColor: $button-info-hover, $border-style: solid);
-// 	}
-// }
-// .btn-suc {
-// 	@include btnType($bgColor: $button-success-normal, $textColor: $white, $borderColor: $button-success-normal, $border-style: solid);
-// 	&:hover {
-// 		@include btnType($bgColor: $button-success-hover, $textColor: $white, $borderColor: $button-success-hover, $border-style: solid);
-// 	}
-// }
-// .btn-warn {
-// 	@include btnType($bgColor: $button-warning-normal, $textColor: $white, $borderColor: $button-warning-normal, $border-style: solid);
-// 	&:hover {
-// 		@include btnType($bgColor: $button-warning-hover, $textColor: $white, $borderColor: $button-warning-hover, $border-style: solid);
-// 	}
-// }
-// .btn-dgr {
-// 	@include btnType($bgColor: $button-danger-normal, $textColor: $white, $borderColor: $button-danger-normal, $border-style: solid);
-// 	&:hover {
-// 		@include btnType($bgColor: $button-danger-hover, $textColor: $white, $borderColor: $button-danger-hover, $border-style: solid);
-// 	}
-// }
-// .btn-disable {
-// 	@include btnType($bgColor: $gray, $textColor: $white, $borderColor: $gray, $border-style: solid);
-// 	&:hover {
-// 		@include btnType($bgColor: $gray, $textColor: $white, $borderColor: $gray, $border-style: solid);
-// 		cursor: not-allowed;
-// 	}
-// }
-// .btn-ghost {
-// 	@include btnType($bgColor: $white, $textColor: $text-button, $borderColor: $gray, $border-style: solid);
-// 	&:hover {
-// 		@include btnType($bgColor: $white, $textColor: $blue, $borderColor: $blue, $border-style: solid);
-// 	}
-// }
-// .btn-invalid {
-// 	@include btnType($bgColor: $white, $textColor: $gray, $borderColor: $gray, $border-style: dashed);
-// 	&:hover {
-// 		@include btnType($bgColor: $white, $textColor: $gray, $borderColor: $gray, $border-style: dashed);
-// 		cursor: not-allowed;
-// 	}
-// }
-
-// /* 标签 */
-// .tag-lightblue {
-// 	@include tagStyle($bgColor: $tag-lightblue, $textColor: $white, $borderColor: $tag-lightblue);
-// }
-// .tag-green {
-// 	@include tagStyle($bgColor: $tag-green, $textColor: $white, $borderColor: $tag-green);
-// }
-// .tag-lightgreen {
-// 	@include tagStyle($bgColor: $tag-lightgreen, $textColor: $white, $borderColor: $tag-lightgreen);
-// }
-// .tag-blue {
-// 	@include tagStyle($bgColor: $tag-blue, $textColor: $white, $borderColor: $tag-blue);
-// }
-// .tag-orange {
-// 	@include tagStyle($bgColor: $tag-orange, $textColor: $white, $borderColor: $tag-orange);
-// }
-// .tag-red {
-// 	@include tagStyle($bgColor: $tag-red, $textColor: $white, $borderColor: $tag-red);
-// }
-// .tag-skyblue {
-// 	@include tagStyle($bgColor: $tag-skyblue, $textColor: $white, $borderColor: $tag-skyblue);
-// }
-// .tag-deepblue {
-// 	@include tagStyle($bgColor: $tag-deepblue, $textColor: $white, $borderColor: $tag-deepblue);
-// }
-// .tag-ghost {
-// 	@include tagStyle($bgColor: $white, $textColor: $blue, $borderColor: $tag-blue);
-// }
-// .tag-normal {
-// 	@include tagStyle($bgColor: $white, $textColor: $text-button, $borderColor: $gray);
-// }
-// .tag-del-s {
-// 	height: 22px;
-
-// 	&:after {
-// 		content: "\00d7";
-//     	margin-left: 6px;
-// 		vertical-align: sub;
-//     	font-size: 20px;
-//     	cursor: pointer;
-// 	}
-// }
-// .tag-del-b {
-// 	width: 11px;
-// 	height: 11px;
-// 	margin-left: 6px;
-// 	line-height: 12px;
-// 	border-radius: 50%;
-// 	text-align: center;
-// 	color: $text-article;
-// 	background-color: $white;
-
-// 	&:after {
-// 		content: "\00d7";
-//     	cursor: pointer;
-// 	}
-// }
+    &:after{
+        clear: both;
+    }
+}

@@ -3,22 +3,4 @@ $link: #1BA1FF;
 $text: #333333;
 $white: #ffffff;
 $text-light: #b5b5b5;
-
-// @mixin btnType($bgColor: $button-info-normal, $textColor: $white, $borderColor: $button-info-normal, $border-style: solid) {
-//     display: inline-block;
-//     padding: 0;
-//     border: 1px $border-style $borderColor;
-//     border-radius: 4px;
-//     text-align: center;
-//     color: $textColor;
-//     background-color: $bgColor;
-// }
-// @mixin btnSize($btnHeight: $button-m) {
-//     width: 100px;
-//     height: $btnHeight;
-// }
-// @mixin tagStyle($bgColor: $blue, $textColor: $white, $borderColor: $blue) {
-//     border: 1px solid $borderColor;
-//     color: $textColor;
-//     background-color: $bgColor;
-// }
+$action: #df001f;

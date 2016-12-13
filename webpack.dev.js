@@ -54,12 +54,7 @@ var config = {
 		loaders: [
 			{
 				test: /\.scss$/,
-                loaders: ["style", "css", "sass"]
-			},
-
-			{
-				test: /\.css$/,
-				loader: "style-loader!css-loader!postcss-loader"
+        		loaders: ["style-loader", "css-loader", "sass-loader"]
 			},
 
 			{

@@ -5,8 +5,8 @@ require('basecss')
 Vue.use(VueRouter)
 
 import Home from './tpl/home.vue'
-import Foot from './tpl/foot.vue'
-import Head from './tpl/head.vue'
+import Foot from 'tpl/foot.vue'
+import Head from 'tpl/head.vue'
 
 const routes = [{
 	path: '/',
