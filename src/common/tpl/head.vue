@@ -2,7 +2,7 @@
 	<div class="head">
 		<div class="z-clearfix setting">
 			<ul class="about-us">
-				<li>联系我们</li>
+				<li v-on:click="getHomeData">联系我们{{ columnList }}</li>
 				<li>加入陆通</li>
 			</ul>
 			<ul class="language">
@@ -11,16 +11,47 @@
 				<li>ENGLISH</li>
 			</ul>
 		</div>
-		<ul class="menu">
-			<li class="action">首页</li>
-			<li>关于陆通</li>
-			<li>业务领域</li>
-			<li>陆通律师</li>
-			<li>新闻动态</li>
-			<li>研究成果</li>
+		<ul class="column">
+			<li v-for="(column, index) in columnList">
+			<!-- v-bind:class="{ nowpage: index==selectItem }" -->
+    			{{ column.name }}
+			</li>
 		</ul>
 	</div>
 </template>
+
+<script type="text/javascript">
+	export default{
+		data: function() {
+			return {
+				columnID: 1,
+				columnList: []
+			}
+		},
+		beforeCreate: function () {
+			this.$nextTick(function () {
+				this.init()
+			})
+		},
+		// mounted: function () {
+		// 	this.$nextTick(function () {
+		// 		this.init()
+		// 	})
+		// },
+		methods: {
+			init: function() {
+				this.getHomeData()
+			},
+			getHomeData: function() {
+				this.$http.get('http://www.lutong.com/api/index.php?lang=1&c=home&m=index').then((response) => {
+    				this.columnList = response.data.column
+  				}, (response) => {
+    				console.log(response)
+  				})
+			}
+		}
+	}
+</script>
 
 <style lang="sass">
 	.head {
@@ -53,7 +84,7 @@
 			}
 		}
 
-		.menu {
+		.column {
 			font-size: 20px;
 
 			li {
