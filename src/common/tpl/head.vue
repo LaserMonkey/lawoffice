@@ -2,7 +2,7 @@
 	<div class="head">
 		<div class="z-clearfix setting">
 			<ul class="about-us">
-				<li v-on:click="getHomeData">联系我们{{ columnList }}</li>
+				<li v-on:click="getHomeData">联系我们</li>
 				<li>加入陆通</li>
 			</ul>
 			<ul class="language">
@@ -12,20 +12,30 @@
 			</ul>
 		</div>
 		<ul class="column">
-			<li v-for="(column, index) in columnList">
-			<!-- v-bind:class="{ nowpage: index==selectItem }" -->
-    			{{ column.name }}
+			<li v-for="(column, index) in columnList" :class="getColumnID == column.id ? 'action' : ''" >
+    			<router-link to="/">{{ column.name }}</router-link>
 			</li>
 		</ul>
 	</div>
 </template>
 
 <script type="text/javascript">
-	export default{
+	export default {
 		data: function() {
 			return {
-				columnID: 1,
-				columnList: []
+				columnList: [],
+				columnUrl: [{
+					1: '#',
+					2: 'about',
+					3: 'practice',
+					4: 'lawyer',
+					5: 'article'
+				}],
+			}
+		},
+		computed: {
+			getColumnID() {
+	    		return this.$store.getters.getColumnID
 			}
 		},
 		beforeCreate: function () {
@@ -60,6 +70,10 @@
 		li {
 			display: inline-block;
 			cursor: pointer;
+
+			a {
+				color: #333333;
+			}
 		}
 
 		.setting {
@@ -93,6 +107,10 @@
 
 			.action {
 				color: #df001f;
+
+				a {
+					color: #df001f;
+				}
 			}
 		}
 	}

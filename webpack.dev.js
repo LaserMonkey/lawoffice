@@ -44,7 +44,8 @@ var config = {
 		    img: path.join(SRC_PATH, './asset/img'),
 		    vedio: path.join(SRC_PATH, './asset/vedio'),
 		    file: path.join(SRC_PATH, './asset/file'),
-		    tpl: path.join(SRC_PATH, './common/tpl')
+		    tpl: path.join(SRC_PATH, './common/tpl'),
+		    store: path.join(SRC_PATH, './common/store')
 		},
 		extensions: ['', '.js', '.css', '.scss','.vue', '.html'],
 		modulesDirectories: ['node_modules']

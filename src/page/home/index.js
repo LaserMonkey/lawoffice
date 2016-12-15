@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
+import store from 'store/home.js'
 require('basecss')
 
 Vue.use(VueRouter)
@@ -31,5 +32,6 @@ const router = new VueRouter({
 })
 
 const app = new Vue({
-	router
+	router,
+	store
 }).$mount('#home')
