@@ -13,7 +13,14 @@ const getters = {
 	lang: state => state.lang
 }
 
-const mutations = {}
+const mutations = {
+	changeLang(state, langType) {
+		state.lang = langType
+	},
+	changeColumnID(state, columnID) {
+		state.columnID = columnID
+	}
+}
 
 export default new Vuex.Store({
 	state,

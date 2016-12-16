@@ -54,5 +54,17 @@ const router = new VueRouter({
 
 const app = new Vue({
 	router,
-	store
+	store,
+	beforeCreate: function () {
+		this.$nextTick(function () {
+			if(localStorage.getItem("lang") === null & navigator.language === 'zh-CN') {
+				localStorage.setItem("lang", 1)
+			} else if(localStorage.getItem("lang") === null & navigator.language === 'zh-TW') {
+				localStorage.setItem("lang", 2)
+			} else if(localStorage.getItem("lang") === null) {
+				localStorage.setItem("lang", 3)
+			}
+			store.commit('changeLang', localStorage.getItem("lang"))
+		})
+	}
 }).$mount('#home')

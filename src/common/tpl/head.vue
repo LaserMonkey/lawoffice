@@ -2,23 +2,23 @@
 	<div class="head">
 		<div class="z-clearfix setting">
 			<ul class="about-us">
-				<li v-on:click="getHomeData">联系我们</li>
+				<li>联系我们</li>
 				<li>加入陆通</li>
 			</ul>
 			<ul class="language">
-				<li>中文简体</li>
-				<li>中文繁體</li>
-				<li>ENGLISH</li>
+				<li @click="changeLang(1)">中文简体</li>
+				<li @click="changeLang(2)">中文繁體</li>
+				<li @click="changeLang(3)">ENGLISH</li>
 			</ul>
 		</div>
 		<ul class="column">
-			<li v-for="(column, index) in columnList" :class="getColumnID == column.id ? 'action' : ''" >
-    			<router-link v-if="column.id==1" to="/">{{ column.name }}</router-link>
-    			<router-link v-else-if="column.id==2" to="about">{{ column.name }}</router-link>
-    			<router-link v-else-if="column.id==3" to="practice">{{ column.name }}</router-link>
-    			<router-link v-else-if="column.id==4" to="lawyer">{{ column.name }}</router-link>
-    			<router-link v-else-if="column.id==5" to="article">{{ column.name }}</router-link>
-    			<router-link v-else to="article">{{ column.name }}</router-link>
+			<li v-for="(column, index) in columnList" :class="getColumnID == column.id ? 'action' : ''">
+    			<router-link v-if="column.id==1" to="/" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
+    			<router-link v-else-if="column.id==2" to="about" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
+    			<router-link v-else-if="column.id==3" to="practice" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
+    			<router-link v-else-if="column.id==4" to="lawyer" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
+    			<router-link v-else-if="column.id==5" to="article" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
+    			<router-link v-else to="article" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
 			</li>
 		</ul>
 	</div>
@@ -51,14 +51,39 @@
 		// },
 		methods: {
 			init: function() {
-				this.getHomeData()
+				this.getHeadData()
 			},
-			getHomeData: function() {
-				this.$http.get('http://www.lutong.com/api/index.php?lang=1&c=home&m=index').then((response) => {
+			getHeadData: function() {
+				const _seft = this
+				this.$http.get('http://www.lutong.com/api/index.php?lang=' + _seft.getLang + '&c=home&m=index').then((response) => {
     				this.columnList = response.data.column
   				}, (response) => {
-    				console.log(response)
+    				// TODO 错误toast提示
   				})
+			},
+			changeLang: function(langType) {
+				if(langType === this.getLang) {
+					return
+				} else if(langType === 1) {
+					this.$store.commit('changeLang', langType)
+					localStorage.setItem("lang", langType)
+					this.getHeadData()
+				} else if(langType === 2) {
+					this.$store.commit('changeLang', langType)
+					localStorage.setItem("lang", langType)
+					this.getHeadData()
+				} else if(langType === 3) {
+					this.$store.commit('changeLang', langType)
+					localStorage.setItem("lang", langType)
+					this.getHeadData()
+				} else {
+					this.$store.commit('changeLang', 1)
+					localStorage.setItem("lang", 1)
+					this.getHeadData()
+				}
+			},
+			changeColumnID: function(columnID) {
+				this.$store.commit('changeColumnID', columnID)
 			}
 		}
 	}
