@@ -1,6 +1,6 @@
 <template>
-	<div>
-		<div class="swiper-container banner">
+	<div class="home">
+		<div class="swiper-container home-banner">
         	<div class="swiper-wrapper">
             	<div class="swiper-slide" style="background-image:url(http://imgsrc.baidu.com/forum/pic/item/4ec2d5628535e5dd55d2464876c6a7efcf1b62af.jpg)">
         			<h2>陆通联合律师当选欧洲竞争与规制学院法律委员</h2>
@@ -14,7 +14,7 @@
         		<div class="swiper-button-prev swiper-button-white"></div>
         	</div>
     	</div>
-		<div class="swiper-container hot">
+		<div class="swiper-container home-hot">
         	<div class="swiper-wrapper">
             	<div class="swiper-slide">
             		<div style="background-image:url(http://imgsrc.baidu.com/forum/pic/item/4ec2d5628535e5dd55d2464876c6a7efcf1b62af.jpg)">
@@ -77,14 +77,14 @@
 
 	export default {
 		mounted () {
-			const swiperBanner = new Swiper('.banner', {
+			const swiperHomeBanner = new Swiper('.home-banner', {
 				nextButton: '.swiper-button-next',
 				prevButton: '.swiper-button-prev',
 				slidesPerView: 1,
 				spaceBetween: 0,
 				loop: true
 			})
-			const swiper = new Swiper('.hot', {
+			const swiperHomeHot = new Swiper('.home-hot', {
 				nextButton: '.swiper-button-next',
 				prevButton: '.swiper-button-prev',
 				slidesPerView: 1,
@@ -106,8 +106,8 @@
 </script>
 
 <style lang="sass">
-	.banner {
-		height: 50rem;
+	.home-banner {
+		height: 41.66666666rem;
 		
 		.swiper-slide {
 			background-position: center center;
@@ -116,11 +116,12 @@
 			
 			h2 {
 				position: relative;
-				top: 79.5%;
-				width: 40%;
+				top: 78%;
+				width: 50%;
 				margin: 0 auto;
 				text-align: center;
 				font-size: 3rem;
+				font-weight: normal;
 				color: white;
 			}
 		}
@@ -128,16 +129,16 @@
 		.swiper-button {
 			position: relative;
 			bottom: 18%;
-			width: 52%;
+			width: 60%;
 			margin: 0 auto;
 
 			.swiper-button-next, .swiper-button-prev {
-				width: 4rem;
-				height: 4rem;
+				width: 3.33333333rem;
+				height: 3.33333333rem;
 				background-color: black;
-				-moz-background-size: 1.4rem 2.4rem;
-				-webkit-background-size: 1.4rem 2.4rem;
-				background-size: 1.4rem 2.4rem;
+				-moz-background-size: 1.16666666rem 2rem;
+				-webkit-background-size: 1.16666666rem 2rem;
+				background-size: 1.16666666rem 2rem;
 			}
 
 			.swiper-button-next {
@@ -151,8 +152,9 @@
 
 	}
 
-	.hot {
-		height: 54rem;
+	.home-hot {
+		height: 45rem;
+		padding-top: 0.08333333rem;
 		background-color: #c1a09c;
 
 		.swiper-slide {
@@ -161,7 +163,7 @@
 			div {
 				position: relative;
 				width: 100%;
-				height: 29rem;
+				height: 24.16666666rem;
 				background-position: center center;
 				background-repeat: no-repeat;
 				background-size: cover;
@@ -169,8 +171,8 @@
 				span {
 					display: block;
 					position: absolute;
-					bottom: -2.1rem;
-					padding: 1rem 5rem;
+					bottom: -1.75rem;
+					padding: 0.83333333rem 4.16666666rem;
 					font-size: 2rem;
 					color: white;
 					background-color: #df001f;
@@ -178,22 +180,23 @@
 			}
 
 			h3 {
-				padding: 4rem 5rem;
-				line-height: 2.6rem;
+				padding: 3.33333333rem 4.16666666rem;
+				line-height: 2.666666666rem;
 				font-size: 2.4rem;
+				font-weight: normal;
 				color: #ccc;
 			}
 		}
 
 		.swiper-button-next, .swiper-button-prev {
 			top: 0;
-			width: 4rem;
-			height: 54rem;
+			width: 3.33333333rem;
+			height: 45rem;
 			margin-top: 0;
 			background-color: #df001f;
-			-moz-background-size: 1.4rem 2.4rem;
-			-webkit-background-size: 1.4rem 2.4rem;
-			background-size: 1.4rem 2.4rem;
+			-moz-background-size: 1.16666666rem 2rem;
+			-webkit-background-size: 1.16666666rem 2rem;
+			background-size: 1.16666666rem 2rem;
 		}
 
 		.swiper-button-next {

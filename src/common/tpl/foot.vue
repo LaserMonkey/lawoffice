@@ -4,7 +4,7 @@
 
 <style lang="sass">
 	.foot {
-		padding: 2.5rem 0;
+		padding: 2.08333333rem 0;
 		text-align: center;
 		font-size: 1.2rem;
 		color: #999999;

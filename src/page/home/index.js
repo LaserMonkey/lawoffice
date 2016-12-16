@@ -10,6 +10,7 @@ Vue.use(VueResource)
 import Home from './tpl/home.vue'
 import Foot from 'tpl/foot.vue'
 import Head from 'tpl/head.vue'
+import Banner from 'tpl/banner.vue'
 
 const routes = [{
 	path: '/',
@@ -23,6 +24,7 @@ const routes = [{
     components: {
 		// default: About,
 		head: Head,
+		banner: Banner,
 		foot: Foot
 	}
 }, {
@@ -30,6 +32,7 @@ const routes = [{
     components: {
 		// default: Practice,
 		head: Head,
+		banner: Banner,
 		foot: Foot
 	}
 }, {
@@ -37,6 +40,7 @@ const routes = [{
     components: {
 		// default: Lawyer,
 		head: Head,
+		banner: Banner,
 		foot: Foot
 	}
 }, {
@@ -44,6 +48,7 @@ const routes = [{
     components: {
 		// default: Article,
 		head: Head,
+		banner: Banner,
 		foot: Foot
 	}
 }]
