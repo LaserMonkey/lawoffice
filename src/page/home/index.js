@@ -19,9 +19,30 @@ const routes = [{
 		foot: Foot
 	}
 }, {
-	path: '/bar',
+	path: '/about',
     components: {
-		default: Home,
+		// default: About,
+		head: Head,
+		foot: Foot
+	}
+}, {
+	path: '/practice',
+    components: {
+		// default: Practice,
+		head: Head,
+		foot: Foot
+	}
+}, {
+	path: '/lawyer',
+    components: {
+		// default: Lawyer,
+		head: Head,
+		foot: Foot
+	}
+}, {
+	path: '/article',
+    components: {
+		// default: Article,
 		head: Head,
 		foot: Foot
 	}

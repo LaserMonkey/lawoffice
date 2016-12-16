@@ -4,11 +4,13 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 const state = {
-	columnID: 1
+	columnID: 1,
+	lang: 1
 }
 
 const getters = {
-	getColumnID: state => state.columnID
+	columnID: state => state.columnID,
+	lang: state => state.lang
 }
 
 const mutations = {}

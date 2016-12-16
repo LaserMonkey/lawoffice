@@ -13,7 +13,12 @@
 		</div>
 		<ul class="column">
 			<li v-for="(column, index) in columnList" :class="getColumnID == column.id ? 'action' : ''" >
-    			<router-link to="/">{{ column.name }}</router-link>
+    			<router-link v-if="column.id==1" to="/">{{ column.name }}</router-link>
+    			<router-link v-else-if="column.id==2" to="about">{{ column.name }}</router-link>
+    			<router-link v-else-if="column.id==3" to="practice">{{ column.name }}</router-link>
+    			<router-link v-else-if="column.id==4" to="lawyer">{{ column.name }}</router-link>
+    			<router-link v-else-if="column.id==5" to="article">{{ column.name }}</router-link>
+    			<router-link v-else to="article">{{ column.name }}</router-link>
 			</li>
 		</ul>
 	</div>
@@ -24,18 +29,14 @@
 		data: function() {
 			return {
 				columnList: [],
-				columnUrl: [{
-					1: '#',
-					2: 'about',
-					3: 'practice',
-					4: 'lawyer',
-					5: 'article'
-				}],
 			}
 		},
 		computed: {
 			getColumnID() {
-	    		return this.$store.getters.getColumnID
+	    		return this.$store.getters.columnID
+			},
+			getLang() {
+	    		return this.$store.getters.lang
 			}
 		},
 		beforeCreate: function () {

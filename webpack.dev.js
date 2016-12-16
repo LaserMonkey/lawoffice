@@ -45,7 +45,8 @@ var config = {
 		    vedio: path.join(SRC_PATH, './asset/vedio'),
 		    file: path.join(SRC_PATH, './asset/file'),
 		    tpl: path.join(SRC_PATH, './common/tpl'),
-		    store: path.join(SRC_PATH, './common/store')
+		    store: path.join(SRC_PATH, './common/store'),
+		    swiper: path.join(SRC_PATH, './asset/tool/swiper'),
 		},
 		extensions: ['', '.js', '.css', '.scss','.vue', '.html'],
 		modulesDirectories: ['node_modules']
