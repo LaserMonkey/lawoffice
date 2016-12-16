@@ -91,7 +91,7 @@
 
 <style lang="sass">
 	.head {
-		padding: 30px 40px 25px;
+		padding: 3rem 4rem 2.5rem;
 
 		li {
 			display: inline-block;
@@ -103,32 +103,33 @@
 		}
 
 		.setting {
-			margin-bottom: 10px;
+			margin-bottom: 1rem;
 
 			.about-us {
 				float: left;
 
 				li {
-					margin-right: 40px;
+					margin-right: 4rem;
+					font-size: 1.6rem;
 				}
 			}
 
 			.language {
 				float: right;
-				margin-top: 3px;
-				font-size: 12px;
+				margin-top: 0.3rem;
+				font-size: 1.2rem;
 
 				li {
-					margin-left: 20px;
+					margin-left: 2rem;
 				}
 			}
 		}
 
 		.column {
-			font-size: 20px;
+			font-size: 2rem;
 
 			li {
-				margin-right: 40px;
+				margin-right: 4rem;
 			}
 
 			.action {

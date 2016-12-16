@@ -1,5 +1,5 @@
 html {
-	font-size: 16px;
+	font-size: 62.5%;
 	background-color: $white;
 }
 body {
@@ -17,13 +17,13 @@ h1, h2, h3, h4, h5, h6 {
   	font-stretch: normal;
 }
 h1 {
-	font-size: 30px;
+	font-size: 3rem;
 }
 h2 {
-	font-size: 24px;
+	font-size: 2.4rem;
 }
 h3 {
-	font-size: 16px;
+	font-size: 1.6rem;
 }
 blockquote, ul, li {
 	margin: 0;
@@ -31,7 +31,7 @@ blockquote, ul, li {
 	list-style: none;
 }
 p {
-	font-size: 18px;
+	font-size: 1.8rem;
 }
 a {
 	text-decoration: none;
@@ -49,8 +49,8 @@ input, button, select, textarea {
 	outline: none;
 	-webkit-appearance: none;
 	-webkit-tap-highlight-color: rgba(255,255,255,0.35);
-	border-radius: 4px;
-	font-size: 16px;
+	border-radius: 0.4rem;
+	font-size: 1.6rem;
 }
 button {
 	&:hover {

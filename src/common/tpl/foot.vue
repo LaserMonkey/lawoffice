@@ -4,9 +4,9 @@
 
 <style lang="sass">
 	.foot {
-		padding: 25px 0;
+		padding: 2.5rem 0;
 		text-align: center;
-		font-size: 12px;
+		font-size: 1.2rem;
 		color: #999999;
 	}
 </style>
