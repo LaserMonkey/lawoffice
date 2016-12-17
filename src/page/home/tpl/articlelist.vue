@@ -21,6 +21,11 @@
 
 <script type="text/javascript">
 	export default {
+		data () {
+			return {
+				columnID: this.getColumnID
+			}
+		},
 		computed: {
 			getColumnID() {
 	    		return this.$store.getters.columnID
@@ -29,17 +34,25 @@
 	    		return this.$store.getters.lang
 			}
 		},
-		mounted: function () {
-			this.$nextTick(function () {
+		route: {
+			data(transition) {
 				this.init()
-			})
+			}       
+		},
+		updated: function() {
+			this.init()
+		},
+		created: function() {
+			this.init()
+		},
+		watch: {
+			// 如果路由有变化，会再次执行该方法
+			'$route': 'init'
 		},
 		methods: {
 			init: function() {
-				// console.log($route.params.id)
-			},
-			changeColumnID: function(columnID) {
-				this.$store.commit('changeColumnID', columnID)
+				console.log(this.$route)
+				console.log(this.getColumnID)
 			}
 		}
 	}

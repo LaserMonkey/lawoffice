@@ -84,6 +84,7 @@
 			},
 			changeColumnID: function(columnID) {
 				this.$store.commit('changeColumnID', columnID)
+				console.log('head-columnID: ' + this.getColumnID)
 			}
 		}
 	}
