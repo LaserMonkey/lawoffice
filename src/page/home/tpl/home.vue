@@ -2,7 +2,7 @@
 	<div class="home">
 		<div class="swiper-container home-banner">
         	<div class="swiper-wrapper">
-            	<div class="swiper-slide" style="background-image:url(http://imgsrc.baidu.com/forum/pic/item/4ec2d5628535e5dd55d2464876c6a7efcf1b62af.jpg)">
+            	<div class="swiper-slide" style="background-image:url(http://photo.enterdesk.com/2009-5-5/enterdesk.com-3916291CA374F2BFED3FC636EE5CFBF7.jpg)">
         			<h2>陆通联合律师当选欧洲竞争与规制学院法律委员</h2>
         		</div>
             	<div class="swiper-slide" style="background-image:url(http://desk.fd.zol-img.com.cn/t_s960x600c5/g3/M03/0D/03/Cg-4V1S_EOWIMyUCAAhG5zFfIHUAATsVQNFKM0ACEb_770.jpg)">
@@ -17,7 +17,7 @@
 		<div class="swiper-container home-hot">
         	<div class="swiper-wrapper">
             	<div class="swiper-slide">
-            		<div style="background-image:url(http://imgsrc.baidu.com/forum/pic/item/4ec2d5628535e5dd55d2464876c6a7efcf1b62af.jpg)">
+            		<div style="background-image:url(http://photo.enterdesk.com/2009-5-5/enterdesk.com-3916291CA374F2BFED3FC636EE5CFBF7.jpg)">
             			<span>路通历史</span>
             		</div>
             		<h3>陆通联合律师当选欧洲竞争与规制学院法律委员</h3>
@@ -29,7 +29,7 @@
             		<h3>陆通上海律师为某知名生物科技公司成功提供反舞弊法律服务</h3>
             	</div>
             	<div class="swiper-slide">
-            		<div style="background-image:url(http://imgsrc.baidu.com/forum/pic/item/4ec2d5628535e5dd55d2464876c6a7efcf1b62af.jpg)">
+            		<div style="background-image:url(http://photo.enterdesk.com/2009-5-5/enterdesk.com-3916291CA374F2BFED3FC636EE5CFBF7.jpg)">
             			<span>路通历史</span>
             		</div>
             		<h3>陆通联合律师当选欧洲竞争与规制学院法律委员</h3>
@@ -41,7 +41,7 @@
             		<h3>陆通上海律师为某知名生物科技公司成功提供反舞弊法律服务</h3>
             	</div>
             	<div class="swiper-slide">
-            		<div style="background-image:url(http://imgsrc.baidu.com/forum/pic/item/4ec2d5628535e5dd55d2464876c6a7efcf1b62af.jpg)">
+            		<div style="background-image:url(http://photo.enterdesk.com/2009-5-5/enterdesk.com-3916291CA374F2BFED3FC636EE5CFBF7.jpg)">
             			<span>路通历史</span>
             		</div>
             		<h3>陆通联合律师当选欧洲竞争与规制学院法律委员</h3>
@@ -53,7 +53,7 @@
             		<h3>陆通上海律师为某知名生物科技公司成功提供反舞弊法律服务</h3>
             	</div>
             	<div class="swiper-slide">
-            		<div style="background-image:url(http://imgsrc.baidu.com/forum/pic/item/4ec2d5628535e5dd55d2464876c6a7efcf1b62af.jpg)">
+            		<div style="background-image:url(http://photo.enterdesk.com/2009-5-5/enterdesk.com-3916291CA374F2BFED3FC636EE5CFBF7.jpg)">
             			<span>路通历史</span>
             		</div>
             		<h3>陆通联合律师当选欧洲竞争与规制学院法律委员</h3>

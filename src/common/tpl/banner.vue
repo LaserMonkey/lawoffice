@@ -1,5 +1,5 @@
 <template>
-	<div class="banner" style="background-image:url(http://imgsrc.baidu.com/forum/pic/item/4ec2d5628535e5dd55d2464876c6a7efcf1b62af.jpg)"></div>
+	<div class="banner" style="background-image:url(http://photo.enterdesk.com/2009-5-5/enterdesk.com-3916291CA374F2BFED3FC636EE5CFBF7.jpg)"></div>
 </template>
 
 <style lang="sass">

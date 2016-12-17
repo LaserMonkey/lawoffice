@@ -11,6 +11,7 @@ import Home from './tpl/home.vue'
 import Foot from 'tpl/foot.vue'
 import Head from 'tpl/head.vue'
 import Banner from 'tpl/banner.vue'
+import About from './tpl/about.vue'
 
 const routes = [{
 	path: '/',
@@ -22,7 +23,7 @@ const routes = [{
 }, {
 	path: '/about',
     components: {
-		// default: About,
+		default: About,
 		head: Head,
 		banner: Banner,
 		foot: Foot
@@ -46,7 +47,7 @@ const routes = [{
 }, {
 	path: '/article',
     components: {
-		// default: Article,
+		// default: ArticleList,
 		head: Head,
 		banner: Banner,
 		foot: Foot
