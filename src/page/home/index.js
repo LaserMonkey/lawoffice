@@ -14,14 +14,16 @@ import Banner from 'tpl/banner.vue'
 import ArticleList from './tpl/articlelist.vue'
 
 const routes = [{
-	path: '/',
+	path: '/index/:columnID',
+	name: 'home',
     components: {
 		default: Home,
 		head: Head,
 		foot: Foot
 	}
 }, {
-	path: '/about',
+	path: '/about/:columnID',
+	name: 'about',
     components: {
 		default: ArticleList,
 		head: Head,
@@ -29,7 +31,8 @@ const routes = [{
 		foot: Foot
 	}
 }, {
-	path: '/practice',
+	path: '/practice/:columnID',
+	name: 'practice',
     components: {
 		// default: Practice,
 		head: Head,
@@ -37,7 +40,8 @@ const routes = [{
 		foot: Foot
 	}
 }, {
-	path: '/lawyer',
+	path: '/lawyer/:columnID',
+	name: 'lawyer',
     components: {
 		// default: Lawyer,
 		head: Head,
@@ -45,7 +49,17 @@ const routes = [{
 		foot: Foot
 	}
 }, {
-	path: '/article',
+	path: '/news/:columnID',
+	name: 'news',
+    components: {
+		default: ArticleList,
+		head: Head,
+		banner: Banner,
+		foot: Foot
+	}
+}, {
+	path: '/article/:columnID',
+	name: 'article',
     components: {
 		default: ArticleList,
 		head: Head,

@@ -13,12 +13,12 @@
 		</div>
 		<ul class="column">
 			<li v-for="(column, index) in columnList" :class="getColumnID == column.id ? 'action' : ''">
-    			<router-link v-if="column.id==1" to="/" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
-    			<router-link v-else-if="column.id==2" to="about" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
-    			<router-link v-else-if="column.id==3" to="practice" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
-    			<router-link v-else-if="column.id==4" to="lawyer" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
-    			<router-link v-else-if="column.id==5" to="article" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
-    			<router-link v-else to="article" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
+    			<router-link v-if="column.id==1" :to="{name: 'home', params:{columnID:column.id}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
+    			<router-link v-else-if="column.id==2" :to="{name: 'about', params:{columnID:column.id}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
+    			<router-link v-else-if="column.id==3" :to="{name: 'practice', params:{columnID:column.id}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
+    			<router-link v-else-if="column.id==4" :to="{name: 'lawyer', params:{columnID:column.id}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
+    			<router-link v-else-if="column.id==5" :to="{name: 'news', params:{columnID:column.id}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
+    			<router-link v-else :to="{name: 'article', params:{columnID:column.id}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
 			</li>
 		</ul>
 	</div>
@@ -51,6 +51,7 @@
 		// },
 		methods: {
 			init: function() {
+				this.$store.commit('changeColumnID', this.$route.params.columnID)
 				this.getHeadData()
 			},
 			getHeadData: function() {
@@ -84,7 +85,6 @@
 			},
 			changeColumnID: function(columnID) {
 				this.$store.commit('changeColumnID', columnID)
-				console.log('head-columnID: ' + this.getColumnID)
 			}
 		}
 	}

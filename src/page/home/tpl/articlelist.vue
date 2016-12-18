@@ -34,25 +34,15 @@
 	    		return this.$store.getters.lang
 			}
 		},
-		route: {
-			data(transition) {
-				this.init()
-			}       
-		},
-		updated: function() {
-			this.init()
-		},
 		created: function() {
 			this.init()
 		},
 		watch: {
-			// 如果路由有变化，会再次执行该方法
 			'$route': 'init'
 		},
 		methods: {
 			init: function() {
-				console.log(this.$route)
-				console.log(this.getColumnID)
+				console.log(this.$route.params.columnID)
 			}
 		}
 	}
