@@ -13,7 +13,7 @@
 	.menu {
 		float: left;
 		width: 200px;
-		min-height: 300px;
+		min-height: 400px;
 		padding-top: 40px;
 		padding-left: 60px;
 		font-size: 1.6rem;

@@ -10,12 +10,21 @@ Vue.use(VueResource)
 import Head from 'tpl/manage/head.vue'
 import Menu from './tpl/menu.vue'
 import Login from './tpl/login.vue'
+import Index from './tpl/index.vue'
 
 const routes = [{
+	path: '/login',
+	name: 'login',
+    components: {
+		default: Login,
+		head: Head,
+		menu: Menu
+	}
+}, {
 	path: '/',
 	name: 'index',
     components: {
-		default: Login,
+		default: Index,
 		head: Head,
 		menu: Menu
 	}

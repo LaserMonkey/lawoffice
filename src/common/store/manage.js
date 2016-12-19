@@ -5,12 +5,14 @@ Vue.use(Vuex)
 
 const state = {
 	token: '',
-	login: 0
+	login: 0,
+	uid: -1,
 }
 
 const getters = {
 	getToken: state => state.token,
-	getLogin: state => state.login
+	getLogin: state => state.login,
+	getUid: state => state.uid
 }
 
 const mutations = {
@@ -19,6 +21,9 @@ const mutations = {
 	},
 	setLogin(state, login) {
 		state.login = login
+	},
+	setUid(state, uid) {
+		state.uid = uid
 	}
 }
 

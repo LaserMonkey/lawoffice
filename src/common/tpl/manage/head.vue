@@ -3,7 +3,7 @@
 		<img src="">
 		<h1>标题</h1>
 		<span class="logout">退出</span>
-		<span>用户名</span>
+		<span class="username">用户名</span>
 	</div>
 </template>
 
@@ -37,6 +37,10 @@
 
 		.logout {
 			cursor: pointer;
+		}
+
+		.username {
+			color: rgba(255, 255, 255, 0.6);
 		}
 	}
 </style>
