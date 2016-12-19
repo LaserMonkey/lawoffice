@@ -8,13 +8,15 @@ Vue.use(VueRouter)
 Vue.use(VueResource)
 
 import Home from './tpl/home.vue'
-import Foot from 'tpl/foot.vue'
-import Head from 'tpl/head.vue'
-import Banner from 'tpl/banner.vue'
-import ArticleList from './tpl/articlelist.vue'
+import Foot from 'tpl/home/foot.vue'
+import Head from 'tpl/home/head.vue'
+import Banner from 'tpl/home/banner.vue'
+import About from './tpl/about.vue'
+import News from './tpl/news.vue'
+import Article from './tpl/article.vue'
 
 const routes = [{
-	path: '/index/:columnID',
+	path: '/',
 	name: 'home',
     components: {
 		default: Home,
@@ -22,16 +24,16 @@ const routes = [{
 		foot: Foot
 	}
 }, {
-	path: '/about/:columnID',
+	path: '/about',
 	name: 'about',
     components: {
-		default: ArticleList,
+		default: About,
 		head: Head,
 		banner: Banner,
 		foot: Foot
 	}
 }, {
-	path: '/practice/:columnID',
+	path: '/practice',
 	name: 'practice',
     components: {
 		// default: Practice,
@@ -40,7 +42,7 @@ const routes = [{
 		foot: Foot
 	}
 }, {
-	path: '/lawyer/:columnID',
+	path: '/lawyer',
 	name: 'lawyer',
     components: {
 		// default: Lawyer,
@@ -49,10 +51,10 @@ const routes = [{
 		foot: Foot
 	}
 }, {
-	path: '/news/:columnID',
+	path: '/news',
 	name: 'news',
     components: {
-		default: ArticleList,
+		default: News,
 		head: Head,
 		banner: Banner,
 		foot: Foot
@@ -61,7 +63,7 @@ const routes = [{
 	path: '/article/:columnID',
 	name: 'article',
     components: {
-		default: ArticleList,
+		default: Article,
 		head: Head,
 		banner: Banner,
 		foot: Foot
@@ -72,7 +74,7 @@ const router = new VueRouter({
 	routes
 })
 
-const app = new Vue({
+const home = new Vue({
 	router,
 	store,
 	beforeCreate: function () {
