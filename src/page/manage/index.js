@@ -8,11 +8,20 @@ Vue.use(VueRouter)
 Vue.use(VueResource)
 
 import Head from 'tpl/manage/head.vue'
-import Menu from './tpl/menu.vue'
+import Menu from 'tpl/manage/menu.vue'
 import Login from './tpl/login.vue'
 import Index from './tpl/index.vue'
+import Article from './tpl/article.vue'
 
 const routes = [{
+	path: '/',
+	name: 'index',
+    components: {
+		default: Index,
+		head: Head,
+		menu: Menu
+	}
+}, {
 	path: '/login',
 	name: 'login',
     components: {
@@ -21,10 +30,10 @@ const routes = [{
 		menu: Menu
 	}
 }, {
-	path: '/',
-	name: 'index',
+	path: '/article',
+	name: 'article',
     components: {
-		default: Index,
+		default: Article,
 		head: Head,
 		menu: Menu
 	}
@@ -36,5 +45,14 @@ const router = new VueRouter({
 
 const manage = new Vue({
 	router,
-	store
+	store,
+	// beforeCreate: function () {
+	// 	this.$nextTick(function () {
+	// 		// console.log(store)
+	// 		// if(!store.getters.isLogin == false) {
+	// 		// 	console.log(store.getters.isLogin)
+	// 		// 	router.push('/login')
+	// 		// }
+	// 	})
+	// }
 }).$mount('#manage')

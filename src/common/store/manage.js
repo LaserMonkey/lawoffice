@@ -4,26 +4,31 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 const state = {
-	token: '',
-	login: 0,
-	uid: -1,
+	token: localStorage.getItem("token"),
+	isLogin: localStorage.getItem("isLogin"),
+	uid: localStorage.getItem("uid"),
+	username: localStorage.getItem("username")
 }
 
 const getters = {
-	getToken: state => state.token,
-	getLogin: state => state.login,
-	getUid: state => state.uid
+	token: state => state.token,
+	isLogin: state => state.isLogin,
+	uid: state => state.uid,
+	username: state => state.username
 }
 
 const mutations = {
-	setToken(state, token) {
+	token(state, token) {
 		state.token = token
 	},
-	setLogin(state, login) {
-		state.login = login
+	isLogin(state, isLogin) {
+		state.isLogin = isLogin
 	},
-	setUid(state, uid) {
+	uid(state, uid) {
 		state.uid = uid
+	},
+	username(state, username) {
+		state.username = username
 	}
 }
 

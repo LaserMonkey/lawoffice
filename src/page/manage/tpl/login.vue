@@ -23,6 +23,12 @@
 				password: ""
 			}
 		},
+		beforeCreate: function () {
+			this.$nextTick(function () {
+				this.$store.commit('isLogin', false)
+				localStorage.setItem("isLogin", false)
+			})
+		},
 		methods: {
 			login: function() {
 				this.loginErr = false
@@ -51,10 +57,14 @@
     					_seft.loginErrMsg = "密码错误"
     					_seft.loginErr = true
     				} else if(status === 1) {
-    					this.$store.commit('setToken', data.token)
-    					this.$store.commit('setUid', data.uid)
+    					this.$store.commit('token', data.token)
     					localStorage.setItem("token", data.token)
+    					this.$store.commit('uid', data.uid)
     					localStorage.setItem("uid", data.uid)
+    					this.$store.commit('username', _seft.username)
+    					localStorage.setItem("username", _seft.username)
+    					this.$store.commit('isLogin', true)
+    					localStorage.setItem("isLogin", true)
     					this.$router.push('/')
     				} else {
     					_seft.loginErrMsg = "网络错误"

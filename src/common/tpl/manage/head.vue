@@ -1,11 +1,43 @@
 <template>
 	<div class="head z-clearfix">
 		<img src="">
-		<h1>标题</h1>
-		<span class="logout">退出</span>
-		<span class="username">用户名</span>
+		<h1>口口口口</h1>
+		<span class="logout" v-show="isLogin" @click="logout()">口口</span>
+		<span class="username" v-show="isLogin">{{username}}</span>
 	</div>
 </template>
+
+<script type="text/javascript">
+	export default {
+		computed: {
+			isLogin() {
+				if(this.$store.getters.isLogin == null) {
+					return false
+				}
+	    		return this.$store.getters.isLogin
+			},
+			username() {
+				return this.$store.getters.username
+			}
+		},
+		methods: {
+			logout: function() {
+				const _seft = this
+				this.$http.get('http://www.lutong.com/admin/index.php?c=user&m=logout&token=' + _seft.$store.getters.token,
+				).then((response) => {
+					const status = response.data.status
+    				if(status === 1) {
+    					this.$store.commit('isLogin', false)
+    					localStorage.setItem("isLogin", false)
+    					this.$router.push('/login')
+    				}
+  				}, (response) => {
+    				// TODO 错误toast提示
+  				})
+			}
+		}
+	}
+</script>
 
 <style lang="sass">
 	.head {
