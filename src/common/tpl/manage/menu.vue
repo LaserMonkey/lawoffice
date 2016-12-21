@@ -4,8 +4,8 @@
 			<li><router-link to="/">口口口口</router-link></li>
 			<li><router-link to="/article">口口口口</router-link></li>
 			<li><router-link to="/articletype">口口口口</router-link></li>
-			<li><router-link to="/practice">口口口口</router-link></li>
 			<li><router-link to="/lawyer">口口口口</router-link></li>
+			<li><router-link to="/practice">口口口口</router-link></li>
 			<li><router-link to="/about">口口口口</router-link></li>
 		</ul>
 	</div>

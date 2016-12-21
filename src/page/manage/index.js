@@ -40,8 +40,68 @@ const routes = [{
 }]
 
 const router = new VueRouter({
-	routes
+	routes,
+	// beforeEach ((to, from, next) => {
+	// 	if (to.matched.some(record => record.meta.requiresAuth)) {
+	// 		// this route requires auth, check if logged in
+	// 		// if not, redirect to login page.
+	// 		if (!auth.loggedIn()) {
+	// 			next({
+	// 				path: '/login',
+	// 				query: { redirect: to.fullPath }
+	// 			})
+	// 		} else {
+	// 			next()
+	// 		}
+	// 	} else {
+	// 		next() // 确保一定要调用 next()
+	// 	}
+	// })
+	// beforeEach((transition) => {
+	// 	if (transition.to.auth) {
+	// 		//判断是否登录，（可以通过接口，Vuex状态 token）
+	// 		//没有登录走下面逻辑
+	// 		let redirect = encodeURIComponent(transition.to.path);
+	// 		transition.redirect('/logon?redirect=' + redirect);
+	// 		//redirect 作为参数，登录之后跳转回来
+	// 	} else {
+	// 		transition.next();
+	// 	}
+	// })
 })
+
+router.beforeEach ((to, from, next) => {
+	// console.log(to)
+	// console.log(from)
+	// console.log(next)
+	if (to.matched.some(record => record.meta.requiresAuth)) {
+		// this route requires auth, check if logged in
+		// if not, redirect to login page.
+		if (!auth.loggedIn()) {
+			next({
+				path: '/login',
+				query: { redirect: to.fullPath }
+			})
+		} else {
+			next()
+		}
+	} else {
+		next() // 确保一定要调用 next()
+	}
+})
+
+// router.beforeEach((transition) => {
+// 	console.log(transition)
+//     if (transition.to.auth) {
+//          //判断是否登录，（可以通过接口，Vuex状态 token）
+//          //没有登录走下面逻辑
+//          let redirect = encodeURIComponent(transition.to.path);
+//          transition.redirect('/logon?redirect=' + redirect);
+//          //redirect 作为参数，登录之后跳转回来
+//     } else {
+//         transition.next();
+//     }
+// })
 
 const manage = new Vue({
 	router,

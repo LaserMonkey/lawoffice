@@ -23,6 +23,34 @@
 	</div>
 </template>
 
+<script type="text/javascript">
+	export default {
+		data: function() {
+			return {
+				sliderList: [],
+				hotList: []
+			}
+		},
+		mounted: function () {
+			this.$nextTick(function () {
+				this.init()
+			})
+		},
+		methods: {
+			init: function() {
+				this.getSliderList()
+				this.getHotList()
+			},
+			getSliderList: function() {
+
+			},
+			getHotList: function() {
+
+			}
+		}
+	}
+</script>
+
 <style lang="sass">
 	.index {
 		margin-left: 200px;

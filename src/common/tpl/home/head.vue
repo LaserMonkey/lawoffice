@@ -55,8 +55,8 @@
 				this.getHeadData()
 			},
 			getHeadData: function() {
-				const _seft = this
-				this.$http.get('http://www.lutong.com/api/index.php?lang=' + _seft.getLang + '&c=home&m=index').then((response) => {
+				const _self = this
+				this.$http.get('http://www.lutong.com/api/index.php?lang=' + _self.getLang + '&c=home&m=index').then((response) => {
     				this.columnList = response.data.column
   				}, (response) => {
     				// TODO 错误toast提示

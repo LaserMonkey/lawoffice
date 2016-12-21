@@ -32,43 +32,43 @@
 		methods: {
 			login: function() {
 				this.loginErr = false
-				const _seft = this
-				this.$http.get('http://www.lutong.com/admin/index.php?c=user&m=user_login&username=' + _seft.username + '&password=' + _seft.password,
+				const _self = this
+				this.$http.get('http://www.lutong.com/admin/index.php?c=user&m=user_login&username=' + _self.username + '&password=' + _self.password,
 					// TODO	上线修改
 					// {
 					// 	c: 'user',
 					// 	m: 'user_login',
-					// 	username: _seft.username,
-					// 	password: _seft.password
+					// 	username: _self.username,
+					// 	password: _self.password
 					// }
 				).then((response) => {
 					const data = response.data
 					const status = data.status
     				if(status === -1) {
-    					_seft.loginErrMsg = "请输入用户名和密码"
-    					_seft.loginErr = true
+    					_self.loginErrMsg = "请输入用户名和密码"
+    					_self.loginErr = true
     				} else if(status === 0) {
-    					_seft.loginErrMsg = "请联系开发人员"
-    					_seft.loginErr = true
+    					_self.loginErrMsg = "请联系开发人员"
+    					_self.loginErr = true
     				} else if(status === -2) {
-    					_seft.loginErrMsg = "用户不存在"
-    					_seft.loginErr = true
+    					_self.loginErrMsg = "用户不存在"
+    					_self.loginErr = true
     				} else if(status === -3) {
-    					_seft.loginErrMsg = "密码错误"
-    					_seft.loginErr = true
+    					_self.loginErrMsg = "密码错误"
+    					_self.loginErr = true
     				} else if(status === 1) {
     					this.$store.commit('token', data.token)
     					localStorage.setItem("token", data.token)
     					this.$store.commit('uid', data.uid)
     					localStorage.setItem("uid", data.uid)
-    					this.$store.commit('username', _seft.username)
-    					localStorage.setItem("username", _seft.username)
+    					this.$store.commit('username', _self.username)
+    					localStorage.setItem("username", _self.username)
     					this.$store.commit('isLogin', true)
     					localStorage.setItem("isLogin", true)
     					this.$router.push('/')
     				} else {
-    					_seft.loginErrMsg = "网络错误"
-    					_seft.loginErr = true
+    					_self.loginErrMsg = "网络错误"
+    					_self.loginErr = true
     				}
   				}, (response) => {
     				// TODO 错误toast提示
