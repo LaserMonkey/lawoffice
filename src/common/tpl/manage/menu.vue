@@ -2,7 +2,7 @@
 	<div class="menu">
 		<ul v-show="isLogin">
 			<li><router-link to="/">口口口口</router-link></li>
-			<li><router-link to="/article">口口口口</router-link></li>
+			<li><router-link to="/articlelist">口口口口</router-link></li>
 			<li><router-link to="/articletype">口口口口</router-link></li>
 			<li><router-link to="/lawyer">口口口口</router-link></li>
 			<li><router-link to="/practice">口口口口</router-link></li>

@@ -85,6 +85,10 @@ var config = {
 		loaders: {
 			js: 'babel'
 		}
+	},
+
+	externals: {
+		'UE': 'UE',
 	}
 }
 

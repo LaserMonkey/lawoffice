@@ -11,6 +11,7 @@ import Head from 'tpl/manage/head.vue'
 import Menu from 'tpl/manage/menu.vue'
 import Login from './tpl/login.vue'
 import Index from './tpl/index.vue'
+import ArticleList from './tpl/articlelist.vue'
 import Article from './tpl/article.vue'
 
 const routes = [{
@@ -26,6 +27,14 @@ const routes = [{
 	name: 'login',
     components: {
 		default: Login,
+		head: Head,
+		menu: Menu
+	}
+}, {
+	path: '/articlelist',
+	name: 'articlelist',
+    components: {
+		default: ArticleList,
 		head: Head,
 		menu: Menu
 	}
