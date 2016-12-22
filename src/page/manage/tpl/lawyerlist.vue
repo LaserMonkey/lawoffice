@@ -1,5 +1,5 @@
 <template>
-	<div class="lawyerlist z-min-width">
+	<div class="lawyerlist z-main-right">
 		<div class="lawyer-type">
 			<label>口口口口：</label>
 			<select name="lawyerType" v-model="lawyerTypeID" @change="getLawyerList()">
@@ -96,9 +96,7 @@
 
 <style lang="sass">
 	.lawyerlist {
-		margin-left: 200px;
 		padding-bottom: 20px;
-		background-color: #fafafa;
 		
 		.lawyer-type {
 			padding: 30px 40px 20px;

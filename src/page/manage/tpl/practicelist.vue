@@ -1,5 +1,5 @@
 <template>
-	<div class="practicelist z-min-width">
+	<div class="practicelist z-main-right">
 		<div class="practice-type">
 			<label>口口口口：</label>
 			<select name="practiceType" v-model="practiceTypeID" @change="getPracticeList()">
@@ -95,9 +95,7 @@
 
 <style lang="sass">
 	.practicelist {
-		margin-left: 200px;
 		padding-bottom: 20px;
-		background-color: #fafafa;
 		
 		.practice-type {
 			padding: 30px 40px 20px;

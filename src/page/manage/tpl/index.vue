@@ -1,5 +1,5 @@
 <template>
-	<div class="index z-min-width">
+	<div class="index z-main-right">
 		<h2>口口口口</h2>
 		<ul>
 			<li style="background-image:url()">
@@ -50,9 +50,7 @@
 
 <style lang="sass">
 	.index {
-		margin-left: 200px;
 		padding: 30px 40px;
-		background-color: #fafafa;
 
 		h2 {
 			margin-bottom: 20px;

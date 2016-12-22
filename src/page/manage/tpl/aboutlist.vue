@@ -1,5 +1,5 @@
 <template>
-	<div class="aboutlist z-min-width">
+	<div class="aboutlist z-main-right">
 		<div class="about-type">
 			<label>口口：</label>
 			<select name="aboutLang" v-model="lang" @change="getAboutList()">
@@ -87,9 +87,7 @@
 
 <style lang="sass">
 	.aboutlist {
-		margin-left: 200px;
 		padding-bottom: 20px;
-		background-color: #fafafa;
 		
 		.about-type {
 			padding: 30px 40px 20px;

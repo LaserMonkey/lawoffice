@@ -1,5 +1,5 @@
 <template>
-	<div class="about z-min-width">
+	<div class="about z-main-right">
 		<div class="z-margin-bottom about-title">
 			<label>口口口口：</label>
 			<input placeholder="请输入标题" v-model="aboutTitle">
@@ -71,21 +71,11 @@
 
 <style lang="sass">
 	.about {
-		margin-left: 200px;
 		padding: 30px 40px;
-		background-color: #fafafa;
 		
 		input {
 			width: 300px;
 			margin-right: 40px;
-		}
-
-		.wangEditor-container {
-			margin-bottom: 20px;
-
-			.wangEditor-menu-container {
-				height: 62px;
-			}
 		}
 
 		.file-uploads {

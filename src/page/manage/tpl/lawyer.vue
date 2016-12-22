@@ -1,5 +1,5 @@
 <template>
-	<div class="lawyer z-min-width">
+	<div class="lawyer z-main-right">
 		<div class="z-margin-bottom lawyer-name">
 			<label>口口口口：</label>
 			<input placeholder="请输入姓名" v-model="lawyerName">
@@ -80,21 +80,11 @@
 
 <style lang="sass">
 	.lawyer {
-		margin-left: 200px;
 		padding: 30px 40px;
-		background-color: #fafafa;
 		
 		input {
 			width: 200px;
 			margin-right: 40px;
-		}
-
-		.wangEditor-container {
-			margin-bottom: 20px;
-
-			.wangEditor-menu-container {
-				height: 62px;
-			}
 		}
 
 		.file-uploads {

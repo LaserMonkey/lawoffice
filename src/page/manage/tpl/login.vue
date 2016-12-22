@@ -1,5 +1,5 @@
 <template>
-	<div class="login z-min-width">
+	<div class="login z-main-right">
 		<div class="login-area">
 			<div class="login-input">
 				<label>用户名：</label><input placeholder="用户名" v-model="username">
@@ -81,9 +81,7 @@
 <style lang="sass">
 	.login {
 		min-height: 400px;
-		margin-left: 200px;
 		padding-top: 100px;
-		background-color: #fafafa;
 
 		.login-area {
 			width: 380px;

@@ -1,5 +1,5 @@
 <template>
-	<div class="articlelist z-min-width">
+	<div class="articlelist z-main-right">
 		<div class="article-type">
 			<label>口口口口：</label>
 			<select name="articleType" v-model="articleTypeID" @change="getArticleList()">
@@ -110,9 +110,7 @@
 
 <style lang="sass">
 	.articlelist {
-		margin-left: 200px;
 		padding-bottom: 20px;
-		background-color: #fafafa;
 		
 		.article-type {
 			padding: 30px 40px 20px;

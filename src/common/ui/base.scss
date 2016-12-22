@@ -143,7 +143,6 @@ select {
 
 .z-page-ctrl {
 	width: 520px;
-	height: 30px;
 	margin: 0 auto 20px;
 	font-size: 1.4rem;
 
@@ -253,6 +252,16 @@ select {
 	padding-top: 12px;
 }
 
-.z-min-width {
-	min-width: 1080px;
+.z-main-right {
+	position: relative;
+	float: right;
+	width: -moz-calc(100% - 200px);
+	width: -webkit-calc(100% - 200px);
+	width: calc(100% - 200px);
+	background-color: #fafafa;
+	zoom: 1;
+}
+
+.wangEditor-container {
+	margin-bottom: 20px;
 }

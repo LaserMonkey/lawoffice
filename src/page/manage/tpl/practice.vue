@@ -1,5 +1,5 @@
 <template>
-	<div class="practice z-min-width">
+	<div class="practice z-main-right">
 		<div class="z-margin-bottom practice-title">
 			<label>口口口口：</label>
 			<input placeholder="请输入业务领域名称" v-model="practiceTitle">
@@ -90,21 +90,11 @@
 
 <style lang="sass">
 	.practice {
-		margin-left: 200px;
 		padding: 30px 40px;
-		background-color: #fafafa;
 		
 		input {
 			width: 260px;
 			margin-right: 40px;
-		}
-
-		.wangEditor-container {
-			margin-bottom: 20px;
-
-			.wangEditor-menu-container {
-				height: 62px;
-			}
 		}
 
 		.file-uploads {

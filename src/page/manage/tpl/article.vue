@@ -1,5 +1,5 @@
 <template>
-	<div class="article z-min-width">
+	<div class="article z-main-right">
 		<div>
 			<label>口口口口：</label>
 			<select name="articleType" v-model="articleTypeID">
@@ -105,22 +105,12 @@
 
 <style lang="sass">
 	.article {
-		margin-left: 200px;
 		padding: 30px 40px;
-		background-color: #fafafa;
 		
 		input {
 			width: 75%;
 		}
-
-		.wangEditor-container {
-			margin-bottom: 20px;
-
-			.wangEditor-menu-container {
-				height: 62px;
-			}
-		}
-
+		
 		.file-uploads {
 			input {
 				font-size: 0;

@@ -1,5 +1,5 @@
 <template>
-	<div class="column z-min-width">
+	<div class="column z-main-right">
 		<div class="add-column">
 			<button @click="addColumn()">新增栏目</button>
 		</div>
@@ -65,10 +65,8 @@
 
 <style lang="sass">
 	.column {
-		margin-left: 200px;
 		padding-top: 40px;
 		padding-bottom: 20px;
-		background-color: #fafafa;
 		
 		.add-column {
 			padding: 0 20px 15px;
