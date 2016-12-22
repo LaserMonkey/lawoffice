@@ -1,5 +1,5 @@
 <template>
-	<div class="article">
+	<div class="article z-min-width">
 		<div>
 			<label>口口口口：</label>
 			<select name="articleType" v-model="articleTypeID">
@@ -60,13 +60,10 @@
 		},
 		mounted: function () {
 			this.$nextTick(function () {
-				this.init()
+				this.getArticleTypeList()
 			})
 		},
 		methods: {
-			init: function() {
-				this.getArticleTypeList()
-			},
 			getArticleTypeList: function() {
 				const _self = this
 				this.$http.get('http://www.lutong.com/admin/index.php?c=article&m=get_article_type_list&token=' + _self.$store.getters.token,
@@ -76,8 +73,10 @@
     				if(status === 1) {
     					_self.articleTypeList = data.list
     					_self.articleTypeID = data.list[0].id
-    				} else {
+    				} else if(status === 403) {
     					_self.$router.push('/login')
+    				} else {
+    					alert('status: ' + status)
     				}
   				}, (response) => {
     				// TODO 错误toast提示
@@ -87,12 +86,10 @@
 				const _self = this
 				this.$http.get('http://www.lutong.com/admin/index.php?c=article&m=add_article&token=' + _self.$store.getters.token + '&type=' + _self.articleTypeID + '&lang=' + _self.lang + '&title=' + _self.articleTitle + '&intro=' + _self.articleBrief + '&content=' + _self.outputContent + '&source=' + _self.articleSource,
 				).then((response) => {
-					console.log(response)
 					const data = response.data
 					const status = response.data.status
     				if(status === 1) {
-    					console.log(data)
-    					// _self.$router.push('/articlelist')
+    					_self.$router.push('/articlelist')
     				} else if(status === 403) {
     					_self.$router.push('/login')
     				} else {

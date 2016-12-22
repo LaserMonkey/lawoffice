@@ -1,12 +1,14 @@
 <template>
 	<div class="menu">
 		<ul v-show="isLogin">
-			<li><router-link to="/">口口口口</router-link></li>
-			<li><router-link to="/articlelist">口口口口</router-link></li>
-			<li><router-link to="/articletype">口口口口</router-link></li>
-			<li><router-link to="/lawyer">口口口口</router-link></li>
-			<li><router-link to="/practice">口口口口</router-link></li>
-			<li><router-link to="/about">口口口口</router-link></li>
+			<li><router-link to="/">首页管理</router-link></li>
+			<li><router-link to="/column">栏目管理</router-link></li>
+			<li><router-link to="/articlelist">文章列表</router-link></li>
+			<li><router-link to="/articletype">文章类型</router-link></li>
+			<li><router-link to="/lawyerlist">律师列表</router-link></li>
+			<li><router-link to="/practicelist">业务列表</router-link></li>
+			<li><router-link to="/practicetype">业务类型</router-link></li>
+			<li><router-link to="/aboutlist">关于我们</router-link></li>
 		</ul>
 	</div>
 </template>

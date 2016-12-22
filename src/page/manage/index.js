@@ -13,8 +13,13 @@ import Login from './tpl/login.vue'
 import Index from './tpl/index.vue'
 import ArticleList from './tpl/articlelist.vue'
 import Article from './tpl/article.vue'
-import Articletype from './tpl/articletype.vue'
-import Lawyerlist from './tpl/lawyerlist.vue'
+import Column from './tpl/column.vue'
+import LawyerList from './tpl/lawyerlist.vue'
+import Lawyer from './tpl/lawyer.vue'
+import PracticeList from './tpl/practicelist.vue'
+import Practice from './tpl/practice.vue'
+import AboutList from './tpl/aboutlist.vue'
+import About from './tpl/about.vue'
 
 const routes = [{
 	path: '/',
@@ -49,10 +54,10 @@ const routes = [{
 		menu: Menu
 	}
 }, {
-	path: '/articletype',
-	name: 'articletype',
+	path: '/column',
+	name: 'column',
     components: {
-		default: Articletype,
+		default: Column,
 		head: Head,
 		menu: Menu
 	}
@@ -60,7 +65,47 @@ const routes = [{
 	path: '/lawyerlist',
 	name: 'lawyerlist',
     components: {
-		default: Lawyerlist,
+		default: LawyerList,
+		head: Head,
+		menu: Menu
+	}
+}, {
+	path: '/lawyer',
+	name: 'lawyer',
+    components: {
+		default: Lawyer,
+		head: Head,
+		menu: Menu
+	}
+}, {
+	path: '/practicelist',
+	name: 'practicelist',
+    components: {
+		default: PracticeList,
+		head: Head,
+		menu: Menu
+	}
+}, {
+	path: '/practice',
+	name: 'practice',
+    components: {
+		default: Practice,
+		head: Head,
+		menu: Menu
+	}
+}, {
+	path: '/aboutlist',
+	name: 'aboutlist',
+    components: {
+		default: AboutList,
+		head: Head,
+		menu: Menu
+	}
+}, {
+	path: '/about',
+	name: 'about',
+    components: {
+		default: About,
 		head: Head,
 		menu: Menu
 	}

@@ -1,5 +1,5 @@
 <template>
-	<div class="articlelist">
+	<div class="articlelist z-min-width">
 		<div class="article-type">
 			<label>口口口口：</label>
 			<select name="articleType" v-model="articleTypeID" @change="getArticleList()">
@@ -17,7 +17,7 @@
 			<button @click="$router.push('/article')">口口口口</button>
 		</div>
 		<ul class="z-table">
-			<li class="article-list-frist">
+			<li class="z-table-first">
 				<h3 class="article-title">口口</h3>
 				<div>口口口口</div>
 				<time>口口口口</time>
@@ -52,7 +52,7 @@
 			return {
 				articleList: [],
 				articleTypeList: [],
-				articleTypeID: '0',
+				articleTypeID: 1,
 				lang: 1,
 				pageCount: 1,
 				pageNow: 1,
@@ -65,13 +65,10 @@
 		},
 		mounted: function () {
 			this.$nextTick(function () {
-				this.init()
+				this.getArticleTypeList()
 			})
 		},
 		methods: {
-			init: function() {
-				this.getArticleTypeList()
-			},
 			getArticleTypeList: function() {
 				const _self = this
 				this.$http.get('http://www.lutong.com/admin/index.php?c=article&m=get_article_type_list&token=' + _self.$store.getters.token,
@@ -122,63 +119,7 @@
 		}
 		
 		.add-article {
-			padding: 0 20px 10px;
-		}
-
-		.z-table {
-			padding-bottom: 20px;
-			border-top: solid 1px rgba(0, 0, 0, 0.1);
-
-			li {
-				display: flex;
-				padding: 16px 40px;
-				border-bottom: solid 1px rgba(0, 0, 0, 0.1);
-				font-size: 1.4rem;
-				background-color: white;
-				flex-wrap: wrap;
-				align-items: flex-start;
-				align-content: flex-start;
-
-				h3 {
-					width: 40%;
-					padding-right: 20px;
-					font-size: 1.4rem;
-					font-weight: normal;
-					overflow: hidden;
-					text-overflow: ellipsis;
-					white-space: nowrap;
-				}
-
-				div {
-					width: 20%;
-					padding-right: 20px;
-
-					a {
-						color: #df001f;
-					}
-
-					span {
-						margin-left: 10px;
-						color: #df001f;
-						cursor: pointer;
-					}
-				}
-
-				time {
-					display: block;
-					width: 20%;
-					padding-right: 20px;
-					overflow: hidden;
-					text-overflow: ellipsis;
-					white-space: nowrap;
-				}
-
-			}
-
-			.z-table-frist {
-				color: rgba(0, 0, 0, 0.6);
-				background-color: #fffef7;
-			}
+			padding: 0 20px 15px;
 		}
 	}
 </style>

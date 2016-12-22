@@ -1,5 +1,5 @@
 <template>
-	<div class="login">
+	<div class="login z-min-width">
 		<div class="login-area">
 			<div class="login-input">
 				<label>用户名：</label><input placeholder="用户名" v-model="username">

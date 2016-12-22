@@ -1,7 +1,7 @@
 <template>
 	<div class="head z-clearfix">
 		<img src="">
-		<h1>口口口口</h1>
+		<h1>陆通联合律师事务所后台管理系统</h1>
 		<span class="logout" v-show="isLogin" @click="logout()">口口</span>
 		<span class="username" v-show="isLogin">{{username}}</span>
 	</div>
@@ -42,6 +42,7 @@
 <style lang="sass">
 	.head {
 		width: 100%;
+		min-width: 1280px;
 		padding: 20px 40px 20px 25px;
 		color: white;
 		background-color: #df001f;

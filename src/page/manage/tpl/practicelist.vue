@@ -1,35 +1,34 @@
 <template>
-	<div class="lawyerlist z-min-width">
-		<div class="lawyer-type">
+	<div class="practicelist z-min-width">
+		<div class="practice-type">
 			<label>口口口口：</label>
-			<select name="lawyerType" v-model="lawyerTypeID" @change="getLawyerList()">
-				<option value="1">首席及合伙人</option>
-				<option value="2">律师</option>
+			<select name="practiceType" v-model="practiceTypeID" @change="getPracticeList()">
+				<option v-for="(practiceType, index) in practiceTypeList" :value="practiceType.id" :disabled="practiceType.disable == 0 ? true : false">{{practiceType.name1}}</option>
 			</select>
 			<label>口口：</label>
-			<select name="lawyerLang" v-model="lang" @change="getLawyerList()">
+			<select name="practiceLang" v-model="lang" @change="getPracticeList()">
 				<option value="1">简体</option>
 				<option value="2">繁體</option>
 				<option value="3">ENGLISH</option>
 			</select>
-			<input placeholder="按人名模糊查询" v-model="search" @keyup.enter="getLawyerList()">
+			<input placeholder="按业务领域模糊查询" v-model="search" @keyup.enter="getPracticeList()">
 		</div>
-		<div class="add-lawyer">
-			<button @click="$router.push('/lawyer')">口口口口</button>
+		<div class="add-practice">
+			<button @click="$router.push('/practice')">口口口口</button>
 		</div>
 		<ul class="z-table">
 			<li class="z-table-first">
-				<h3 class="lawyer-title">口口</h3>
+				<h3 class="practice-title">口口</h3>
 				<div>口口口口</div>
 				<time>口口口口</time>
 				<div>口口</div>
 			</li>
-			<li v-for="(lawyer, index) in lawyerList">
-				<h3 class="lawyer-title">{{lawyer.name}}</h3>
-				<div>{{lawyer.type_name}}</div>
-				<time :datetime="getMyDate(lawyer.dateline)" :alt="getMyDate(lawyer.dateline)">{{getMyDate(lawyer.dateline)}}</time>
-				<div>
-					<router-link :to="{name: 'lawyer', query: {lawyerid: lawyer.id}}">口口</router-link>
+			<li v-for="(practice, index) in practiceList">
+				<h3 class="practice-title">{{practice.title}}</h3>
+				<div>{{practice.type_name}}</div>
+				<time :datetime="getMyDate(practice.dateline)" :alt="getMyDate(practice.dateline)">{{getMyDate(practice.dateline)}}</time>
+				<div class="options">
+					<router-link :to="{name: 'practice', query: {practiceid: practice.id}}">口口</router-link>
 					<span @click="">口口</span>
 				</div>
 			</li>
@@ -51,9 +50,9 @@
 	export default {
 		data: function() {
 			return {
-				lawyerList: [],
-				lawyerTypeList: [],
-				lawyerTypeID: 1,
+				practiceList: [],
+				practiceTypeList: [],
+				practiceTypeID: 1,
 				lang: 1,
 				pageCount: 1,
 				pageNow: 1,
@@ -66,22 +65,22 @@
 		},
 		mounted: function () {
 			this.$nextTick(function () {
-				this.getLawyerList()
+				this.getPracticeList()
 			})
 		},
 		methods: {
-			getLawyerList: function() {
+			getPracticeList: function() {
 				const _self = this
-				this.$http.get('http://www.lutong.com/admin/index.php?c=lawyers&m=get_lawyers_list&page=' + _self.pageNow + '&name=' + _self.search + '&type=' + _self.lawyerTypeID + '&lang=' + _self.lang + '&token=' + _self.$store.getters.token,
+				this.$http.get('http://www.lutong.com/admin/index.php?c=practices&m=index&page=' + _self.pageNow + '&title=' + _self.search + '&type=' + _self.practiceTypeID + '&lang=' + _self.lang + '&token=' + _self.$store.getters.token,
 				).then((response) => {
 					const data = response.data
 					const status = response.data.status
     				if(status === 1) {
-    					_self.lawyerList = data.list
-    				} else if(status === 403) {
-    					_self.$router.push('/login')
+    					_self.practiceTypeList = data.type
+    					_self.practiceTypeID = data.type[0].id
+    					_self.practiceList = data.list
     				} else {
-    					alert('status: ' + status)
+    					_self.$router.push('/login')
     				}
   				}, (response) => {
     				// TODO 错误toast提示
@@ -95,16 +94,16 @@
 </script>
 
 <style lang="sass">
-	.lawyerlist {
+	.practicelist {
 		margin-left: 200px;
 		padding-bottom: 20px;
 		background-color: #fafafa;
 		
-		.lawyer-type {
+		.practice-type {
 			padding: 30px 40px 20px;
 		}
 		
-		.add-lawyer {
+		.add-practice {
 			padding: 0 20px 15px;
 		}
 
@@ -113,17 +112,20 @@
 			li {
 
 				h3 {
-					width: 25%;
+					width: 20%;
 				}
 
 				div {
-					width: 25%;
+					width: 20%;
 				}
 
 				time {
-					width: 25%;
+					width: 20%;
 				}
 
+				.options {
+					width: 40%;
+				}
 			}
 		}
 	}

@@ -1,5 +1,5 @@
 <template>
-	<div class="index">
+	<div class="index z-min-width">
 		<h2>口口口口</h2>
 		<ul>
 			<li style="background-image:url()">
@@ -33,14 +33,11 @@
 		},
 		mounted: function () {
 			this.$nextTick(function () {
-				this.init()
+				this.getSliderList()
+				this.getHotList()
 			})
 		},
 		methods: {
-			init: function() {
-				this.getSliderList()
-				this.getHotList()
-			},
 			getSliderList: function() {
 
 			},
