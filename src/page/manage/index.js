@@ -13,6 +13,8 @@ import Login from './tpl/login.vue'
 import Index from './tpl/index.vue'
 import ArticleList from './tpl/articlelist.vue'
 import Article from './tpl/article.vue'
+import Articletype from './tpl/articletype.vue'
+import Lawyerlist from './tpl/lawyerlist.vue'
 
 const routes = [{
 	path: '/',
@@ -43,6 +45,22 @@ const routes = [{
 	name: 'article',
     components: {
 		default: Article,
+		head: Head,
+		menu: Menu
+	}
+}, {
+	path: '/articletype',
+	name: 'articletype',
+    components: {
+		default: Articletype,
+		head: Head,
+		menu: Menu
+	}
+}, {
+	path: '/lawyerlist',
+	name: 'lawyerlist',
+    components: {
+		default: Lawyerlist,
 		head: Head,
 		menu: Menu
 	}

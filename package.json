@@ -24,6 +24,7 @@
         "sass": "^0.5.0",
     	"sass-loader": "^4.0.2",
         "style-loader": "^0.13.0",
+        "url-loader": "^0.5.7",
     	"vue": "^2.1.5",
         "vue-hot-reload-api": "^2.0.6",
         "vue-html-loader": "^1.0.0",
@@ -31,7 +32,9 @@
         "vue-resource": "^1.0.3",
     	"vue-router": "^2.1.1",
     	"vue-template-compiler": "^2.1.5",
+        "vue-upload-component": "^2.0.0-beta.5",
         "vuex": "^2.0.0",
+        "wangeditor": "^2.1.22",
 		"webpack": "^1.13.3",
 		"webpack-dev-server": "^1.16.2"
 	}

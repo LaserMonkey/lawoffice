@@ -18,14 +18,25 @@
 		</div>
 		<div class="z-margin-bottom z-padding-top"><label>口口口口</label></div>
 		<textarea placeholder="请在这里写下文章简介" v-model="articleBrief"></textarea>
-		<div>
+		<v-editor :input-content="inputContent" :upload-url="uploadUrl" v-model="outputContent"></v-editor>
+		<div class="z-margin-bottom">
 			<label>口口口口：</label>
 			<input placeholder="请写信息来源" v-model="articleSource">
+		</div>
+		<div class="z-margin-bottom z-padding-top">
+			<label>口口口口：</label>
+			<file-upload title="点击此处添加附件(可不上传)"></file-upload>
+		</div>
+		<div class="z-margin-bottom z-padding-top">
+			<button @click="saveArticle()">口口</button>
 		</div>
 	</div>
 </template>
 
 <script type="text/javascript">
+	import Editor from 'tpl/manage/editor.vue'
+	import FileUpload from 'vue-upload-component'
+
 	export default {
 		data: function() {
 			return {
@@ -34,9 +45,18 @@
 				articleTitle: "",
 				articleTypeList: [],
 				articleTypeID: '0',
-				content: "",
 				lang: 1,
+				// input content to editor
+				inputContent: '',
+				// output content from editor
+				outputContent: '',
+				// set image upload api url
+				uploadUrl: '/api/v1/help/upload/wangEditorH5File'
 			}
+		},
+		components: {
+			'v-editor': Editor,
+			FileUpload
 		},
 		mounted: function () {
 			this.$nextTick(function () {
@@ -63,6 +83,25 @@
     				// TODO 错误toast提示
   				})
 			},
+			saveArticle: function() {
+				const _self = this
+				this.$http.get('http://www.lutong.com/admin/index.php?c=article&m=add_article&token=' + _self.$store.getters.token + '&type=' + _self.articleTypeID + '&lang=' + _self.lang + '&title=' + _self.articleTitle + '&intro=' + _self.articleBrief + '&content=' + _self.outputContent + '&source=' + _self.articleSource,
+				).then((response) => {
+					console.log(response)
+					const data = response.data
+					const status = response.data.status
+    				if(status === 1) {
+    					console.log(data)
+    					// _self.$router.push('/articlelist')
+    				} else if(status === 403) {
+    					_self.$router.push('/login')
+    				} else {
+    					alert('status: ' + status)
+    				}
+  				}, (response) => {
+    				// TODO 错误toast提示
+  				})
+			}
 		}
 	}
 </script>
@@ -75,6 +114,20 @@
 		
 		input {
 			width: 75%;
+		}
+
+		.wangEditor-container {
+			margin-bottom: 20px;
+
+			.wangEditor-menu-container {
+				height: 62px;
+			}
+		}
+
+		.file-uploads {
+			input {
+				font-size: 0;
+			}
 		}
 	}
 </style>
