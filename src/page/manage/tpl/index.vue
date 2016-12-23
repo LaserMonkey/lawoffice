@@ -1,5 +1,13 @@
 <template>
 	<div class="index z-main-right">
+		<div class="slider-type">
+			<select name="sliderLang" v-model="lang" @change="getSliderList()">
+				<option value="1">简体</option>
+				<option value="2">繁體</option>
+				<option value="3">ENGLISH</option>
+			</select>
+			<input placeholder="按标题模糊查询" v-model="search" @keyup.enter="getSliderList()">
+		</div>
 		<h2>轮播图管理</h2>
 		<ul>
 			<li style="background-image:url()">
@@ -28,7 +36,9 @@
 		data: function() {
 			return {
 				sliderList: [],
-				hotList: []
+				hotList: [],
+				lang: 1,
+				search: "",
 			}
 		},
 		mounted: function () {

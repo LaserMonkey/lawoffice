@@ -1,49 +1,43 @@
 <template>
-	<div class="column z-main-right">
-		<div class="add-column">
+	<div class="practicetype z-main-right">
+		<div class="add-practicetype">
 			<button @click="openPopAdd()">新增栏目</button>
 		</div>
 		<ul class="z-table">
 			<li class="z-table-first">
-				<h3 class="column-name">简体名称</h3>
-				<h3 class="column-name">繁体名称</h3>
-				<h3 class="column-name">英文名称</h3>
+				<h3 class="practicetype-name">简体名称</h3>
+				<h3 class="practicetype-name">繁体名称</h3>
+				<h3 class="practicetype-name">英文名称</h3>
 				<div>栏目类型</div>
 				<time>最后修改时间</time>
 				<div class="options">操作</div>
 			</li>
-			<li v-for="(column, index) in columnList">
-				<h3 class="column-name">{{column.name1}}</h3>
-				<h3 class="column-name">{{column.name2}}</h3>
-				<h3 class="column-name">{{column.name3}}</h3>
-				<div>{{column.type_name == "" ? "固定栏目" : column.type_name}}</div>
-				<time :datetime="getMyDate(column.dateline)">{{getMyDate(column.dateline)}}</time>
+			<li v-for="(practiceType, index) in practiceTypeList">
+				<h3 class="practicetype-name">{{practiceType.name1}}</h3>
+				<h3 class="practicetype-name">{{practiceType.name2}}</h3>
+				<h3 class="practicetype-name">{{practiceType.name3}}</h3>
+				<div>{{practiceType.type_name == "" ? "固定栏目" : practiceType.type_name}}</div>
+				<time :datetime="getMyDate(practiceType.dateline)">{{getMyDate(practiceType.dateline)}}</time>
 				<div>
 					<span @click="">口口</span>
 				</div>
 			</li>
 		</ul>
 		<div class="z-pop pop-add" v-show="showPopAdd">
-			<div>
-				<label>文章分类：</label>
-				<select name="articleType" v-model="articleTypeID">
-					<option v-for="(articleType, index) in articleTypeList" :value="articleType.id" :disabled="articleType.disable == 0 ? true : false">{{articleType.name1}}</option>
-				</select>
-			</div>
 			<div class="pop-blank">
 				<label>简体名称：</label>
-				<input type="text" placeholder="请输入栏目简体名称" v-model="nameCHS">
+				<input type="text" placeholder="请输入文章分类简体名称" v-model="nameCHS">
 			</div>
 			<div class="pop-blank">
 				<label>繁体名称：</label>
-				<input type="text" placeholder="请输入栏目繁体名称" v-model="nameCHT">
+				<input type="text" placeholder="请输入文章分类繁体名称" v-model="nameCHT">
 			</div>
 			<div class="pop-blank">
 				<label>英文名称：</label>
-				<input type="text" placeholder="请输入栏目英文名称" v-model="nameEN">
+				<input type="text" placeholder="请输入文章分类英文名称" v-model="nameEN">
 			</div>
 			<div class="z-pop-action z-clearfix">
-				<button @click="addColumn()">确定</button>
+				<button @click="addPracticeType()">确定</button>
 				<button class="z-pop-cancel" @click="closePop()">取消</button>
 			</div>
 		</div>
@@ -55,9 +49,7 @@
 	export default {
 		data: function() {
 			return {
-				articleTypeID: 1,
-				articleTypeList: [],
-				columnList: [],
+				practiceTypeList: [],
 				nameCHS: "",
 				nameCHT: "",
 				nameEN: "",
@@ -67,22 +59,20 @@
 		},
 		mounted: function () {
 			this.$nextTick(function () {
-				this.getColumnList()
+				this.getPracticeTypeList()
 			})
 		},
 		methods: {
-			getColumnList: function() {
+			getPracticeTypeList: function() {
 				const _self = this
-				this.$http.get('http://www.lutong.com/admin/index.php?c=sys&m=get_column_list&token=' + _self.$store.getters.token,
+				this.$http.get('http://www.lutong.com/admin/index.php?c=practices&m=get_practices_type_list&token=' + _self.$store.getters.token,
 				).then((response) => {
 					const data = response.data
 					const status = response.data.status
     				if(status === 1) {
-    					_self.columnList = data.list
-    				} else if(status === 403) {
-    					_self.$router.push('/login')
+    					_self.practiceTypeList = data.list
     				} else {
-    					alert('status: ' + status)
+    					_self.$router.push('/login')
     				}
   				}, (response) => {
     				// TODO 错误toast提示
@@ -97,34 +87,18 @@
 				this.nameEN = ""
 				this.showCover = 1
 				this.showPopAdd = 1
-				this.getArticleTypeList()
+				this.getPracticeTypeList()
 			},
-			getArticleTypeList: function() {
+			addPracticeType: function() {
 				const _self = this
-				this.$http.get('http://www.lutong.com/admin/index.php?c=article&m=get_article_type_list&token=' + _self.$store.getters.token,
-				).then((response) => {
-					const data = response.data
-					const status = response.data.status
-    				if(status === 1) {
-    					_self.articleTypeList = data.list
-    					_self.articleTypeID = data.list[0].id
-    				} else {
-    					_self.$router.push('/login')
-    				}
-  				}, (response) => {
-    				// TODO 错误toast提示
-  				})
-			},
-			addColumn: function() {
-				const _self = this
-				this.$http.get('http://www.lutong.com/admin/index.php?c=sys&m=add_column&token=' + _self.$store.getters.token + '&type=' + _self.articleTypeID + '&name1=' + _self.nameCHS + '&name2=' + _self.nameCHT + '&name3=' + _self.nameEN,
+				this.$http.get('http://www.lutong.com/admin/index.php?c=practices&m=add_practices_type&token=' + _self.$store.getters.token + '&name1=' + _self.nameCHS + '&name2=' + _self.nameCHT + '&name3=' + _self.nameEN,
 				).then((response) => {
 					const data = response.data
 					const status = response.data.status
 					_self.showCover = 0
 					_self.showPopAdd = 0
     				if(status === 1) {
-    					_self.getColumnList()
+    					_self.getPracticeTypeList()
     				} else {
     					_self.$router.push('/login')
     				}
@@ -141,11 +115,11 @@
 </script>
 
 <style lang="sass">
-	.column {
+	.practicetype {
 		padding-top: 40px;
 		padding-bottom: 20px;
 		
-		.add-column {
+		.add-practicetype {
 			padding: 0 20px 15px;
 		}
 

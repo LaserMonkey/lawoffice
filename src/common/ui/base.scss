@@ -265,3 +265,46 @@ select {
 .wangEditor-container {
 	margin-bottom: 20px;
 }
+
+.z-cover {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.2);
+	z-index: 9999;
+}
+
+.z-pop {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	padding: 40px 60px;
+	border-radius: 4px;
+	font-size: 1.6rem;
+	background: white;
+	z-index: 10000;
+
+	.z-pop-title {
+		margin-bottom: 20px;
+	}
+
+	.z-pop-action {
+		padding-top: 10px;
+		text-align: center;
+
+		button {
+			float: left;
+			width: 100px;
+			height: 40px;
+			margin: 0 10px;
+			padding: 5px 20px;
+		}
+
+		.z-pop-cancel {
+			float: right;
+			background-color: lightgray;
+		}
+	}
+}

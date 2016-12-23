@@ -18,8 +18,10 @@ import LawyerList from './tpl/lawyerlist.vue'
 import Lawyer from './tpl/lawyer.vue'
 import PracticeList from './tpl/practicelist.vue'
 import Practice from './tpl/practice.vue'
+import PracticeType from './tpl/practicetype.vue'
 import AboutList from './tpl/aboutlist.vue'
 import About from './tpl/about.vue'
+import ArticleType from './tpl/articletype.vue'
 
 const routes = [{
 	path: '/',
@@ -50,6 +52,14 @@ const routes = [{
 	name: 'article',
     components: {
 		default: Article,
+		head: Head,
+		menu: Menu
+	}
+}, {
+	path: '/articletype',
+	name: 'articletype',
+    components: {
+		default: ArticleType,
 		head: Head,
 		menu: Menu
 	}
@@ -90,6 +100,14 @@ const routes = [{
 	name: 'practice',
     components: {
 		default: Practice,
+		head: Head,
+		menu: Menu
+	}
+}, {
+	path: '/practicetype',
+	name: 'practicetype',
+    components: {
+		default: PracticeType,
 		head: Head,
 		menu: Menu
 	}
