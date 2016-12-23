@@ -13,6 +13,11 @@ var BUILD_PATH = path.resolve(ROOT_PATH, 'build');
 // 获取所有入口文件
 var entries = getEntries(PAGE_PATH);
 
+// 热替换处理
+Object.keys(entries).forEach(function (name) {
+    entries[name] = ['webpack-dev-server/client?http://0.0.0.0:9000/'].concat(entries[name])
+})
+
 // webpack 配置项
 var config = {
 

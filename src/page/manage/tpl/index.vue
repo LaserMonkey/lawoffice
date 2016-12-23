@@ -1,6 +1,6 @@
 <template>
 	<div class="index z-main-right">
-		<h2>口口口口</h2>
+		<h2>轮播图管理</h2>
 		<ul>
 			<li style="background-image:url()">
 				<h3>口口口口</h3>
@@ -10,7 +10,7 @@
 			</li>
 			<li class="add-btn">+</li>
 		</ul>
-		<h2>口口口口</h2>
+		<h2>热点文章管理</h2>
 		<ul>
 			<li style="background-image:url()">
 				<h3>口口口口</h3>
