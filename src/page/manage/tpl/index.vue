@@ -1,6 +1,6 @@
 <template>
 	<div class="index z-main-right">
-		<div class="slider-type">
+		<div class="slider-type z-margin-bottom">
 			<select name="sliderLang" v-model="lang" @change="getSliderList()">
 				<option value="1">简体</option>
 				<option value="2">繁體</option>
@@ -49,10 +49,38 @@
 		},
 		methods: {
 			getSliderList: function() {
-
+				const _self = this
+				this.$http.get('http://www.lutong.com/admin/index.php?c=sys&m=get_carousel_list&token=' + _self.$store.getters.token + '&lang=' + _self.lang + '&title=' + _self.search,
+				).then((response) => {
+					const data = response.data
+					const status = response.data.status
+    				if(status === 1) {
+    					_self.sliderList = data.list
+    				} else if(status === 403) {
+    					_self.$router.push('/login')
+    				} else {
+    					alert('status: ' + status)
+    				}
+  				}, (response) => {
+    				// TODO 错误toast提示
+  				})
 			},
 			getHotList: function() {
-
+				const _self = this
+				this.$http.get('http://www.lutong.com/admin/index.php?c=sys&m=get_custom_list&token=' + _self.$store.getters.token + '&lang=' + _self.lang + '&title=' + _self.search,
+				).then((response) => {
+					const data = response.data
+					const status = response.data.status
+    				if(status === 1) {
+    					_self.hotList = data.list
+    				} else if(status === 403) {
+    					_self.$router.push('/login')
+    				} else {
+    					alert('status: ' + status)
+    				}
+  				}, (response) => {
+    				// TODO 错误toast提示
+  				})
 			}
 		}
 	}
@@ -63,7 +91,8 @@
 		padding: 30px 40px;
 
 		h2 {
-			margin-bottom: 20px;
+			margin-bottom: 10px;
+			font-size: 2.0rem
 		}
 
 		ul {
