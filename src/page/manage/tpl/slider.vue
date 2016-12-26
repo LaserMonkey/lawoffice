@@ -9,23 +9,23 @@
 		</div>
 		<ul>
 			<li v-for="(slider, index) in sliderList">
-				<div :style="'background-image:url(' + slider.img + ')'" @click="openPopSlider(index)" class="sliderImg">
+				<div :style="'background-image:url(' + slider.img + ')'" @click="openPopSlider(index, slider.id)" class="sliderImg">
 					<h3>{{slider.title}}</h3>
 					<div class="z-del-btn" @click.stop="openPopDelSlider(slider.id)">+</div>
 				</div>
 				<div class="z-clearfix">
-					<div class="z-using z-clearfix">
-						<span class="able">启用</span>
+					<div class="z-blockup z-clearfix" v-if="slider.disable == '0'">
+						<span class="able" @click="blockup(slider.id)">启用</span>
 						<span class="disable">禁用</span>
 					</div>
-					<div class="z-sort">
-						<label>排序：</label>
-						<input type="number" min="0" :value="slider.sort">
-						<button>确定</button>
+					<div class="z-using z-clearfix" v-else>
+						<span class="able">启用</span>
+						<span class="disable" @click="blockup(slider.id)">禁用</span>
 					</div>
+					<span class="action-sort" @click="openPopSortSlider(slider.id, slider.sort)">排序</span>
 				</div>
 			</li>
-			<li class="add-btn" @click="openPopSlider(-1)" v-show="sliderList.length < 8">+</li>
+			<li class="add-btn" @click="openPopSlider(-1, 0)" v-show="sliderList.length < 8">+</li>
 		</ul>
 		<div class="z-pop pop-add-slider" v-show="showPopSlider">
 			<div class="pop-blank">
@@ -59,6 +59,16 @@
 				<button class="z-pop-cancel" @click="closePopDelSlider()">取消</button>
 			</div>
 		</div>
+		<div class="z-pop pop-sort-slider" v-show="showPopSortSlider">
+			<div class="z-sort">
+				<label>设置排序：</label>
+				<input type="number" min="0" v-model="sliderSort">
+			</div>
+			<div class="z-pop-action z-clearfix">
+				<button @click="updateSort()">确定</button>
+				<button class="z-pop-cancel" @click="closePopSortSlider()">取消</button>
+			</div>
+		</div>
 		<div class="z-cover" v-show="showCover"></div>
 	</div>
 </template>
@@ -78,6 +88,8 @@
 				showSliderEditBtn: false,
 				sliderID: 0,
 				showPopDelSlider: false,
+				sliderSort: 0,
+				showPopSortSlider: false,
 			}
 		},
 		mounted: function () {
@@ -106,7 +118,8 @@
 			getFresh: function() {
 				this.getSliderList()
 			},
-			openPopSlider: function(index) {
+			openPopSlider: function(index, sliderID) {
+					this.sliderID = sliderID
 				if(index === -1) {
 					this.sliderLang = 1
 					this.sliderTitle = ""
@@ -117,6 +130,7 @@
 					this.sliderLang = this.sliderList[index].lang
 					this.sliderTitle = this.sliderList[index].title
 					this.sliderLink = this.sliderList[index].url
+					this.sliderSort = this.sliderList[index].sort
 					this.showSliderAddBtn = false
 					this.showSliderEditBtn = true
 				}
@@ -142,7 +156,7 @@
 			},
 			editSlider: function() {
 				const _self = this
-				this.$http.get('http://www.lutong.com/admin/index.php?c=sys&m=update_carousel&token=' + _self.$store.getters.token + '&lang=' + _self.sliderLang + '&title=' + _self.sliderTitle + '&url=' + _self.sliderLink,
+				this.$http.get('http://www.lutong.com/admin/index.php?c=sys&m=update_carousel&token=' + _self.$store.getters.token + '&id=' + _self.sliderID + '&lang=' + _self.sliderLang + '&title=' + _self.sliderTitle + '&url=' + _self.sliderLink,
 				).then((response) => {
 					const data = response.data
 					const status = response.data.status
@@ -186,8 +200,54 @@
 			closePopDelSlider: function() {
 				this.showPopDelSlider = false
 				this.showCover = false
-			}
-		}
+			},
+			blockup: function(sliderID) {
+				const _self = this
+				this.$http.get('http://www.lutong.com/admin/index.php?c=sys&m=disable_carousel&token=' + _self.$store.getters.token + '&id=' + sliderID,
+				).then((response) => {
+					const data = response.data
+					const status = response.data.status
+    				if(status === 1) {
+    					_self.getSliderList()
+    				} else if(status === 403) {
+    					_self.$router.push('/login')
+    				} else {
+    					alert('status: ' + status)
+    				}
+  				}, (response) => {
+    				// TODO 错误toast提示
+  				})
+			},
+			openPopSortSlider: function(sliderID, sliderSort) {
+				this.sliderID = sliderID
+				this.sliderSort = sliderSort
+				this.showCover = true
+				this.showPopSortSlider = true
+			},
+			updateSort: function() {
+				const _self = this
+				this.$http.get('http://www.lutong.com/admin/index.php?c=sys&m=sort_carousel&token=' + _self.$store.getters.token + '&id=' + _self.sliderID + '&sort=' + _self.sliderSort,
+				).then((response) => {
+					const data = response.data
+					const status = response.data.status
+    				if(status === 1) {
+    					_self.getSliderList()
+    					this.showPopSortSlider = false
+						this.showCover = false
+    				} else if(status === 403) {
+    					_self.$router.push('/login')
+    				} else {
+    					alert('status: ' + status)
+    				}
+  				}, (response) => {
+    				// TODO 错误toast提示
+  				})
+			},
+			closePopSortSlider: function() {
+				this.showPopSortSlider = false
+				this.showCover = false
+			},
+		},
 	}
 </script>
 
@@ -233,6 +293,12 @@
 						bottom: 0;
 						color: white;
 					}
+				}
+
+				.action-sort {
+					line-height: 26px;
+					color: #df001f;
+					cursor: pointer;
 				}
 			}
 
