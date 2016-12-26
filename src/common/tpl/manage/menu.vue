@@ -1,7 +1,8 @@
 <template>
 	<div class="menu">
 		<ul v-show="isLogin">
-			<li><router-link to="/">首页管理</router-link></li>
+			<li><router-link to="/">首页轮播</router-link></li>
+			<li><router-link to="/hot">首页热点</router-link></li>
 			<li><router-link to="/column">栏目管理</router-link></li>
 			<li><router-link to="/articlelist">文章列表</router-link></li>
 			<li><router-link to="/articletype">文章类型</router-link></li>

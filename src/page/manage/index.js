@@ -10,7 +10,8 @@ Vue.use(VueResource)
 import Head from 'tpl/manage/head.vue'
 import Menu from 'tpl/manage/menu.vue'
 import Login from './tpl/login.vue'
-import Index from './tpl/index.vue'
+import Slider from './tpl/slider.vue'
+import Hot from './tpl/hot.vue'
 import ArticleList from './tpl/articlelist.vue'
 import Article from './tpl/article.vue'
 import Column from './tpl/column.vue'
@@ -25,9 +26,17 @@ import ArticleType from './tpl/articletype.vue'
 
 const routes = [{
 	path: '/',
-	name: 'index',
+	name: 'slider',
     components: {
-		default: Index,
+		default: Slider,
+		head: Head,
+		menu: Menu
+	}
+}, {
+	path: '/hot',
+	name: 'hot',
+    components: {
+		default: Hot,
 		head: Head,
 		menu: Menu
 	}
