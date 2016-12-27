@@ -14,13 +14,9 @@
 					<div class="z-del-btn" @click.stop="openPopDelSlider(slider.id)">+</div>
 				</div>
 				<div class="z-clearfix">
-					<div class="z-blockup z-clearfix" v-if="slider.disable == '0'">
-						<span class="able" @click="blockup(slider.id)">启用</span>
-						<span class="disable">禁用</span>
-					</div>
-					<div class="z-using z-clearfix" v-else>
-						<span class="able">启用</span>
-						<span class="disable" @click="blockup(slider.id)">禁用</span>
+					<div :class="slider.disable == '0' ? 'z-blockup z-clearfix' : 'z-using z-clearfix'">
+						<span class="able" @click="blockup(slider.id, slider.disable, index, 1)">启用</span>
+						<span class="disable" @click="blockup(slider.id, slider.disable, index, 0)">禁用</span>
 					</div>
 					<span class="action-sort" @click="openPopSortSlider(slider.id, slider.sort)">排序</span>
 				</div>
@@ -119,8 +115,10 @@
 				this.getSliderList()
 			},
 			openPopSlider: function(index, sliderID) {
-					this.sliderID = sliderID
-				if(index === -1) {
+				console.log(index)
+				console.log(sliderID)
+				this.sliderID = sliderID
+				if(index == -1) {
 					this.sliderLang = 1
 					this.sliderTitle = ""
 					this.sliderLink = ""
@@ -145,6 +143,7 @@
 					const status = response.data.status
     				if(status === 1) {
     					_self.getSliderList()
+						_self.closePopSlider()
     				} else if(status === 403) {
     					_self.$router.push('/login')
     				} else {
@@ -162,6 +161,7 @@
 					const status = response.data.status
     				if(status === 1) {
     					_self.getSliderList()
+						_self.closePopSlider()
     				} else if(status === 403) {
     					_self.$router.push('/login')
     				} else {
@@ -188,6 +188,7 @@
 					const status = response.data.status
     				if(status === 1) {
     					_self.getSliderList()
+    					_self.closePopDelSlider()
     				} else if(status === 403) {
     					_self.$router.push('/login')
     				} else {
@@ -201,14 +202,22 @@
 				this.showPopDelSlider = false
 				this.showCover = false
 			},
-			blockup: function(sliderID) {
+			blockup: function(sliderID, sliderDisable, index, action) {
+				if(sliderDisable == action || (sliderDisable > '0' && action> '0')) {
+					return
+				}
 				const _self = this
 				this.$http.get('http://www.lutong.com/admin/index.php?c=sys&m=disable_carousel&token=' + _self.$store.getters.token + '&id=' + sliderID,
 				).then((response) => {
 					const data = response.data
 					const status = response.data.status
     				if(status === 1) {
-    					_self.getSliderList()
+    					if(sliderDisable == '0') {
+    						sliderDisable = new Date().getTime()
+    					} else {
+    						sliderDisable = '0'
+    					}
+    					_self.sliderList[index].disable = sliderDisable
     				} else if(status === 403) {
     					_self.$router.push('/login')
     				} else {
@@ -232,8 +241,7 @@
 					const status = response.data.status
     				if(status === 1) {
     					_self.getSliderList()
-    					this.showPopSortSlider = false
-						this.showCover = false
+    					_self.closePopSortSlider()
     				} else if(status === 403) {
     					_self.$router.push('/login')
     				} else {
@@ -336,6 +344,11 @@
 					margin-bottom: 0;
 				}
 			}
+		}
+
+		.pop-sort-slider {
+			margin-top: -82px;
+			margin-left: -180px;
 		}
 	}
 </style>
