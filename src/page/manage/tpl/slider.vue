@@ -40,6 +40,10 @@
 				<label>链接地址：</label>
 				<input type="text" placeholder="请输入链接地址" v-model="sliderLink">
 			</div>
+			<div class="z-margin-bottom z-padding-top">
+				<label>背景图片：</label>
+				<file-upload title="点击此处添加附件(可不上传)"></file-upload>
+			</div>
 			<div class="z-pop-action z-clearfix">
 				<button @click="addSlider()" v-show="showSliderAddBtn">确定</button>
 				<button @click="editSlider()" v-show="showSliderEditBtn">确定</button>
@@ -70,6 +74,7 @@
 </template>
 
 <script type="text/javascript">
+	import FileUpload from 'vue-upload-component'
 	export default {
 		data: function() {
 			return {
@@ -87,6 +92,9 @@
 				sliderSort: 0,
 				showPopSortSlider: false,
 			}
+		},
+		components: {
+			FileUpload
 		},
 		mounted: function () {
 			this.$nextTick(function () {
@@ -115,15 +123,13 @@
 				this.getSliderList()
 			},
 			openPopSlider: function(index, sliderID) {
-				console.log(index)
-				console.log(sliderID)
 				this.sliderID = sliderID
 				if(index == -1) {
 					this.sliderLang = 1
 					this.sliderTitle = ""
 					this.sliderLink = ""
-					this.sliderEditBtn = false
-					this.sliderAddBtn = true
+					this.showSliderEditBtn = false
+					this.showSliderAddBtn = true
 				} else {
 					this.sliderLang = this.sliderList[index].lang
 					this.sliderTitle = this.sliderList[index].title
@@ -142,8 +148,8 @@
 					const data = response.data
 					const status = response.data.status
     				if(status === 1) {
-    					_self.getSliderList()
 						_self.closePopSlider()
+    					_self.getSliderList()
     				} else if(status === 403) {
     					_self.$router.push('/login')
     				} else {
@@ -160,8 +166,8 @@
 					const data = response.data
 					const status = response.data.status
     				if(status === 1) {
-    					_self.getSliderList()
 						_self.closePopSlider()
+    					_self.getSliderList()
     				} else if(status === 403) {
     					_self.$router.push('/login')
     				} else {
