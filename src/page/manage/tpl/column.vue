@@ -1,7 +1,7 @@
 <template>
 	<div class="column z-main-right">
 		<div class="add-column">
-			<button @click="openPopAdd()">新增栏目</button>
+			<button @click="openPopColumn(-1, 0)">新增栏目</button>
 		</div>
 		<ul class="z-table">
 			<li class="z-table-first">
@@ -19,11 +19,13 @@
 				<div>{{column.type_name == "" ? "固定栏目" : column.type_name}}</div>
 				<time :datetime="getMyDate(column.dateline)">{{getMyDate(column.dateline)}}</time>
 				<div>
-					<span @click="">口口</span>
+					<span @click="openPopSort(column.id, column.sort)">排序</span>
+					<span @click="openPopColumn(index, column.id)" v-if="column.fixed == 0">编辑</span>
+					<span @click="openPopDel(column.id)" v-if="column.fixed == 0">删除</span>
 				</div>
 			</li>
 		</ul>
-		<div class="z-pop pop-add" v-show="showPopAdd">
+		<div class="z-pop pop-column" v-show="showPopColumn">
 			<div>
 				<label>文章分类：</label>
 				<select name="articleType" v-model="articleTypeID">
@@ -43,8 +45,28 @@
 				<input type="text" placeholder="请输入栏目英文名称" v-model="nameEN">
 			</div>
 			<div class="z-pop-action z-clearfix">
-				<button @click="addColumn()">确定</button>
-				<button class="z-pop-cancel" @click="closePop()">取消</button>
+				<button @click="addColumn()" v-show="showAddBtn">确定</button>
+				<button @click="editColumn()" v-show="showEditBtn">确定</button>
+				<button class="z-pop-cancel" @click="closePopColumn()">取消</button>
+			</div>
+		</div>
+		<div class="z-pop z-pop-sort" v-show="showPopSort">
+			<div class="z-sort">
+				<label>设置排序：</label>
+				<input type="number" min="0" v-model="columnSort">
+			</div>
+			<div class="z-pop-action z-clearfix">
+				<button @click="updateSort()">确定</button>
+				<button class="z-pop-cancel" @click="closePopSort()">取消</button>
+			</div>
+		</div>
+		<div class="z-pop z-pop-del" v-show="showPopDel">
+			<div class="pop-blank">
+				确定要删除此项的操作？
+			</div>
+			<div class="z-pop-action z-clearfix">
+				<button @click="delColumn()">确定</button>
+				<button class="z-pop-cancel" @click="closePopDel()">取消</button>
 			</div>
 		</div>
 		<div class="z-cover" v-show="showCover"></div>
@@ -55,19 +77,26 @@
 	export default {
 		data: function() {
 			return {
-				articleTypeID: 1,
+				articleTypeID: 0,
 				articleTypeList: [],
 				columnList: [],
 				nameCHS: "",
 				nameCHT: "",
 				nameEN: "",
-				showCover: 0,
-				showPopAdd: 0,
+				showCover: false,
+				showPopColumn: false,
+				showPopSort: false,
+				columnSort: "0",
+				showPopDel: false,
+				columnID: 0,
+				showEditBtn: false,
+				showAddBtn: false,
 			}
 		},
 		mounted: function () {
 			this.$nextTick(function () {
 				this.getColumnList()
+				this.getArticleTypeList()
 			})
 		},
 		methods: {
@@ -91,13 +120,25 @@
 			getMyDate: function(time) {
 				return (new Date(parseInt(time) * 1000)).toLocaleString()
 			},
-			openPopAdd: function() {
-				this.nameCHS = ""
-				this.nameCHT = ""
-				this.nameEN = ""
-				this.showCover = 1
-				this.showPopAdd = 1
-				this.getArticleTypeList()
+			openPopColumn: function(index, columnID) {
+				this.columnID = columnID
+				if(index == -1) {
+					this.articleTypeID =this.articleTypeList[0].id,
+					this.nameCHS = "",
+					this.nameCHT = "",
+					this.nameEN = "",
+					this.showEditBtn = false
+					this.showAddBtn = true
+				} else {
+					this.nameCHS = this.columnList[index].name1,
+					this.nameCHT = this.columnList[index].name1,
+					this.nameEN = this.columnList[index].name1,
+					this.articleTypeID = this.columnList[index].type,
+					this.showAddBtn = false
+					this.showEditBtn = true
+				}
+				this.showCover = true
+				this.showPopColumn = true
 			},
 			getArticleTypeList: function() {
 				const _self = this
@@ -107,7 +148,9 @@
 					const status = response.data.status
     				if(status === 1) {
     					_self.articleTypeList = data.list
-    					_self.articleTypeID = data.list[0].id
+    					if(_self.articleTypeID == 0) {
+    						_self.articleTypeID = data.list[0].id
+    					}
     				} else {
     					_self.$router.push('/login')
     				}
@@ -121,8 +164,8 @@
 				).then((response) => {
 					const data = response.data
 					const status = response.data.status
-					_self.showCover = 0
-					_self.showPopAdd = 0
+					_self.showCover = false
+					_self.showPopColumn = false
     				if(status === 1) {
     					_self.getColumnList()
     				} else {
@@ -132,10 +175,83 @@
     				// TODO 错误toast提示
   				})
 			},
-			closePop: function() {
-				this.showCover = 0
-				this.showPopAdd = 0
-			}
+			editColumn: function() {
+				const _self = this
+				this.$http.get('http://www.lutong.com/admin/index.php?c=sys&m=update_column&token=' + _self.$store.getters.token + '&id=' + _self.columnID + '&type=' + _self.articleTypeID + '&name1=' + _self.nameCHS + '&name2=' + _self.nameCHT + '&name3=' + _self.nameEN,
+				).then((response) => {
+					const data = response.data
+					const status = response.data.status
+    				if(status === 1) {
+    					_self.getColumnList()
+						_self.closePopColumn()
+    				} else if(status === 403) {
+    					_self.$router.push('/login')
+    				} else {
+    					alert('status: ' + status)
+    				}
+  				}, (response) => {
+    				// TODO 错误toast提示
+  				})
+			},
+			closePopColumn: function() {
+				this.showCover = false
+				this.showPopColumn = false
+			},
+			openPopSort: function(columnID, columnSort) {
+				this.columnID = columnID
+				this.columnSort = columnSort
+				this.showCover = true
+				this.showPopSort = true
+			},
+			updateSort: function() {
+				const _self = this
+				this.$http.get('http://www.lutong.com/admin/index.php?c=sys&m=sort_column&token=' + _self.$store.getters.token + '&id=' + _self.columnID + '&sort=' + _self.columnSort,
+				).then((response) => {
+					const data = response.data
+					const status = response.data.status
+    				if(status === 1) {
+    					_self.getColumnList()
+    					_self.closePopSort()
+    				} else if(status === 403) {
+    					_self.$router.push('/login')
+    				} else {
+    					alert('status: ' + status)
+    				}
+  				}, (response) => {
+    				// TODO 错误toast提示
+  				})
+			},
+			closePopSort: function() {
+				this.showPopSort = false
+				this.showCover = false
+			},
+			openPopDel: function(columnID) {
+				this.columnID = columnID
+				this.showCover = true
+				this.showPopDel = true
+			},
+			delColumn: function() {
+				const _self = this
+				this.$http.get('http://www.lutong.com/admin/index.php?c=sys&m=del_column&token=' + _self.$store.getters.token + '&id=' + _self.columnID,
+				).then((response) => {
+					const data = response.data
+					const status = response.data.status
+    				if(status === 1) {
+    					_self.getColumnList()
+    					_self.closePopDel()
+    				} else if(status === 403) {
+    					_self.$router.push('/login')
+    				} else {
+    					alert('status: ' + status)
+    				}
+  				}, (response) => {
+    				// TODO 错误toast提示
+  				})
+			},
+			closePopDel: function() {
+				this.showPopDel = false
+				this.showCover = false
+			},
 		}
 	}
 </script>
@@ -175,7 +291,7 @@
 			margin-left: -150px;
 		}
 
-		.pop-add {
+		.pop-column {
 			margin-top: -165px;
 			margin-left: -200px;
 

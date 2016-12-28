@@ -193,7 +193,7 @@ select {
 
 	li {
 		display: flex;
-		padding: 16px 40px;
+		padding: 16px 0 16px 40px;
 		border-bottom: solid 1px rgba(0, 0, 0, 0.1);
 		font-size: 1.4rem;
 		background-color: white;
@@ -427,5 +427,27 @@ select {
     	border-bottom-left-radius: 0;
     	vertical-align: top;
     	font-size: 1.2rem;
+	}
+}
+
+.file-uploads input {
+    font-size: 0;
+}
+
+.z-pop-sort {
+	margin-top: -82px;
+	margin-left: -180px;
+}
+
+.z-pop-del {
+	margin-top: -75px;
+	margin-left: -180px;
+
+	.pop-blank {
+		margin-bottom: 10px;
+
+		select {
+			margin-bottom: 0;
+		}
 	}
 }

@@ -1,11 +1,11 @@
 <template>
 	<div class="articlelist z-main-right">
 		<div class="article-type">
-			<label>口口口口：</label>
+			<label>文章类型：</label>
 			<select name="articleType" v-model="articleTypeID" @change="getArticleList()">
 				<option v-for="(articleType, index) in articleTypeList" :value="articleType.id" :disabled="articleType.disable == 0 ? true : false">{{articleType.name1}}</option>
 			</select>
-			<label>口口：</label>
+			<label>语言：</label>
 			<select name="articleLang" v-model="lang" @change="getArticleList()">
 				<option value="1">简体</option>
 				<option value="2">繁體</option>
@@ -14,22 +14,22 @@
 			<input placeholder="按文章标题模糊查询" v-model="search" @keyup.enter="getArticleList()">
 		</div>
 		<div class="add-article">
-			<button @click="$router.push('/article')">口口口口</button>
+			<button @click="$router.push('/article')">新建文章</button>
 		</div>
 		<ul class="z-table">
 			<li class="z-table-first">
-				<h3 class="article-title">口口</h3>
-				<div>口口口口</div>
-				<time>口口口口</time>
-				<div>口口</div>
+				<h3 class="article-title">标题</h3>
+				<div class="article-list-type">文章类型</div>
+				<time>最后修改时间</time>
+				<div>操作</div>
 			</li>
 			<li v-for="(article, index) in articleList">
 				<h3 class="article-title">{{article.title}}</h3>
-				<div>{{article.type_name}}</div>
+				<div class="article-list-type">{{article.type_name}}</div>
 				<time :datetime="getMyDate(article.dateline)" :alt="getMyDate(article.dateline)">{{getMyDate(article.dateline)}}</time>
 				<div>
-					<router-link :to="{name: 'article', query: {articleid: article.id}}">口口</router-link>
-					<span @click="">口口</span>
+					<router-link :to="{name: 'article', query: {articleid: article.id}}">编辑</router-link>
+					<span @click="">删除</span>
 				</div>
 			</li>
 		</ul>
@@ -118,6 +118,18 @@
 		
 		.add-article {
 			padding: 0 20px 15px;
+		}
+
+		.article-list-type {
+			width: 10%;
+		}
+
+		ul {
+			li {
+				div {
+					width: 30%;
+				}
+			}
 		}
 	}
 </style>

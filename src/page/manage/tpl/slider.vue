@@ -18,7 +18,7 @@
 						<span class="able" @click="blockup(slider.id, slider.disable, index, 1)">启用</span>
 						<span class="disable" @click="blockup(slider.id, slider.disable, index, 0)">禁用</span>
 					</div>
-					<span class="action-sort" @click="openPopSortSlider(slider.id, slider.sort)">排序</span>
+					<span class="action-sort" @click="openPopSort(slider.id, slider.sort)">排序</span>
 				</div>
 			</li>
 			<li class="add-btn" @click="openPopSlider(-1, 0)" v-show="sliderList.length < 8">+</li>
@@ -50,7 +50,7 @@
 				<button class="z-pop-cancel" @click="closePopSlider()">取消</button>
 			</div>
 		</div>
-		<div class="z-pop pop-del-slider" v-show="showPopDelSlider">
+		<div class="z-pop z-pop-del" v-show="showPopDelSlider">
 			<div class="pop-blank">
 				确定要删除此项的操作？
 			</div>
@@ -59,7 +59,7 @@
 				<button class="z-pop-cancel" @click="closePopDelSlider()">取消</button>
 			</div>
 		</div>
-		<div class="z-pop pop-sort-slider" v-show="showPopSortSlider">
+		<div class="z-pop z-pop-sort" v-show="showPopSortSlider">
 			<div class="z-sort">
 				<label>设置排序：</label>
 				<input type="number" min="0" v-model="sliderSort">
@@ -233,7 +233,7 @@
     				// TODO 错误toast提示
   				})
 			},
-			openPopSortSlider: function(sliderID, sliderSort) {
+			openPopSort: function(sliderID, sliderSort) {
 				this.sliderID = sliderID
 				this.sliderSort = sliderSort
 				this.showCover = true
@@ -282,7 +282,8 @@
 			align-content: flex-start;
 			
 			li {
-				width: 20%;
+				width: 40%;
+				max-width: 200px;
 				margin-right: 20px;
 				margin-bottom: 20px;
 
@@ -337,24 +338,6 @@
 					margin-bottom: 0;
 				}
 			}
-		}
-
-		.pop-del-slider {
-			margin-top: -75px;
-			margin-left: -180px;
-
-			.pop-blank {
-				margin-bottom: 10px;
-
-				select {
-					margin-bottom: 0;
-				}
-			}
-		}
-
-		.pop-sort-slider {
-			margin-top: -82px;
-			margin-left: -180px;
 		}
 	}
 </style>

@@ -18,36 +18,40 @@
 		</ul>
 		<div class="z-pop pop-add-hot" v-show="showPopHot">
 			<div class="pop-blank">
-				<label>选择语言：</label>
-				<select name="popHotLang" v-model="hotLang">
-					<option value="1">简体</option>
-					<option value="2">繁體</option>
-					<option value="3">ENGLISH</option>
-				</select>
+				<label>简体标签：</label>
+				<input type="text" placeholder="建议四字左右" v-model="hotTitle1">
 			</div>
 			<div class="pop-blank">
-				<label>简体标题：</label>
-				<input type="text" placeholder="请输入标题名称" v-model="hotTitle1">
+				<label>简体简述：</label>
+				<input type="text" placeholder="简体简短标题" v-model="hotDescribe1">
 			</div>
 			<div class="pop-blank">
 				<label>简体链接：</label>
-				<input type="text" placeholder="请输入链接地址" v-model="hotLink1">
+				<input type="text" placeholder="请输入简体文章链接地址" v-model="hotLink1">
 			</div>
 			<div class="pop-blank">
-				<label>繁体标题：</label>
-				<input type="text" placeholder="请输入标题名称" v-model="hotTitle2">
+				<label>繁体标签：</label>
+				<input type="text" placeholder="建议四字左右" v-model="hotTitle2">
+			</div>
+			<div class="pop-blank">
+				<label>繁体简述：</label>
+				<input type="text" placeholder="繁体简短标题" v-model="hotDescribe2">
 			</div>
 			<div class="pop-blank">
 				<label>繁体链接：</label>
-				<input type="text" placeholder="请输入链接地址" v-model="hotLink2">
+				<input type="text" placeholder="请输入繁体文章链接地址" v-model="hotLink2">
 			</div>
 			<div class="pop-blank">
-				<label>英文标题：</label>
-				<input type="text" placeholder="请输入标题名称" v-model="hotTitle3">
+				<label>英文标签：</label>
+				<input type="text" placeholder="英文标签" v-model="hotTitle3">
+			</div>
+			<div class="pop-blank">
+				<label>英文简述：</label>
+				<input type="text" placeholder="英文简短标题" v-model="hotDescribe3">
 			</div>
 			<div class="pop-blank">
 				<label>英文链接：</label>
-				<input type="text" placeholder="请输入链接地址" v-model="hotLink3">
+				<input type="text" placeholder="请输入英文文章链接地址" v-model="hotLink3">
 			</div>
 			<div class="z-pop-action z-clearfix">
 				<button @click="addHot()" v-show="showHotAddBtn">确定</button>
@@ -84,15 +88,16 @@
 		data: function() {
 			return {
 				hotList: [],
-				lang: 1,
 				showCover: false,
-				hotLang: 1,
 				hotTitle1: "",
 				hotLink1: "",
+				hotDescribe1: "",
 				hotTitle2: "",
 				hotLink2: "",
+				hotDescribe2: "",
 				hotTitle3: "",
 				hotLink3: "",
+				hotDescribe3: "",
 				showPopHot: false,
 				showHotAddBtn: true,
 				showHotEditBtn: false,
@@ -113,7 +118,7 @@
 		methods: {
 			getHotList: function() {
 				const _self = this
-				this.$http.get('http://www.lutong.com/admin/index.php?c=sys&m=get_carousel_list&token=' + _self.$store.getters.token + '&lang=' + _self.lang,
+				this.$http.get('http://www.lutong.com/admin/index.php?c=sys&m=get_custom_list&token=' + _self.$store.getters.token,
 				).then((response) => {
 					const data = response.data
 					const status = response.data.status
@@ -134,23 +139,27 @@
 			openPopHot: function(index, hotID) {
 				this.hotID = hotID
 				if(index == -1) {
-					this.hotLang = 1
 					this.hotTitle1 = ""
 					this.hotLink1 = ""
+					this.hotDescribe1 = ""
 					this.hotTitle2 = ""
 					this.hotLink2 = ""
+					this.hotDescribe2 = ""
 					this.hotTitle3 = ""
 					this.hotLink3 = ""
+					this.hotDescribe3 = ""
 					this.showHotEditBtn = false
 					this.showHotAddBtn = true
 				} else {
-					this.hotLang = this.hotList[index].lang
 					this.hotTitle1 = this.hotList[index].title1
 					this.hotLink1 = this.hotList[index].url1
+					this.hotDescribe1 = this.hotList[index].describe1
 					this.hotTitle2 = this.hotList[index].title2
 					this.hotLink2 = this.hotList[index].url2
+					this.hotDescribe2 = this.hotList[index].describe3
 					this.hotTitle3 = this.hotList[index].title3
 					this.hotLink3 = this.hotList[index].url3
+					this.hotDescribe3 = this.hotList[index].describe3
 					this.hotSort = this.hotList[index].sort
 					this.showHotAddBtn = false
 					this.showHotEditBtn = true
@@ -160,7 +169,7 @@
 			},
 			addHot: function(index) {
 				const _self = this
-				this.$http.get('http://www.lutong.com/admin/index.php?c=sys&m=add_carousel&token=' + _self.$store.getters.token + '&lang=' + _self.hotLang + '&title1=' + _self.hotTitle1 + '&url1=' + _self.hotLink1 + '&title2=' + _self.hotTitle2 + '&url2=' + _self.hotLink2 + '&title3=' + _self.hotTitle3 + '&url3=' + _self.hotLink3,
+				this.$http.get('http://www.lutong.com/admin/index.php?c=sys&m=add_custom&token=' + _self.$store.getters.token + '&title1=' + _self.hotTitle1 + '&url1=' + _self.hotLink1 + '&describe1=' + _self.hotDescribe1 + '&title2=' + _self.hotTitle2 + '&url2=' + _self.hotLink2 + '&describe2=' + _self.hotDescribe2 + '&title3=' + _self.hotTitle3 + '&url3=' + _self.hotLink3 + '&describe3=' + _self.hotDescribe3,
 				).then((response) => {
 					const data = response.data
 					const status = response.data.status
@@ -178,7 +187,7 @@
 			},
 			editHot: function() {
 				const _self = this
-				this.$http.get('http://www.lutong.com/admin/index.php?c=sys&m=update_carousel&token=' + _self.$store.getters.token + '&id=' + _self.hotID + '&lang=' + _self.hotLang + '&title=' + _self.hotTitle1 + '&url=' + _self.hotLink1,
+				this.$http.get('http://www.lutong.com/admin/index.php?c=sys&m=update_custom&token=' + _self.$store.getters.token + '&id=' + _self.hotID + '&title1=' + _self.hotTitle1 + '&url1=' + _self.hotLink1 + '&describe1=' + _self.hotDescribe1 + '&title2=' + _self.hotTitle2 + '&url2=' + _self.hotLink2 + '&describe2=' + _self.hotDescribe2 + '&title3=' + _self.hotTitle3 + '&url3=' + _self.hotLink3 + '&describe3=' + _self.hotDescribe3,
 				).then((response) => {
 					const data = response.data
 					const status = response.data.status
@@ -205,7 +214,7 @@
 			},
 			delHot: function() {
 				const _self = this
-				this.$http.get('http://www.lutong.com/admin/index.php?c=sys&m=del_carousel&token=' + _self.$store.getters.token + '&id=' + _self.hotID,
+				this.$http.get('http://www.lutong.com/admin/index.php?c=sys&m=del_custom&token=' + _self.$store.getters.token + '&id=' + _self.hotID,
 				).then((response) => {
 					const data = response.data
 					const status = response.data.status
@@ -230,7 +239,7 @@
 					return
 				}
 				const _self = this
-				this.$http.get('http://www.lutong.com/admin/index.php?c=sys&m=disable_carousel&token=' + _self.$store.getters.token + '&id=' + hotID,
+				this.$http.get('http://www.lutong.com/admin/index.php?c=sys&m=disable_custom&token=' + _self.$store.getters.token + '&id=' + hotID,
 				).then((response) => {
 					const data = response.data
 					const status = response.data.status
@@ -258,7 +267,7 @@
 			},
 			updateSort: function() {
 				const _self = this
-				this.$http.get('http://www.lutong.com/admin/index.php?c=sys&m=sort_carousel&token=' + _self.$store.getters.token + '&id=' + _self.hotID + '&sort=' + _self.hotSort,
+				this.$http.get('http://www.lutong.com/admin/index.php?c=sys&m=sort_custom&token=' + _self.$store.getters.token + '&id=' + _self.hotID + '&sort=' + _self.hotSort,
 				).then((response) => {
 					const data = response.data
 					const status = response.data.status
