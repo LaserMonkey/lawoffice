@@ -1,29 +1,33 @@
 <template>
 	<div class="articletype z-main-right">
 		<div class="add-articletype">
-			<button @click="openPopAdd()">新增栏目</button>
+			<button @click="openPopArticleType(-1, 0)">新增类型</button>
 		</div>
 		<ul class="z-table">
 			<li class="z-table-first">
 				<h3 class="articletype-name">简体名称</h3>
 				<h3 class="articletype-name">繁体名称</h3>
 				<h3 class="articletype-name">英文名称</h3>
-				<div>栏目类型</div>
 				<time>最后修改时间</time>
-				<div class="options">操作</div>
+				<div>操作</div>
 			</li>
 			<li v-for="(articleType, index) in articleTypeList">
 				<h3 class="articletype-name">{{articleType.name1}}</h3>
 				<h3 class="articletype-name">{{articleType.name2}}</h3>
 				<h3 class="articletype-name">{{articleType.name3}}</h3>
-				<div>{{articleType.type_name == "" ? "固定栏目" : articleType.type_name}}</div>
 				<time :datetime="getMyDate(articleType.dateline)">{{getMyDate(articleType.dateline)}}</time>
-				<div>
-					<span @click="">口口</span>
+				<div class="options">
+					<div :class="articleType.disable == '0' ? 'z-blockup-li z-clearfix' : 'z-using-li z-clearfix'" v-if="articleType.fixed == '0'">
+						<span class="able" @click="blockup(articleType.id, articleType.disable, index, 1)">启用</span>
+						<span class="disable" @click="blockup(articleType.id, articleType.disable, index, 0)">禁用</span>
+					</div>
+					<span @click="openPopArticleType(index, articleType.id)" v-if="articleType.fixed == '0'">编辑</span>
+					<span @click="openPopSort(articleType.id, articleType.sort)">排序</span>
+					<span @click="openPopDel(articleType.id)" v-if="articleType.fixed == '0'">删除</span>
 				</div>
 			</li>
 		</ul>
-		<div class="z-pop pop-add" v-show="showPopAdd">
+		<div class="z-pop pop-articletype" v-show="showPopArticleType">
 			<div class="pop-blank">
 				<label>简体名称：</label>
 				<input type="text" placeholder="请输入文章分类简体名称" v-model="nameCHS">
@@ -37,8 +41,28 @@
 				<input type="text" placeholder="请输入文章分类英文名称" v-model="nameEN">
 			</div>
 			<div class="z-pop-action z-clearfix">
-				<button @click="addArticleType()">确定</button>
-				<button class="z-pop-cancel" @click="closePop()">取消</button>
+				<button @click="addArticleType()" v-show="showArticleTypeAddBtn">确定</button>
+				<button @click="editArticleType()" v-show="showArticleTypeEditBtn">确定</button>
+				<button class="z-pop-cancel" @click="closePopArticleType()">取消</button>
+			</div>
+		</div>
+		<div class="z-pop z-pop-sort" v-show="showPopSort">
+			<div class="z-sort">
+				<label>设置排序：</label>
+				<input type="number" min="0" v-model="articleTypeSort">
+			</div>
+			<div class="z-pop-action z-clearfix">
+				<button @click="updateSort()">确定</button>
+				<button class="z-pop-cancel" @click="closePopSort()">取消</button>
+			</div>
+		</div>
+		<div class="z-pop z-pop-del" v-show="showPopDel">
+			<div class="pop-blank">
+				确定要删除此项的操作？
+			</div>
+			<div class="z-pop-action z-clearfix">
+				<button @click="del()">确定</button>
+				<button class="z-pop-cancel" @click="closePopDel()">取消</button>
 			</div>
 		</div>
 		<div class="z-cover" v-show="showCover"></div>
@@ -49,12 +73,18 @@
 	export default {
 		data: function() {
 			return {
+				articleTypeID: 0,
 				articleTypeList: [],
 				nameCHS: "",
 				nameCHT: "",
 				nameEN: "",
-				showCover: 0,
-				showPopAdd: 0,
+				showCover: false,
+				showPopArticleType: false,
+				showArticleTypeEditBtn: false,
+				showArticleTypeAddBtn: false,
+				showPopSort: false,
+				articleTypeSort: 0,
+				showPopDel: false,
 			}
 		},
 		mounted: function () {
@@ -81,13 +111,23 @@
 			getMyDate: function(time) {
 				return (new Date(parseInt(time) * 1000)).toLocaleString()
 			},
-			openPopAdd: function() {
-				this.nameCHS = ""
-				this.nameCHT = ""
-				this.nameEN = ""
-				this.showCover = 1
-				this.showPopAdd = 1
-				this.getArticleTypeList()
+			openPopArticleType: function(index, articleTypeID) {
+				this.articleTypeID = articleTypeID
+				if(index == -1) {
+					this.nameCHS = ""
+					this.nameCHT = ""
+					this.nameEN = ""
+					this.showArticleTypeEditBtn = false
+					this.showArticleTypeAddBtn = true
+				} else {
+					this.nameCHS = this.articleTypeList[index].name1
+					this.nameCHT = this.articleTypeList[index].name2
+					this.nameEN = this.articleTypeList[index].name3
+					this.showArticleTypeAddBtn = false
+					this.showArticleTypeEditBtn = true
+				}
+				this.showCover = true
+				this.showPopArticleType = true
 			},
 			addArticleType: function() {
 				const _self = this
@@ -95,8 +135,7 @@
 				).then((response) => {
 					const data = response.data
 					const status = response.data.status
-					_self.showCover = 0
-					_self.showPopAdd = 0
+					_self.closePopArticleType()
     				if(status === 1) {
     					_self.getArticleTypeList()
     				} else {
@@ -106,10 +145,108 @@
     				// TODO 错误toast提示
   				})
 			},
-			closePop: function() {
-				this.showCover = 0
-				this.showPopAdd = 0
-			}
+			closePopArticleType: function() {
+				this.showCover = false
+				this.showPopArticleType = false
+			},
+			blockup: function(articleTypeID, articleTypeDisable, index, action) {
+				if(articleTypeDisable == action || (articleTypeDisable > '0' && action> '0')) {
+					return
+				}
+				const _self = this
+				this.$http.get('http://www.lutong.com/admin/index.php?c=article&m=disable_article_type&token=' + _self.$store.getters.token + '&id=' + articleTypeID,
+				).then((response) => {
+					const data = response.data
+					const status = response.data.status
+    				if(status === 1) {
+    					if(articleTypeDisable == '0') {
+    						articleTypeDisable = new Date().getTime()
+    					} else {
+    						articleTypeDisable = '0'
+    					}
+    					_self.articleTypeList[index].disable = articleTypeDisable
+    				} else if(status === 403) {
+    					_self.$router.push('/login')
+    				} else {
+    					alert('status: ' + status)
+    				}
+  				}, (response) => {
+    				// TODO 错误toast提示
+  				})
+			},
+			editArticleType: function() {
+				const _self = this
+				this.$http.get('http://www.lutong.com/admin/index.php?c=article&m=update_article_type&token=' + _self.$store.getters.token + '&id=' + _self.articleTypeID + '&name1=' + _self.nameCHS + '&name2=' + _self.nameCHT + '&name3=' + _self.nameEN,
+				).then((response) => {
+					const data = response.data
+					const status = response.data.status
+    				if(status === 1) {
+    					_self.getArticleTypeList()
+						_self.closePopArticleType()
+    				} else if(status === 403) {
+    					_self.$router.push('/login')
+    				} else {
+    					alert('status: ' + status)
+    				}
+  				}, (response) => {
+    				// TODO 错误toast提示
+  				})
+			},
+			openPopSort: function(articleTypeID, articleTypeSort) {
+				this.articleTypeID = articleTypeID
+				this.articleTypeSort = articleTypeSort
+				this.showCover = true
+				this.showPopSort = true
+			},
+			updateSort: function() {
+				const _self = this
+				this.$http.get('http://www.lutong.com/admin/index.php?c=article&m=sort_article_type&token=' + _self.$store.getters.token + '&id=' + _self.articleTypeID + '&sort=' + _self.articleTypeSort,
+				).then((response) => {
+					const data = response.data
+					const status = response.data.status
+    				if(status === 1) {
+    					_self.getArticleTypeList()
+    					_self.closePopSort()
+    				} else if(status === 403) {
+    					_self.$router.push('/login')
+    				} else {
+    					alert('status: ' + status)
+    				}
+  				}, (response) => {
+    				// TODO 错误toast提示
+  				})
+			},
+			closePopSort: function() {
+				this.showPopSort = false
+				this.showCover = false
+			},
+			openPopDel: function(articleTypeID) {
+				this.articleTypeID = articleTypeID
+				this.showCover = true
+				this.showPopDel = true
+			},
+			del: function() {
+				const _self = this
+				this.$http.get('http://www.lutong.com/admin/index.php?c=article&m=del_article_type&token=' + _self.$store.getters.token + '&id=' + _self.articleTypeID,
+				).then((response) => {
+					const data = response.data
+					const status = response.data.status
+    				if(status === 1) {
+    					_self.getArticleTypeList()
+    					_self.closePopDel()
+    				} else if(status === 403) {
+    					_self.$router.push('/login')
+    				} else {
+    					alert('status: ' + status)
+    				}
+  				}, (response) => {
+    				// TODO 错误toast提示
+  				})
+			},
+			closePopDel: function() {
+				this.showPopDel = false
+				this.showCover = false
+			},
 		}
 	}
 </script>
@@ -132,15 +269,11 @@
 				}
 
 				div {
-					width: 15%;
+					width: 30%;
 				}
 
 				time {
-					width: 20%;
-				}
-				
-				.options {
-					width: 20%;
+					width: 25%;
 				}
 			}
 		}
@@ -149,7 +282,7 @@
 			margin-left: -150px;
 		}
 
-		.pop-add {
+		.pop-articletype {
 			margin-top: -165px;
 			margin-left: -200px;
 

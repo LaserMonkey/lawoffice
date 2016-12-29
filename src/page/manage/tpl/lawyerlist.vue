@@ -1,12 +1,12 @@
 <template>
 	<div class="lawyerlist z-main-right">
 		<div class="lawyer-type">
-			<label>口口口口：</label>
+			<label>律师类型：</label>
 			<select name="lawyerType" v-model="lawyerTypeID" @change="getLawyerList()">
 				<option value="1">首席及合伙人</option>
 				<option value="2">律师</option>
 			</select>
-			<label>口口：</label>
+			<label>语言：</label>
 			<select name="lawyerLang" v-model="lang" @change="getLawyerList()">
 				<option value="1">简体</option>
 				<option value="2">繁體</option>
@@ -15,22 +15,22 @@
 			<input placeholder="按人名模糊查询" v-model="search" @keyup.enter="getLawyerList()">
 		</div>
 		<div class="add-lawyer">
-			<button @click="$router.push('/lawyer')">口口口口</button>
+			<button @click="$router.push('/lawyer')">新建律师</button>
 		</div>
 		<ul class="z-table">
 			<li class="z-table-first">
-				<h3 class="lawyer-title">口口</h3>
-				<div>口口口口</div>
-				<time>口口口口</time>
-				<div>口口</div>
+				<h3 class="lawyer-title">姓名</h3>
+				<div>律师类型</div>
+				<time>最后操作时间</time>
+				<div class="options">操作</div>
 			</li>
 			<li v-for="(lawyer, index) in lawyerList">
 				<h3 class="lawyer-title">{{lawyer.name}}</h3>
 				<div>{{lawyer.type_name}}</div>
 				<time :datetime="getMyDate(lawyer.dateline)" :alt="getMyDate(lawyer.dateline)">{{getMyDate(lawyer.dateline)}}</time>
 				<div>
-					<router-link :to="{name: 'lawyer', query: {lawyerid: lawyer.id}}">口口</router-link>
-					<span @click="">口口</span>
+					<router-link :to="{name: 'lawyer', query: {lawyerid: lawyer.id}}">编辑</router-link>
+					<span @click="">删除</span>
 				</div>
 			</li>
 		</ul>
@@ -111,7 +111,7 @@
 			li {
 
 				h3 {
-					width: 25%;
+					width: 15%;
 				}
 
 				div {
@@ -122,6 +122,9 @@
 					width: 25%;
 				}
 
+				.options {
+					width: 35%;
+				}
 			}
 		}
 	}
