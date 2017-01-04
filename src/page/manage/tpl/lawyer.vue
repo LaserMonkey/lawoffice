@@ -111,6 +111,7 @@
     					_self.lawyerTypeID = data.info.type
     					_self.lang = data.info.lang
     					_self.inputContent = data.info.content
+    					_self.outputContent = data.info.content
     				} else if(status === 403) {
     					_self.$router.push('/login')
     				} else {
