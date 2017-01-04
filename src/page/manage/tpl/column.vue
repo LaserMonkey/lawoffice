@@ -131,8 +131,8 @@
 					this.showAddBtn = true
 				} else {
 					this.nameCHS = this.columnList[index].name1,
-					this.nameCHT = this.columnList[index].name1,
-					this.nameEN = this.columnList[index].name1,
+					this.nameCHT = this.columnList[index].name2,
+					this.nameEN = this.columnList[index].name3,
 					this.articleTypeID = this.columnList[index].type,
 					this.showAddBtn = false
 					this.showEditBtn = true

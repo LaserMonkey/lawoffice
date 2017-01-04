@@ -1,13 +1,13 @@
 <template>
 	<div class="practice z-main-right">
 		<div class="z-margin-bottom practice-title">
-			<label>口口口口：</label>
+			<label>业务名称：</label>
 			<input placeholder="请输入业务领域名称" v-model="practiceTitle">
-			<label>口口口口：</label>
+			<label>业务类型：</label>
 			<select name="practiceType" v-model="practiceTypeID">
 				<option v-for="(practiceType, index) in practiceTypeList" :value="practiceType.id" :disabled="practiceType.disable == 0 ? true : false">{{practiceType.name1}}</option>
 			</select>
-			<label>口口口口：</label>
+			<label>选择语言：</label>
 			<select name="practiceLang" v-model="lang">
 				<option value="1">简体</option>
 				<option value="2">繁體</option>
@@ -16,7 +16,7 @@
 		</div>
 		<v-editor :input-content="inputContent" :upload-url="uploadUrl" v-model="outputContent"></v-editor>
 		<div class="z-margin-bottom z-padding-top">
-			<button @click="savePractice()">口口</button>
+			<button @click="savePractice()">保存</button>
 		</div>
 	</div>
 </template>
@@ -27,6 +27,7 @@
 	export default {
 		data: function() {
 			return {
+				practiceID: 0,
 				practiceSource: "",
 				practiceTitle: "",
 				practiceTypeList: [],
@@ -44,9 +45,11 @@
 			'v-editor': Editor
 		},
 		mounted: function () {
-			this.$nextTick(function () {
-				this.getPracticeTypeList()
-			})
+			this.getPracticeTypeList()
+			if(this.$route.query.practiceid != undefined) {
+				this.practiceID = this.$route.query.practiceid
+				this.loadPracticeInfo()
+			}
 		},
 		methods: {
 			getPracticeTypeList: function() {
@@ -68,6 +71,13 @@
   				})
 			},
 			savePractice: function() {
+				if(this.practiceID == 0) {
+					this.addPractice()
+				} else {
+					this.editPractice()
+				}
+			},
+			addPractice: function() {
 				const _self = this
 				this.$http.get('http://www.lutong.com/admin/index.php?c=practices&m=add_practices&token=' + _self.$store.getters.token + '&type=' + _self.practiceTypeID + '&lang=' + _self.lang + '&title=' + _self.practiceTitle + '&content=' + _self.outputContent,
 				).then((response) => {
@@ -75,6 +85,43 @@
 					const status = response.data.status
     				if(status === 1) {
     					_self.$router.push('/practicelist')
+    				} else if(status === 403) {
+    					_self.$router.push('/login')
+    				} else {
+    					alert('status: ' + status)
+    				}
+  				}, (response) => {
+    				// TODO 错误toast提示
+  				})
+			},
+			editPractice: function() {
+				const _self = this
+				this.$http.get('http://www.lutong.com/admin/index.php?c=practices&m=update_practices&token=' + _self.$store.getters.token + '&type=' + _self.practiceTypeID + '&lang=' + _self.lang + '&title=' + _self.practiceTitle + '&content=' + _self.outputContent + '&id=' + _self.practiceID,
+				).then((response) => {
+					const data = response.data
+					const status = response.data.status
+    				if(status === 1) {
+    					_self.$router.push('/practicelist')
+    				} else if(status === 403) {
+    					_self.$router.push('/login')
+    				} else {
+    					alert('status: ' + status)
+    				}
+  				}, (response) => {
+    				// TODO 错误toast提示
+  				})
+			},
+			loadPracticeInfo: function() {
+				const _self = this
+				this.$http.get('http://www.lutong.com/admin/index.php?c=practices&m=get_practices_info&token=' + _self.$store.getters.token + '&id=' + _self.practiceID,
+				).then((response) => {
+					const data = response.data
+					const status = response.data.status
+    				if(status === 1) {
+    					_self.practiceTitle = data.info.title
+    					_self.practiceTypeID = data.info.type
+    					_self.lang = data.info.lang
+    					_self.inputContent = data.info.content
     				} else if(status === 403) {
     					_self.$router.push('/login')
     				} else {

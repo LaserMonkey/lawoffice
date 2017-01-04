@@ -1,14 +1,14 @@
 <template>
 	<div class="lawyer z-main-right">
 		<div class="z-margin-bottom lawyer-name">
-			<label>口口口口：</label>
+			<label>人员姓名：</label>
 			<input placeholder="请输入姓名" v-model="lawyerName">
-			<label>口口口口：</label>
+			<label>人员类型：</label>
 			<select name="lawyerType" v-model="lawyerTypeID">
 				<option value="1">首席及合伙人</option>
 				<option value="2">律师</option>
 			</select>
-			<label>口口口口：</label>
+			<label>选择语言：</label>
 			<select name="lawyerLang" v-model="lang">
 				<option value="1">简体</option>
 				<option value="2">繁體</option>
@@ -21,7 +21,7 @@
 			<file-upload title="点击此处添加附件(可不上传)"></file-upload>
 		</div>
 		<div class="z-margin-bottom z-padding-top">
-			<button @click="saveLawyer()">口口</button>
+			<button @click="saveLawyer()">保存</button>
 		</div>
 	</div>
 </template>
@@ -107,7 +107,6 @@
 					const data = response.data
 					const status = response.data.status
     				if(status === 1) {
-    					console.log(data)
     					_self.lawyerName = data.info.name
     					_self.lawyerTypeID = data.info.type
     					_self.lang = data.info.lang
