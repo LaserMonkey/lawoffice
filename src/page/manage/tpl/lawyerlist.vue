@@ -28,9 +28,13 @@
 				<h3 class="lawyer-title">{{lawyer.name}}</h3>
 				<div>{{lawyer.type_name}}</div>
 				<time :datetime="getMyDate(lawyer.dateline)" :alt="getMyDate(lawyer.dateline)">{{getMyDate(lawyer.dateline)}}</time>
-				<div>
+				<div class="options">
+					<div :class="lawyer.disable == '0' ? 'z-blockup-li z-clearfix' : 'z-using-li z-clearfix'">
+						<span class="able" @click="blockup(lawyer.id, lawyer.disable, index, 1)">启用</span>
+						<span class="disable" @click="blockup(lawyer.id, lawyer.disable, index, 0)">禁用</span>
+					</div>
 					<router-link :to="{name: 'lawyer', query: {lawyerid: lawyer.id}}">编辑</router-link>
-					<span @click="">删除</span>
+					<span @click="openPopDel(lawyer.id)">删除</span>
 				</div>
 			</li>
 		</ul>
@@ -44,6 +48,16 @@
 			<div class="z-page-next">下一页</div>
 			<div class="z-page-jump"><label>跳转到第</label><input type="number" min="1" :max="pageCount" v-model="pageNow"><label>页，共{{pageCount}}页</label></div>
 		</div>
+		<div class="z-pop z-pop-del" v-show="showPopDel">
+			<div class="pop-blank">
+				确定要删除此项的操作？
+			</div>
+			<div class="z-pop-action z-clearfix">
+				<button @click="del()">确定</button>
+				<button class="z-pop-cancel" @click="closePopDel()">取消</button>
+			</div>
+		</div>
+		<div class="z-cover" v-show="showCover"></div>
 	</div>
 </template>
 
@@ -62,6 +76,8 @@
 				pageNext: false,
 				totals: 2,
 				search: "",
+				showPopDel: false,
+				showCover: false,
 			}
 		},
 		mounted: function () {
@@ -89,7 +105,59 @@
 			},
 			getMyDate: function(time) {
 				return (new Date(parseInt(time) * 1000)).toLocaleString()
-			}
+			},
+			blockup: function(lawyerID, lawyerDisable, index, action) {
+				if(lawyerDisable == action || (lawyerDisable > '0' && action> '0')) {
+					return
+				}
+				const _self = this
+				this.$http.get('http://www.lutong.com/admin/index.php?c=lawyers&m=disable_lawyers&token=' + _self.$store.getters.token + '&id=' + lawyerID,
+				).then((response) => {
+					const data = response.data
+					const status = response.data.status
+    				if(status === 1) {
+    					if(lawyerDisable == '0') {
+    						lawyerDisable = new Date().getTime()
+    					} else {
+    						lawyerDisable = '0'
+    					}
+    					_self.lawyerList[index].disable = lawyerDisable
+    				} else if(status === 403) {
+    					_self.$router.push('/login')
+    				} else {
+    					alert('status: ' + status)
+    				}
+  				}, (response) => {
+    				// TODO 错误toast提示
+  				})
+			},
+			openPopDel: function(lawyerID) {
+				this.lawyerID = lawyerID
+				this.showCover = true
+				this.showPopDel = true
+			},
+			del: function() {
+				const _self = this
+				this.$http.get('http://www.lutong.com/admin/index.php?c=lawyers&m=del_lawyers&token=' + _self.$store.getters.token + '&id=' + _self.lawyerID,
+				).then((response) => {
+					const data = response.data
+					const status = response.data.status
+    				if(status === 1) {
+    					_self.getLawyerList()
+    					_self.closePopDel()
+    				} else if(status === 403) {
+    					_self.$router.push('/login')
+    				} else {
+    					alert('status: ' + status)
+    				}
+  				}, (response) => {
+    				// TODO 错误toast提示
+  				})
+			},
+			closePopDel: function() {
+				this.showPopDel = false
+				this.showCover = false
+			},
 		}
 	}
 </script>

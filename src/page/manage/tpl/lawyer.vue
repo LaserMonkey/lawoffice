@@ -33,6 +33,7 @@
 	export default {
 		data: function() {
 			return {
+				lawyerID: 0,
 				lawyerSource: "",
 				lawyerBrief: "",
 				lawyerName: "",
@@ -52,12 +53,20 @@
 			FileUpload
 		},
 		mounted: function () {
-			this.$nextTick(function () {
-				
-			})
+			if(this.$route.query.lawyerid != undefined) {
+				this.lawyerID = this.$route.query.lawyerid
+				this.loadLawyerInfo()
+			}
 		},
 		methods: {
 			saveLawyer: function() {
+				if(this.lawyerID == 0) {
+					this.addLawyer()
+				} else {
+					this.editLawyer()
+				}
+			},
+			addLawyer: function() {
 				const _self = this
 				this.$http.get('http://www.lutong.com/admin/index.php?c=lawyers&m=add_lawyers&token=' + _self.$store.getters.token + '&type=' + _self.lawyerTypeID + '&lang=' + _self.lang + '&name=' + _self.lawyerName + '&content=' + _self.outputContent,
 				).then((response) => {
@@ -65,6 +74,44 @@
 					const status = response.data.status
     				if(status === 1) {
     					_self.$router.push('/lawyerlist')
+    				} else if(status === 403) {
+    					_self.$router.push('/login')
+    				} else {
+    					alert('status: ' + status)
+    				}
+  				}, (response) => {
+    				// TODO 错误toast提示
+  				})
+			},
+			editLawyer: function() {
+				const _self = this
+				this.$http.get('http://www.lutong.com/admin/index.php?c=lawyers&m=update_about&token=' + _self.$store.getters.token + '&type=' + _self.lawyerTypeID + '&lang=' + _self.lang + '&name=' + _self.lawyerName + '&content=' + _self.outputContent + '&id=' + _self.lawyerID,
+				).then((response) => {
+					const data = response.data
+					const status = response.data.status
+    				if(status === 1) {
+    					_self.$router.push('/lawyerlist')
+    				} else if(status === 403) {
+    					_self.$router.push('/login')
+    				} else {
+    					alert('status: ' + status)
+    				}
+  				}, (response) => {
+    				// TODO 错误toast提示
+  				})
+			},
+			loadLawyerInfo: function() {
+				const _self = this
+				this.$http.get('http://www.lutong.com/admin/index.php?c=lawyers&m=get_lawyers_info&token=' + _self.$store.getters.token + '&id=' + _self.lawyerID,
+				).then((response) => {
+					const data = response.data
+					const status = response.data.status
+    				if(status === 1) {
+    					console.log(data)
+    					_self.lawyerName = data.info.name
+    					_self.lawyerTypeID = data.info.type
+    					_self.lang = data.info.lang
+    					_self.inputContent = data.info.content
     				} else if(status === 403) {
     					_self.$router.push('/login')
     				} else {
