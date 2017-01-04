@@ -27,9 +27,14 @@
 				<h3 class="article-title">{{article.title}}</h3>
 				<div class="article-list-type">{{article.type_name}}</div>
 				<time :datetime="getMyDate(article.dateline)" :alt="getMyDate(article.dateline)">{{getMyDate(article.dateline)}}</time>
-				<div>
+				<div class="options">
+					<div :class="article.disable == '0' ? 'z-blockup-li z-clearfix' : 'z-using-li z-clearfix'">
+						<span class="able" @click="blockup(article.id, article.disable, index, 1)">启用</span>
+						<span class="disable" @click="blockup(article.id, article.disable, index, 0)">禁用</span>
+					</div>
 					<router-link :to="{name: 'article', query: {articleid: article.id}}">编辑</router-link>
-					<span @click="">删除</span>
+					<span @click="openPopSort(article.id, article.sort)">排序</span>
+					<span @click="openPopDel(article.id)">删除</span>
 				</div>
 			</li>
 		</ul>
@@ -43,6 +48,26 @@
 			<div class="z-page-next">下一页</div>
 			<div class="z-page-jump"><label>跳转到第</label><input type="number" min="1" :max="pageCount" v-model="pageNow"><label>页，共{{pageCount}}页</label></div>
 		</div>
+		<div class="z-pop z-pop-sort" v-show="showPopSort">
+			<div class="z-sort">
+				<label>设置排序：</label>
+				<input type="number" min="0" v-model="articleSort">
+			</div>
+			<div class="z-pop-action z-clearfix">
+				<button @click="updateSort()">确定</button>
+				<button class="z-pop-cancel" @click="closePopSort()">取消</button>
+			</div>
+		</div>
+		<div class="z-pop z-pop-del" v-show="showPopDel">
+			<div class="pop-blank">
+				确定要删除此项的操作？
+			</div>
+			<div class="z-pop-action z-clearfix">
+				<button @click="del()">确定</button>
+				<button class="z-pop-cancel" @click="closePopDel()">取消</button>
+			</div>
+		</div>
+		<div class="z-cover" v-show="showCover"></div>
 	</div>
 </template>
 
@@ -61,6 +86,11 @@
 				pageNext: false,
 				totals: 2,
 				search: "",
+				articleID: 0,
+				showPopDel: false,
+				showCover: false,
+				articleSort: "0",
+				showPopSort: false,
 			}
 		},
 		mounted: function () {
@@ -103,7 +133,87 @@
 			},
 			getMyDate: function(time) {
 				return (new Date(parseInt(time) * 1000)).toLocaleString()
-			}
+			},
+			blockup: function(articleID, articleDisable, index, action) {
+				if(articleDisable == action || (articleDisable > '0' && action> '0')) {
+					return
+				}
+				const _self = this
+				this.$http.get('http://www.lutong.com/admin/index.php?c=article&m=disable_article&token=' + _self.$store.getters.token + '&id=' + articleID,
+				).then((response) => {
+					const data = response.data
+					const status = response.data.status
+    				if(status === 1) {
+    					if(articleDisable == '0') {
+    						articleDisable = new Date().getTime()
+    					} else {
+    						articleDisable = '0'
+    					}
+    					_self.articleList[index].disable = articleDisable
+    				} else if(status === 403) {
+    					_self.$router.push('/login')
+    				} else {
+    					alert('status: ' + status)
+    				}
+  				}, (response) => {
+    				// TODO 错误toast提示
+  				})
+			},
+			openPopSort: function(articleID, articleSort) {
+				this.articleID = articleID
+				this.articleSort = articleSort
+				this.showCover = true
+				this.showPopSort = true
+			},
+			updateSort: function() {
+				const _self = this
+				this.$http.get('http://www.lutong.com/admin/index.php?c=article&m=sort_article&token=' + _self.$store.getters.token + '&id=' + _self.articleID + '&sort=' + _self.articleSort,
+				).then((response) => {
+					const data = response.data
+					const status = response.data.status
+    				if(status === 1) {
+    					_self.getArticleList()
+    					_self.closePopSort()
+    				} else if(status === 403) {
+    					_self.$router.push('/login')
+    				} else {
+    					alert('status: ' + status)
+    				}
+  				}, (response) => {
+    				// TODO 错误toast提示
+  				})
+			},
+			closePopSort: function() {
+				this.showPopSort = false
+				this.showCover = false
+			},
+			openPopDel: function(articleID) {
+				this.articleID = articleID
+				this.showCover = true
+				this.showPopDel = true
+			},
+			del: function() {
+				const _self = this
+				this.$http.get('http://www.lutong.com/admin/index.php?c=article&m=del_article&token=' + _self.$store.getters.token + '&id=' + _self.articleID,
+				).then((response) => {
+					const data = response.data
+					const status = response.data.status
+    				if(status === 1) {
+    					_self.getArticleList()
+    					_self.closePopDel()
+    				} else if(status === 403) {
+    					_self.$router.push('/login')
+    				} else {
+    					alert('status: ' + status)
+    				}
+  				}, (response) => {
+    				// TODO 错误toast提示
+  				})
+			},
+			closePopDel: function() {
+				this.showPopDel = false
+				this.showCover = false
+			},
 		}
 	}
 </script>
