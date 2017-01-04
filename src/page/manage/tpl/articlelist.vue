@@ -33,7 +33,6 @@
 						<span class="disable" @click="blockup(article.id, article.disable, index, 0)">禁用</span>
 					</div>
 					<router-link :to="{name: 'article', query: {articleid: article.id}}">编辑</router-link>
-					<span @click="openPopSort(article.id, article.sort)">排序</span>
 					<span @click="openPopDel(article.id)">删除</span>
 				</div>
 			</li>
@@ -47,16 +46,6 @@
 			<div class="z-page-num">5</div>
 			<div class="z-page-next">下一页</div>
 			<div class="z-page-jump"><label>跳转到第</label><input type="number" min="1" :max="pageCount" v-model="pageNow"><label>页，共{{pageCount}}页</label></div>
-		</div>
-		<div class="z-pop z-pop-sort" v-show="showPopSort">
-			<div class="z-sort">
-				<label>设置排序：</label>
-				<input type="number" min="0" v-model="articleSort">
-			</div>
-			<div class="z-pop-action z-clearfix">
-				<button @click="updateSort()">确定</button>
-				<button class="z-pop-cancel" @click="closePopSort()">取消</button>
-			</div>
 		</div>
 		<div class="z-pop z-pop-del" v-show="showPopDel">
 			<div class="pop-blank">
@@ -158,34 +147,6 @@
   				}, (response) => {
     				// TODO 错误toast提示
   				})
-			},
-			openPopSort: function(articleID, articleSort) {
-				this.articleID = articleID
-				this.articleSort = articleSort
-				this.showCover = true
-				this.showPopSort = true
-			},
-			updateSort: function() {
-				const _self = this
-				this.$http.get('http://www.lutong.com/admin/index.php?c=article&m=sort_article&token=' + _self.$store.getters.token + '&id=' + _self.articleID + '&sort=' + _self.articleSort,
-				).then((response) => {
-					const data = response.data
-					const status = response.data.status
-    				if(status === 1) {
-    					_self.getArticleList()
-    					_self.closePopSort()
-    				} else if(status === 403) {
-    					_self.$router.push('/login')
-    				} else {
-    					alert('status: ' + status)
-    				}
-  				}, (response) => {
-    				// TODO 错误toast提示
-  				})
-			},
-			closePopSort: function() {
-				this.showPopSort = false
-				this.showCover = false
 			},
 			openPopDel: function(articleID) {
 				this.articleID = articleID

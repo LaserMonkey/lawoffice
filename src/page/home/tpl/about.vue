@@ -42,7 +42,24 @@
 		},
 		methods: {
 			init: function() {
-				console.log(this.$route.params.columnID)
+				this.loadAbout()
+			},
+			loadAbout: function() {
+				// const _self = this
+				// this.$http.get('http://www.lutong.com/admin/index.php?c=about&m=add_about&token=' + _self.$store.getters.token + '&lang=' + _self.lang + '&title=' + _self.aboutTitle + '&content=' + _self.outputContent,
+				// ).then((response) => {
+				// 	const data = response.data
+				// 	const status = response.data.status
+    // 				if(status === 1) {
+    // 					_self.$router.push('/aboutlist')
+    // 				} else if(status === 403) {
+    // 					_self.$router.push('/login')
+    // 				} else {
+    // 					alert('status: ' + status)
+    // 				}
+  		// 		}, (response) => {
+    // 				// TODO 错误toast提示
+  		// 		})
 			}
 		}
 	}
