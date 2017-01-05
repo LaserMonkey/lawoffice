@@ -31,12 +31,16 @@
 			'$route': 'init'
 		},
 		mounted: function () {
-			if(this.$route.query.a != undefined) {
-				this.aboutID = this.$route.query.a
-			}
-			this.loadAbout()
+			this.init()
 		},
 		methods: {
+			init: function() {
+				console.log(this.$route.name)
+				if(this.$route.query.a != undefined) {
+					this.aboutID = this.$route.query.a
+				}
+				this.loadAbout()
+			},
 			loadAbout: function() {
 				const _self = this
 				this.$http.get('http://www.lutong.com/api/index.php?c=about&m=index',
