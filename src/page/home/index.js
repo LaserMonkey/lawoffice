@@ -14,6 +14,7 @@ import Banner from 'tpl/home/banner.vue'
 import About from './tpl/about.vue'
 import News from './tpl/news.vue'
 import Article from './tpl/article.vue'
+import Lawyer from './tpl/lawyer.vue'
 
 const routes = [{
 	path: '/',
@@ -50,10 +51,19 @@ const routes = [{
 		foot: Foot
 	}
 }, {
+	path: '/lawyerdetail',
+	name: 'lawyerdetail',
+    components: {
+		// default: Lawyer,
+		head: Head,
+		banner: Banner,
+		foot: Foot
+	}
+}, {
 	path: '/lawyer/:columnID',
 	name: 'lawyer',
     components: {
-		// default: Lawyer,
+		default: Lawyer,
 		head: Head,
 		banner: Banner,
 		foot: Foot

@@ -13,7 +13,7 @@
 	export default {
 		data () {
 			return {
-				columnID: this.getColumnID,
+				columnID: 2,
 				aboutList: [],
 				aboutContent: "",
 				aboutID: 0,
