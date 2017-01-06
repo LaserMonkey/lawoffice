@@ -1,8 +1,8 @@
 <template>
 	<div class="article-list z-clearfix">
 		<ul class="menu">
-			<li v-for="about in aboutList" :class="about.id == aboutID ? 'action' : ''" @click="">
-				<router-link :to="{name: 'about', params:{columnID: columnID}, query: {c: columnID, a: about.id}}">{{about.title}}</router-link>
+			<li v-for="about in aboutList" :class="about.id == aboutID ? 'action' : ''" @click="getAboutDetail(about.id)">
+				<router-link :to="{name: 'about', params:{columnID: columnID}, query: {id: about.id}}">{{about.title}}</router-link>
 			</li>
 		</ul>
 		<div class="content" v-html="aboutContent"></div>
@@ -19,28 +19,14 @@
 				aboutID: 0,
 			}
 		},
-		computed: {
-			getColumnID() {
-	    		return this.$store.getters.columnID
-			},
-			getLang() {
-	    		return this.$store.getters.lang
-			}
-		},
-		watch: {
-			'$route': 'init'
-		},
 		mounted: function () {
-			this.init()
+			this.columnID = this.$route.params.columnID
+			if(this.$route.query.id != undefined) {
+				this.aboutID = this.$route.query.a
+			}
+			this.loadAbout()
 		},
 		methods: {
-			init: function() {
-				console.log(this.$route.name)
-				if(this.$route.query.a != undefined) {
-					this.aboutID = this.$route.query.a
-				}
-				this.loadAbout()
-			},
 			loadAbout: function() {
 				const _self = this
 				this.$http.get('http://www.lutong.com/api/index.php?c=about&m=index',
@@ -48,12 +34,32 @@
 					const data = response.data
 					const status = response.data.status
     				if(status === 1) {
-    					console.log(data)
-    					_self.aboutContent = data.info.content
     					_self.aboutList = data.list
-    					if(data.list.length > 0) {
-    						_self.aboutID = data.list[0].id
-    					}
+    					if(_self.$route.query.id != undefined) {
+							_self.aboutID = _self.$route.query.id
+							_self.getAboutDetail(_self.aboutID)
+						} else {
+    						_self.aboutContent = data.info.content
+    						if(data.list.length > 0) {
+    							_self.aboutID = data.list[0].id
+    						}
+						}
+    				} else {
+    					alert('status: ' + status)
+    				}
+  				}, (response) => {
+    				// TODO 错误toast提示
+  				})
+			},
+			getAboutDetail: function(aboutID) {
+				this.aboutID = aboutID
+				const _self = this
+				this.$http.get('http://www.lutong.com/api/index.php?c=about&m=get_about_info&id=' + aboutID,
+				).then((response) => {
+					const data = response.data
+					const status = response.data.status
+    				if(status === 1) {
+    					_self.aboutContent = data.info.content
     				} else {
     					alert('status: ' + status)
     				}

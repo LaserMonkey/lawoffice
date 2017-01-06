@@ -12,13 +12,13 @@
 			</ul>
 		</div>
 		<ul class="column">
-			<li v-for="(column, index) in columnList" :class="$route.query.c == column.id ? 'action' : ''">
-    			<router-link v-if="column.id==1" :to="{name: 'home', params:{columnID:column.id}, query: {c: column.id}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
-    			<router-link v-else-if="column.id==2" :to="{name: 'about', params:{columnID: column.id}, query: {c: column.id}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
-    			<router-link v-else-if="column.id==3" :to="{name: 'practice', params:{columnID:column.id}, query: {c: column.id}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
-    			<router-link v-else-if="column.id==4" :to="{name: 'lawyer', params:{columnID:column.id}, query: {c: column.id}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
-    			<router-link v-else-if="column.id==5" :to="{name: 'news', params:{columnID:column.id}, query: {c: column.id}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
-    			<router-link v-else :to="{name: 'article', params:{columnID:column.id}, query: {c: column.id}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
+			<li v-for="(column, index) in columnList" :class="columnID == column.id ? 'action' : ''">
+    			<router-link v-if="column.id==1" :to="{name: 'home', params:{columnID:column.id}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
+    			<router-link v-else-if="column.id==2" :to="{name: 'about', params:{columnID: column.id}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
+    			<router-link v-else-if="column.id==3" :to="{name: 'practice', params:{columnID:column.id}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
+    			<router-link v-else-if="column.id==4" :to="{name: 'lawyer', params:{columnID:column.id}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
+    			<router-link v-else-if="column.id==5" :to="{name: 'news', params:{columnID:column.id}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
+    			<router-link v-else :to="{name: 'article', params:{columnID:column.id}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
 			</li>
 		</ul>
 	</div>
@@ -29,34 +29,26 @@
 		data: function() {
 			return {
 				columnList: [],
+				columnID: 1,
 			}
 		},
-		computed: {
-			getColumnID() {
-	    		return this.$store.getters.columnID
-			},
-			getLang() {
-	    		return this.$store.getters.lang
+		mounted: function () {
+			if(parseInt(this.$route.params.columnID) !== parseInt(this.$route.params.columnID)) {
+				this.$store.commit('changeColumnID', 1)
+				window.location.href="/home#/1"
+			} else {
+				this.$store.commit('changeColumnID', this.$route.params.columnID)
+				this.columnID = this.$route.params.columnID
 			}
+			this.getHeadData()
 		},
-		beforeCreate: function () {
-			this.$nextTick(function () {
-				this.init()
-			})
-		},
-		// mounted: function () {
-		// 	this.$nextTick(function () {
-		// 		this.init()
-		// 	})
-		// },
 		methods: {
-			init: function() {
-				this.$store.commit('changeColumnID', this.$route.query.c)
-				this.getHeadData()
+			getLang: function() {
+	    		return this.$store.getters.lang
 			},
 			getHeadData: function() {
 				const _self = this
-				this.$http.get('http://www.lutong.com/api/index.php?lang=' + _self.getLang + '&c=home&m=index').then((response) => {
+				this.$http.get('http://www.lutong.com/api/index.php?lang=' + _self.getLang() + '&c=home&m=index').then((response) => {
     				this.columnList = response.data.column
   				}, (response) => {
     				// TODO 错误toast提示
@@ -85,6 +77,7 @@
 			},
 			changeColumnID: function(columnID) {
 				this.$store.commit('changeColumnID', columnID)
+				this.columnID = columnID
 			}
 		}
 	}

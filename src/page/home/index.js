@@ -17,6 +17,14 @@ import Article from './tpl/article.vue'
 
 const routes = [{
 	path: '/',
+	name: 'index',
+    components: {
+		default: Home,
+		head: Head,
+		foot: Foot
+	}
+}, {
+	path: '/:columnID',
 	name: 'home',
     components: {
 		default: Home,
@@ -24,7 +32,7 @@ const routes = [{
 		foot: Foot
 	}
 }, {
-	path: '/about',
+	path: '/about/:columnID',
 	name: 'about',
     components: {
 		default: About,
@@ -33,7 +41,7 @@ const routes = [{
 		foot: Foot
 	}
 }, {
-	path: '/practice',
+	path: '/practice/:columnID',
 	name: 'practice',
     components: {
 		// default: Practice,
@@ -42,7 +50,7 @@ const routes = [{
 		foot: Foot
 	}
 }, {
-	path: '/lawyer',
+	path: '/lawyer/:columnID',
 	name: 'lawyer',
     components: {
 		// default: Lawyer,
@@ -51,7 +59,7 @@ const routes = [{
 		foot: Foot
 	}
 }, {
-	path: '/news',
+	path: '/news/:columnID',
 	name: 'news',
     components: {
 		default: News,
