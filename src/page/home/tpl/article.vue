@@ -1,20 +1,31 @@
 <template>
 	<div class="article-list z-clearfix">
 		<ul class="menu">
-			<li class="action">关于陆通</li>
-			<li>加入陆通</li>
-			<li>联系我们</li>
+			<li v-for="type in typeList" :class="typeID == type.id ? 'action' : ''">
+				<router-link :to="{name: 'news', params: {columnID: columnID}, query: {type: type.id}}">{{type.name}}</router-link>
+			</li>
 		</ul>
 		<div class="content">
-			<h2>陆通简介</h2>
-			<p>北京市陆通联合律师事务所（“陆通”或“我们”）创立于1992年，是中国改革开放后第一批成立的合伙制律师事务所。经过数年的稳健发展，陆通已成为中国最具历史沉淀的专业化精品律师事务所之一。</p>
-			<p>陆通致力于为每一位客户提供量身定制的一站式法律服务，我们深刻理解中国商业和社会逻辑、洞悉市场的变革和发展，能够立足于客户需求，为客户的商业活动和权利保护提供全面、安全和切实有效的法律支持。</p>
-			<p>陆通持续专注在争议解决、公司和投资、证券、银行和金融、国际贸易、知识产权和劳动法等领域，涉足行业包括金融、保险、医疗、房地产、航天航空等传统行业、亦包括科技、文化、体育和娱乐等新兴行业。</p>
-			<p>陆通拥有一支执业经验丰富、解决问题能力强大、并锐意进取的律师团队。陆通律师均毕业于国内外知名法学院，具有丰富的法律实践经验、深厚的理论基础和创新精神，平均执业年限超过10年以上。我们注重团队协作，亦重视团队的稳定性，保证能够为我们的客户提供连贯的高质量法律服务。</p>
-			<p>在二十余年的执业过程中，陆通与各级政府部门、司法部门、仲裁机构以及各大法学院校和学术界均保持着良好的业务关系和交流渠道。同时，陆通与美国、英国、德国、法国、加拿大、日本、西班牙、香港特别行政区及台湾地区等国家和地区的多家知名律师事务所建立了良好的合作关系。基于陆通贯穿境内外的优质合作资源，我们有能力在全球化视野下为客户提供有力的法律服务支持、满足客户的发展目标。</p>
-			<p>自创立以来，陆通多次获得中国司法部、北京市司法局、中华全国律师协会以及北京市律师协会等行业主管单位的奖励和表彰。同时，陆通始终具有深刻的社会责任感，陆通及陆通律师参与公益活动的历史自1992年至今已超过23年。</p>
-			<h2>陆通价值观</h2>
-			<p>陆通始终以持续为客户提供专业定制化的法律服务、维护客户权益、实现客户需求为发展目标，并以坚持公益事业、推动社会良性发展为己任。</p>
+			<h2>中国人民银行推出扩大全口径跨境融资宏观审慎管理试点</h2>
+			<div>
+				<label>来源：</label><span>新浪网</span><time></time>
+			</div>
+			<div>大成律师事务所 ( "大成" )成立于1992年，是中国成立最早、规模最大的综合性律师事务所。
+
+大成自2004年起进行了从个体化作业向团队化作业转型，向规模化、规范化、专业化、品牌化、国际化方向发展的探索和改革。通过一系列的研究和改革，大成目前已实现了跨越式发展，不仅规模化建设取得明显成效，而且规范化、专业化、团队化建设也取得了丰硕成果。大成现已建立了先进的管理体制和专业化团队作业模式，奠定了有效控制业务质量的基础，建设了资源共享机制的路径。大成将坚持不懈地积极探索中国律师事务所品牌化、国际化的建设和发展道路。
+
+大成拥有4000余名律师及其他专业人员。其中，大多数律师毕业于国内外知名的法学院校；多数律师取得了美、英、法、日、韩、俄等国一流法学院校学位，并具有在国际知名律师事务所工作的经验；相当数量的律师还具备国际贸易、金融、建筑工程、工商管理、会计、税务等其他专业背景。大成的律师及其他专业人员能够以英、法、日、韩、俄、蒙古等语言为客户提供服务。
+
+大成作为一家大型的、综合性的律师事务所，始终贯彻最大程度维护客户利益的执业宗旨，为国内外客户及时提供专业的、全面的、务实的法律及商务解决方案。大成的主要专业领域包括：公司综合类业务、公司收购、兼并与重组、证券与资本市场、私募股权与投资基金、国企改制与产权交易、银行与金融、外商直接投资与外资并购、境外投资、反垄断与国家安全审查、税务、国际贸易、国际贸易救济与WTO业务、海商海事、知识产权、房地产与建设工程、矿业、能源与自然资源、诉讼仲裁、刑事辩护和劳动法等。</div>
+			<div>
+				<div>相关律师</div>
+				<ul>
+					<li>
+						<div class="name">人名</div>
+						<div class="duty">合伙人</div>
+					</li>
+				</ul>
+			</div>
 		</div>
 	</div>
 </template>
@@ -23,18 +34,14 @@
 	export default {
 		data () {
 			return {
-				columnID: this.getColumnID
+				columnID: 0,
+				typeID: 0,
+				articleID: 0,
+				page: 1,
+				typeList: [],
 			}
 		},
-		computed: {
-			getColumnID() {
-	    		return this.$store.getters.columnID
-			},
-			getLang() {
-	    		return this.$store.getters.lang
-			}
-		},
-		created: function() {
+		mounted: function () {
 			this.init()
 		},
 		watch: {
@@ -42,8 +49,42 @@
 		},
 		methods: {
 			init: function() {
-				console.log(this.$route.params.columnID)
-			}
+				this.columnID = this.$route.params.columnID
+				this.typeID = this.$route.query.type
+				this.articleID = this.$route.query.id
+				this.loadType()
+				this.loadArticle()
+			},
+			loadType: function() {
+				const _self = this
+				this.$http.get('http://www.lutong.com/api/index.php?c=article&m=index&id=' + _self.typeID + '&page=1',
+				).then((response) => {
+					const data = response.data
+					const status = response.data.status
+    				if(status === 1) {
+    					_self.typeList = data.type
+    				} else {
+    					alert('status: ' + status)
+    				}
+  				}, (response) => {
+    				// TODO 错误toast提示
+  				})
+			},
+			loadArticle: function() {
+				const _self = this
+				this.$http.get('http://www.lutong.com/api/index.php?c=article&m=get_article_info&id=' + _self.articleID + '&page=' + _self.page,
+				).then((response) => {
+					const data = response.data
+					const status = response.data.status
+    				if(status === 1) {
+
+    				} else {
+    					alert('status: ' + status)
+    				}
+  				}, (response) => {
+    				// TODO 错误toast提示
+  				})
+			},
 		}
 	}
 </script>
@@ -62,6 +103,10 @@
 			text-align: center;
 			font-size: 2rem;
 			cursor: pointer;
+
+			a {
+				display: block;
+			}
 		}
 
 		.action {
@@ -71,24 +116,44 @@
 		}
 	}
 
-	.content {
+	.news {
 		float: right;
 		width: 70%;
 		margin-top: 2.5rem;
 		margin-bottom: 2.5rem;
-		padding: 0.83333333rem 5rem 2.5rem;
 		border-left: solid 0.08333333rem rgba(0, 0, 0, 0.1);
 
-		h2 {
-			margin-bottom: 2.5rem;
-			font-size: 2.4rem;
-			font-weight: normal;
+		li {
+			padding: 3.33333333rem 6.35% 1.66666667rem;
+
+			h2 {
+				margin-bottom: 2rem;
+				font-size: 2.8rem;
+				font-weight: normal;
+				color: #444444;
+			}
+
+			p {
+				margin-bottom: 1.66666667rem;
+				line-height: 2rem;
+				font-size: 1.6rem;
+				color: #666666;
+			}
+
+			time {
+				display: block;
+				font-size: 1.4rem;
+				color: #999999;
+			}
+
+			&:hover {
+				background-color: #FAFAFA;
+
+				h2 {
+					color: #df001f;
+				}
+			}
 		}
 
-		p {
-			margin-bottom: 2.5rem;
-			line-height: 2.5rem;
-			font-size: 1.8rem;
-		}
 	}
 </style>

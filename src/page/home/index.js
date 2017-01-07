@@ -13,8 +13,10 @@ import Head from 'tpl/home/head.vue'
 import Banner from 'tpl/home/banner.vue'
 import About from './tpl/about.vue'
 import News from './tpl/news.vue'
-import Article from './tpl/article.vue'
+import Column from './tpl/column.vue'
 import Lawyer from './tpl/lawyer.vue'
+import LawyerDetail from './tpl/lawyerdetail.vue'
+import Article from './tpl/article.vue'
 
 const routes = [{
 	path: '/',
@@ -51,10 +53,10 @@ const routes = [{
 		foot: Foot
 	}
 }, {
-	path: '/lawyerdetail',
+	path: '/lawyerdetail/:columnID',
 	name: 'lawyerdetail',
     components: {
-		// default: Lawyer,
+		default: LawyerDetail,
 		head: Head,
 		banner: Banner,
 		foot: Foot
@@ -73,6 +75,15 @@ const routes = [{
 	name: 'news',
     components: {
 		default: News,
+		head: Head,
+		banner: Banner,
+		foot: Foot
+	}
+}, {
+	path: '/column/:columnID',
+	name: 'column',
+    components: {
+		default: Column,
 		head: Head,
 		banner: Banner,
 		foot: Foot

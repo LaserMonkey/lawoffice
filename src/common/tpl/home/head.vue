@@ -17,8 +17,8 @@
     			<router-link v-else-if="column.id==2" :to="{name: 'about', params:{columnID: column.id}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
     			<router-link v-else-if="column.id==3" :to="{name: 'practice', params:{columnID:column.id}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
     			<router-link v-else-if="column.id==4" :to="{name: 'lawyer', params:{columnID:column.id}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
-    			<router-link v-else-if="column.id==5" :to="{name: 'news', params:{columnID:column.id}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
-    			<router-link v-else :to="{name: 'article', params:{columnID:column.id}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
+    			<router-link v-else-if="column.id==5" :to="{name: 'news', params: {columnID: column.id}, query: {type: column.type}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
+    			<router-link v-else :to="{name: 'column', params:{columnID:column.id}, query: {type: column.type}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
 			</li>
 		</ul>
 	</div>

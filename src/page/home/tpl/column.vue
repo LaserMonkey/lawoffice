@@ -21,7 +21,7 @@
 	export default {
 		data () {
 			return {
-				columnID: 5,
+				columnID: 0,
 				typeID: 1,
 				page: 1,
 				typeList: [],
