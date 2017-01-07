@@ -3,7 +3,7 @@
 		<h2>路通律师</h2>
 		<h3>{{partnerList.name}}</h3>
 		<ul class="partner z-clearfix">
-			<li v-for="partner in partnerList.list" @click="getDetail(partner.id)">
+			<li v-for="partner in partnerList.list">
 				<router-link :to="{name: 'lawyerdetail', params:{columnID:columnID}, query: {id: partner.id}}">
 					<div class="name">{{partner.name}}</div>
 					<div class="duty">合伙人</div>
@@ -12,7 +12,7 @@
 		</ul>
 		<h3>{{lawyerList.name}}</h3>
 		<ul class="lawyer z-clearfix">
-			<li v-for="lawyer in lawyerList.list" @click="getDetail(lawyer.id)">
+			<li v-for="lawyer in lawyerList.list">
 				<router-link :to="{name: 'lawyerdetail', params:{columnID:columnID}, query: {id: lawyer.id}}">
 					<div class="name">{{lawyer.name}}</div>
 					<div class="duty">律师</div>

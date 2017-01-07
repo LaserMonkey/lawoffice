@@ -17,6 +17,7 @@ import Column from './tpl/column.vue'
 import Lawyer from './tpl/lawyer.vue'
 import LawyerDetail from './tpl/lawyerdetail.vue'
 import Article from './tpl/article.vue'
+import Practice from './tpl/practice.vue'
 
 const routes = [{
 	path: '/',
@@ -47,7 +48,7 @@ const routes = [{
 	path: '/practice/:columnID',
 	name: 'practice',
     components: {
-		// default: Practice,
+		default: Practice,
 		head: Head,
 		banner: Banner,
 		foot: Foot
