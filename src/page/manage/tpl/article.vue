@@ -63,12 +63,13 @@
 				lang: 1,
 				showPopLawyer: false,
 				showCover: false,
+				lawyerList: [],
 				// input content to editor
 				inputContent: '',
 				// output content from editor
 				outputContent: '',
 				// set image upload api url
-				uploadUrl: '/api/v1/help/upload/wangEditorH5File'
+				uploadUrl: 'http://www.lutong.com/upload'
 			}
 		},
 		components: {
@@ -171,7 +172,21 @@
 				this.loadLawyer()
 			},
 			loadLawyer: function() {
-
+				const _self = this
+				this.$http.get('http://www.lutong.com/admin/index.php?c=lawyers&m=get_lawyers_list_all&token=' + _self.$store.getters.token,
+				).then((response) => {
+					const data = response.data
+					const status = response.data.status
+    				if(status === 1) {
+    					
+    				} else if(status === 403) {
+    					_self.$router.push('/login')
+    				} else {
+    					alert('status: ' + status)
+    				}
+  				}, (response) => {
+    				// TODO 错误toast提示
+  				})
 			},
 			closePopLawyer: function() {
 				this.showPopLawyer = false

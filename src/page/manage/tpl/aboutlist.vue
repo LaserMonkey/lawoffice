@@ -33,14 +33,10 @@
 			</li>
 		</ul>
 		<div class="z-page-ctrl z-clearfix">
-			<div class="z-page-prev">上一页</div>
-			<div class="z-page-num action">1</div>
-			<div class="z-page-num">2</div>
-			<div class="z-page-num">3</div>
-			<div class="z-page-num">4</div>
-			<div class="z-page-num">5</div>
-			<div class="z-page-next">下一页</div>
-			<div class="z-page-jump"><label>跳转到第</label><input type="number" min="1" :max="pageCount" v-model="pageNow"><label>页，共{{pageCount}}页</label></div>
+			<div class="z-page-prev" @click="goPage(pageNow-1)" v-show="pageNow != 1">上一页</div>
+			<div class="z-page-num" v-for="pageBtn in pageBtnList" :class="pageBtn == pageNow ? 'action' : ''" @click="goPage(pageBtn)">{{pageBtn}}</div>
+			<div class="z-page-next" @click="goPage(pageNow+1)" v-show="pageNow != pageCount">下一页</div>
+			<div class="z-page-jump"><label>跳转到第</label><input type="number" min="1" :max="pageCount" v-model="pageInput" @keyup.enter="goPage(pageInput)"><label>页，共{{pageCount}}页</label></div>
 		</div>
 		<div class="z-pop z-pop-sort" v-show="showPopSort">
 			<div class="z-sort">
@@ -71,17 +67,19 @@
 			return {
 				aboutList: [],
 				lang: 1,
-				pageCount: 1,
-				pageNow: 1,
-				perpage: 10,
-				pagePrev: false,
-				pageNext: false,
-				totals: 2,
 				search: "",
 				aboutSort: "0",
 				showPopSort: false,
 				showCover: false,
 				showPopDel: false,
+				pageCount: 1,
+				pageNow: 1,
+				perpage: 10,
+				pageInput: 1,
+				pagePrev: false,
+				pageNext: false,
+				totals: 2,
+				pageBtnList: [],
 			}
 		},
 		mounted: function () {
@@ -98,6 +96,10 @@
 					const status = response.data.status
     				if(status === 1) {
     					_self.aboutList = data.list
+    					_self.pageCount = data.pages
+    					_self.pageNow = data.page
+    					_self.totals = data.totals
+    					_self.getPageBtnList()
     				} else if(status === 403) {
     					_self.$router.push('/login')
     				} else {
@@ -190,6 +192,40 @@
 				this.showPopDel = false
 				this.showCover = false
 			},
+			goPage: function(pageNow) {
+				if(pageNow >= 1 && pageNow <= this.pageCount && pageNow != this.pageNow) {
+					this.pageNow = pageNow
+					this.getAboutList()
+				}
+			},
+			getPageBtnList: function() {
+				this.pageBtnList = []
+				if(this.pageNow >= this.pageCount-2) {
+					if(this.pageCount <= 5) {
+						for(let i = 1; i <= this.pageCount; i++) {
+							this.pageBtnList.push(i)
+						}
+					} else {
+						for(let i = this.pageCount-4; i <= this.pageCount; i++) {
+							this.pageBtnList.push(i)
+						}
+					}
+				} else if(this.pageNow < this.pageCount-2) {
+					if(this.pageCount <= 5) {
+						for(let i = 1; i <= this.pageCount; i++) {
+							this.pageBtnList.push(i)
+						}
+					} else if(this.pageCount > 5 && this.pageNow <= 3) {
+						for(let i = 1; i <= 5; i++) {
+							this.pageBtnList.push(i)
+						}
+					} else {
+						for(let i = this.pageNow-2; i <= this.pageNow+2; i++) {
+							this.pageBtnList.push(i)
+						}
+					}
+				}
+			}
 		}
 	}
 </script>
