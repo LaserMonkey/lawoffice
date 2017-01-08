@@ -98,6 +98,7 @@
 </script>
 
 <style lang="sass">
+.article-list {
 	.menu {
 		float: left;
 		width: 30%;
@@ -201,4 +202,6 @@
 			}
 		}
 	}
+}
+	
 </style>

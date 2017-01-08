@@ -1,5 +1,5 @@
 <template>
-	<div class="article-list z-clearfix">
+	<div class="about-list z-clearfix">
 		<ul class="menu">
 			<li v-for="about in aboutList" :class="about.id == aboutID ? 'action' : ''" @click="getAboutDetail(about.id)">
 				<router-link :to="{name: 'about', params:{columnID: columnID}, query: {id: about.id}}">{{about.title}}</router-link>
@@ -79,6 +79,7 @@
 </script>
 
 <style lang="sass">
+.about-list {
 	.menu {
 		float: left;
 		width: 30%;
@@ -124,4 +125,5 @@
 			font-size: 1.8rem;
 		}
 	}
+}
 </style>

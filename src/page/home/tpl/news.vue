@@ -1,5 +1,5 @@
 <template>
-	<div class="article-list z-clearfix">
+	<div class="new-list z-clearfix">
 		<ul class="menu">
 			<li v-for="type in typeList" :class="typeID == type.id ? 'action' : ''">
 				<router-link :to="{name: 'news', params: {columnID: columnID}, query: {type: type.id}}">{{type.name}}</router-link>
@@ -116,6 +116,7 @@
 </script>
 
 <style lang="sass">
+.new-list {
 	.menu {
 		float: left;
 		width: 30%;
@@ -185,4 +186,5 @@
 	.z-page-ctrl {
 		float: right;
 	}
+}
 </style>
