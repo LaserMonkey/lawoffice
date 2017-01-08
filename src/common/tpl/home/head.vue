@@ -30,6 +30,7 @@
 			return {
 				columnList: [],
 				columnID: 1,
+				lang: 1,
 			}
 		},
 		mounted: function () {
@@ -43,37 +44,39 @@
 			this.getHeadData()
 		},
 		methods: {
-			getLang: function() {
-	    		return this.$store.getters.lang
-			},
 			getHeadData: function() {
 				const _self = this
-				this.$http.get('http://www.lutong.com/api/index.php?lang=' + _self.getLang() + '&c=home&m=index').then((response) => {
+				this.$http.get('http://www.lutong.com/api/index.php?lang=' + _self.lang + '&c=home&m=index').then((response) => {
     				this.columnList = response.data.column
   				}, (response) => {
     				// TODO 错误toast提示
   				})
 			},
 			changeLang: function(langType) {
-				if(langType === this.getLang) {
+				if(langType === this.lang) {
 					return
 				} else if(langType === 1) {
 					this.$store.commit('changeLang', langType)
 					localStorage.setItem("lang", langType)
+					this.lang = langType
 					this.getHeadData()
 				} else if(langType === 2) {
 					this.$store.commit('changeLang', langType)
 					localStorage.setItem("lang", langType)
+					this.lang = langType
 					this.getHeadData()
 				} else if(langType === 3) {
 					this.$store.commit('changeLang', langType)
 					localStorage.setItem("lang", langType)
+					this.lang = langType
 					this.getHeadData()
 				} else {
 					this.$store.commit('changeLang', 1)
 					localStorage.setItem("lang", 1)
+					this.lang = 1
 					this.getHeadData()
 				}
+				this.$store.commit('changeLang', langType)
 			},
 			changeColumnID: function(columnID) {
 				this.$store.commit('changeColumnID', columnID)

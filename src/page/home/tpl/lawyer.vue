@@ -29,16 +29,24 @@
 				columnID: 4,
 				partnerList: [],
 				lawyerList: [],
+				lang: 1,
 			}
 		},
 		mounted: function () {
 			this.columnID = this.$route.params.columnID
 			this.loadLawyer()
 		},
+		watch: {
+			'$store.getters.lang': 'changeLang'
+		},
 		methods: {
+			changeLang: function() {
+				this.lang = this.$store.getters.lang
+				this.loadLawyer()
+			},
 			loadLawyer: function() {
 				const _self = this
-				this.$http.get('http://www.lutong.com/api/index.php?c=lawyers&m=index',
+				this.$http.get('http://www.lutong.com/api/index.php?c=lawyers&m=index&lang=' + _self.lang,
 				).then((response) => {
 					const data = response.data
 					const status = response.data.status

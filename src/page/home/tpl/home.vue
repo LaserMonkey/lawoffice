@@ -82,7 +82,8 @@
 				prevButton: '.swiper-button-prev',
 				slidesPerView: 1,
 				spaceBetween: 0,
-				loop: true
+				loop: true,
+				lang: 1,
 			})
 			const swiperHomeHot = new Swiper('.home-hot', {
 				nextButton: '.swiper-button-next',
@@ -101,6 +102,14 @@
 					}
 				}
 			})
+		},
+		watch: {
+			'$store.getters.lang': 'changeLang'
+		},
+		methods: {
+			changeLang: function() {
+				this.lang = this.$store.getters.lang
+			},
 		}
 	}
 </script>

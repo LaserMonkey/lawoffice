@@ -26,23 +26,26 @@
 				page: 1,
 				typeList: [],
 				articleList: [],
+				lang: 1,
 			}
 		},
 		mounted: function () {
 			this.init()
 		},
 		watch: {
-			'$route': 'init'
+			'$route': 'init',
+			'$store.getters.lang': 'init'
 		},
 		methods: {
 			init: function() {
+				this.lang = this.$store.getters.lang
 				this.columnID = this.$route.params.columnID
 				this.typeID = this.$route.query.type
 				this.loadNews()
 			},
 			loadNews: function() {
 				const _self = this
-				this.$http.get('http://www.lutong.com/api/index.php?c=article&m=index&id=' + _self.typeID + '&page=' + _self.page,
+				this.$http.get('http://www.lutong.com/api/index.php?c=article&m=index&lang=' + _self.lang + '&id=' + _self.typeID + '&page=' + _self.page,
 				).then((response) => {
 					const data = response.data
 					const status = response.data.status

@@ -19,16 +19,24 @@
 			return {
 				columnID: 4,
 				practiceList: [],
+				lang: 1,
 			}
 		},
 		mounted: function () {
 			this.columnID = this.$route.params.columnID
-			this.loadLawyer()
+			this.loadPractice()
+		},
+		watch: {
+			'$store.getters.lang': 'changeLang'
 		},
 		methods: {
-			loadLawyer: function() {
+			changeLang: function() {
+				this.lang = this.$store.getters.lang
+				this.loadPractice()
+			},
+			loadPractice: function() {
 				const _self = this
-				this.$http.get('http://www.lutong.com/api/index.php?c=practices&m=index',
+				this.$http.get('http://www.lutong.com/api/index.php?c=practices&m=index&lang=' + _self.lang,
 				).then((response) => {
 					const data = response.data
 					const status = response.data.status

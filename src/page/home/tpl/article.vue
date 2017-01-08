@@ -40,16 +40,19 @@
 				content: "",
 				source: "",
 				title: "",
+				lang: 1,
 			}
 		},
 		mounted: function () {
 			this.init()
 		},
 		watch: {
-			'$route': 'init'
+			'$route': 'init',
+			'$store.getters.lang': 'init'
 		},
 		methods: {
 			init: function() {
+				this.lang = this.$store.getters.lang
 				this.columnID = this.$route.params.columnID
 				this.typeID = this.$route.query.type
 				this.articleID = this.$route.query.id
@@ -58,7 +61,7 @@
 			},
 			loadType: function() {
 				const _self = this
-				this.$http.get('http://www.lutong.com/api/index.php?c=article&m=index&id=' + _self.typeID + '&page=1',
+				this.$http.get('http://www.lutong.com/api/index.php?c=article&m=index&lang=' + _self.lang + '&id=' + _self.typeID + '&page=1',
 				).then((response) => {
 					const data = response.data
 					const status = response.data.status
@@ -73,7 +76,7 @@
 			},
 			loadArticle: function() {
 				const _self = this
-				this.$http.get('http://www.lutong.com/api/index.php?c=article&m=get_article_info&id=' + _self.articleID + '&page=' + _self.page,
+				this.$http.get('http://www.lutong.com/api/index.php?c=article&m=get_article_info&lang=' + _self.lang + '&id=' + _self.articleID + '&page=' + _self.page,
 				).then((response) => {
 					const data = response.data
 					const status = response.data.status

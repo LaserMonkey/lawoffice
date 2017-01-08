@@ -23,13 +23,27 @@
 			<label>文章来源：</label>
 			<input placeholder="请写信息来源" v-model="articleSource">
 		</div>
+		<div class="z-margin-bottom">
+			<label>关联律师：</label>
+			<span class="select-btn" @click="openLawyerPop()">选择</span>
+		</div>
 		<div class="z-margin-bottom z-padding-top">
-			<label>口口口口：</label>
+			<label>文件上传：</label>
 			<file-upload title="点击此处添加附件(可不上传)"></file-upload>
 		</div>
 		<div class="z-margin-bottom z-padding-top">
 			<button @click="saveArticle()">保存</button>
 		</div>
+		<div class="z-pop pop-lawyer" v-show="showPopLawyer">
+			<div class="pop-blank">
+				请选择要关联的律师
+			</div>
+			<div class="z-pop-action z-clearfix">
+				<button @click="linkLawyer()">确定</button>
+				<button class="z-pop-cancel" @click="closePopLawyer()">取消</button>
+			</div>
+		</div>
+		<div class="z-cover" v-show="showCover"></div>
 	</div>
 </template>
 
@@ -47,6 +61,8 @@
 				articleTypeList: [],
 				articleTypeID: '0',
 				lang: 1,
+				showPopLawyer: false,
+				showCover: false,
 				// input content to editor
 				inputContent: '',
 				// output content from editor
@@ -148,7 +164,19 @@
   				}, (response) => {
     				// TODO 错误toast提示
   				})
-			}
+			},
+			openLawyerPop: function() {
+				this.showPopLawyer = true
+				this.showCover = true
+				this.loadLawyer()
+			},
+			loadLawyer: function() {
+
+			},
+			closePopLawyer: function() {
+				this.showPopLawyer = false
+				this.showCover = false
+			},
 		}
 	}
 </script>
@@ -164,6 +192,32 @@
 		.file-uploads {
 			input {
 				font-size: 0;
+			}
+
+			span {
+				font-size: 1.4rem;
+				color: #1BA1FF;
+				cursor: pointer;
+			}
+		}
+
+		.select-btn {
+			font-size: 1.4rem;
+			color: #1BA1FF;
+			cursor: pointer;
+		}
+
+		.pop-lawyer {
+			margin-top: -165px;
+			margin-left: -200px;
+
+			input, select {
+				width: 200px;
+				margin-right: 0;
+			}
+
+			.pop-blank {
+				margin-bottom: 10px;
 			}
 		}
 	}
