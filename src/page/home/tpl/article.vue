@@ -297,18 +297,18 @@
 						a {
 							display: block;
 							width: 100%;
-							height: 10rem;
-							padding-top: 2.5rem;
+							height: 6rem;
+							padding-top: 1.5rem;
 							background-color: #f5f5f5;
 							text-align: center;
 
 							.name {
-								font-size: 2.0rem;
-								margin-bottom: 1.66666667rem;
+								font-size: 1.4rem;
+								margin-bottom: 1rem;
 							}
 
 							.duty {
-								font-size: 1.6rem;
+								font-size: 1rem;
 								color: #999999;
 							}
 						}
