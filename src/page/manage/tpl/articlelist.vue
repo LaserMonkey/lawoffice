@@ -32,6 +32,7 @@
 						<span class="able" @click="blockup(article.id, article.disable, index, 1)">启用</span>
 						<span class="disable" @click="blockup(article.id, article.disable, index, 0)">禁用</span>
 					</div>
+					<span @click="openLawyerPop(article.id)">关联</span>
 					<router-link :to="{name: 'article', query: {articleid: article.id}}">编辑</router-link>
 					<span @click="openPopDel(article.id)">删除</span>
 				</div>
@@ -50,6 +51,18 @@
 			<div class="z-pop-action z-clearfix">
 				<button @click="del()">确定</button>
 				<button class="z-pop-cancel" @click="closePopDel()">取消</button>
+			</div>
+		</div>
+		<div class="z-pop pop-lawyer" v-show="showPopLawyer">
+			<div class="pop-blank">
+				请选择要关联的律师
+			</div>
+			<ul class="link-lawyer">
+				<li v-for="lawyer in lawyerList"><input type="checkbox" :id="lawyer.name+lawyer.id" :value="lawyer.id" v-model="checkedIdList"><label for="checkbox">{{lawyer.name}}</label></li>
+			</ul>
+			<div class="z-pop-action z-clearfix">
+				<button @click="linkLawyer()">确定</button>
+				<button class="z-pop-cancel" @click="cancelLinkLawyer()">取消</button>
 			</div>
 		</div>
 		<div class="z-cover" v-show="showCover"></div>
@@ -78,6 +91,9 @@
 				pageNext: false,
 				totals: 2,
 				pageBtnList: [],
+				showPopLawyer: false,
+				lawyerList: [],
+				checkedIdList: [],
 			}
 		},
 		mounted: function () {
@@ -115,8 +131,26 @@
     					_self.pageNow = data.page
     					_self.totals = data.totals
     					_self.getPageBtnList()
+    					_self.loadLawyer()
     				} else {
     					_self.$router.push('/login')
+    				}
+  				}, (response) => {
+    				// TODO 错误toast提示
+  				})
+			},
+			loadLawyer: function() {
+				const _self = this
+				this.$http.get('http://www.lutong.com/admin/index.php?c=lawyers&m=get_lawyers_list_all&token=' + _self.$store.getters.token,
+				).then((response) => {
+					const data = response.data
+					const status = response.data.status
+    				if(status === 1) {
+    					_self.lawyerList = data.list
+    				} else if(status === 403) {
+    					_self.$router.push('/login')
+    				} else {
+    					alert('status: ' + status)
     				}
   				}, (response) => {
     				// TODO 错误toast提示
@@ -210,7 +244,62 @@
 						}
 					}
 				}
-			}
+			},
+			openLawyerPop: function(articleID) {
+				this.showPopLawyer = true
+				this.showCover = true
+				this.articleID = articleID
+				this.loadLinkLawyerByArticleID(articleID)
+			},
+			loadLinkLawyerByArticleID: function(articleID) {
+				const _self = this
+				this.$http.get('http://www.lutong.com/admin/index.php?c=article&m=get_article_correlated&token=' + _self.$store.getters.token + '&id=' + articleID,
+				).then((response) => {
+					const data = response.data
+					const status = response.data.status
+    				if(status === 1) {
+    					if(data.list != null) {
+    						_self.checkedIdList = []
+    						for(let i = 0; i < data.list.length; i++) {
+    							_self.checkedIdList.push(data.list[i].id)
+    						}
+    					}
+    				} else if(status === 403) {
+    					_self.$router.push('/login')
+    				} else {
+    					alert('status: ' + status)
+    				}
+  				}, (response) => {
+    				// TODO 错误toast提示
+  				})
+			},
+			linkLawyer: function() {
+				const lawyerIdList = this.checkedIdList.join()
+				const _self = this
+				this.$http.get('http://www.lutong.com/admin/index.php?c=article&m=add_article_correlated&token=' + _self.$store.getters.token + '&id=' + _self.articleID + '&lawyers_id=' + lawyerIdList,
+				).then((response) => {
+					const data = response.data
+					const status = response.data.status
+					if(status === 1) {
+						_self.checkedIdList = []
+					} else if(status === 403) {
+						_self.$router.push('/login')
+					} else {
+						alert('status: ' + status)
+					}
+				}, (response) => {
+					// TODO 错误toast提示
+				})
+				this.closePopLawyer()
+			},
+			cancelLinkLawyer: function() {
+				this.checkedIdList = []
+				this.closePopLawyer()
+			},
+			closePopLawyer: function() {
+				this.showPopLawyer = false
+				this.showCover = false
+			},
 		}
 	}
 </script>
@@ -235,6 +324,41 @@
 			li {
 				div {
 					width: 30%;
+				}
+			}
+		}
+
+		.pop-lawyer {
+			width: 420px;
+			margin-top: -165px;
+			margin-left: -210px;
+
+			input, select {
+				width: 200px;
+				margin-right: 0;
+			}
+
+			.pop-blank {
+				margin-bottom: 10px;
+			}
+
+			.link-lawyer {
+				li {
+					display: inline-block;
+					width: 100px;
+
+					input {
+						width: 14px;
+						height: 14px;
+						margin: 3px 3px 3px 4px;
+						padding: 0;
+						vertical-align: middle;
+						-webkit-appearance: checkbox;
+					}
+
+					label {
+						margin-right: 0;
+					}
 				}
 			}
 		}

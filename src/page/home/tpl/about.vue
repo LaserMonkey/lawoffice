@@ -27,17 +27,26 @@
 			} else {
 				this.mobile = false
 			}
-			if(this.$route.query.id != undefined) {
-				this.aboutID = this.$route.query.a
-			}
-			this.loadAbout()
+			this.init()
 		},
 		watch: {
-			'$store.getters.lang': 'changeLang'
+			'$route': 'init',
+			'$store.getters.lang': 'changeLang',
 		},
 		methods: {
+			init: function() {
+				if(this.$route.query.id != undefined) {
+					this.aboutID = this.$route.query.a
+				}
+				if(localStorage.getItem("lang") != null) {
+					this.lang = localStorage.getItem("lang")
+				}
+				this.changeLang()
+			},
 			changeLang: function() {
-				this.lang = this.$store.getters.lang
+				if(localStorage.getItem("lang") != null) {
+					this.lang = localStorage.getItem("lang")
+				}
 				this.loadAbout()
 			},
 			loadAbout: function() {

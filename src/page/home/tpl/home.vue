@@ -102,6 +102,9 @@
 					}
 				}
 			})
+			if(localStorage.getItem("lang") != null) {
+				this.lang = localStorage.getItem("lang")
+			}
 		},
 		watch: {
 			'$store.getters.lang': 'changeLang'

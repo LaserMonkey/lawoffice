@@ -11,4 +11,10 @@
 		background-repeat: no-repeat;
 		background-size: cover;
 	}
+
+@media only screen and (max-width: 480px) {
+	.banner {
+		height: 8.33333333rem;
+	}
+}
 </style>

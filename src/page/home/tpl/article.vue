@@ -45,6 +45,11 @@
 			}
 		},
 		mounted: function () {
+			if(navigator.userAgent.match(/(phone|pod|iPhone|iPod|ios|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)){
+				this.mobile = true
+			} else {
+				this.mobile = false
+			}
 			this.init()
 		},
 		watch: {
@@ -53,12 +58,9 @@
 		},
 		methods: {
 			init: function() {
-				if(navigator.userAgent.match(/(phone|pod|iPhone|iPod|ios|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)){
-					this.mobile = true
-				} else {
-					this.mobile = false
+				if(localStorage.getItem("lang") != null) {
+					this.lang = localStorage.getItem("lang")
 				}
-				this.lang = this.$store.getters.lang
 				this.columnID = this.$route.params.columnID
 				this.typeID = this.$route.query.type
 				this.articleID = this.$route.query.id
@@ -128,6 +130,10 @@
 				background-color: #df001f;
 				color: white;
 				cursor: default;
+
+				a {
+					color: white;
+				}
 			}
 		}
 
@@ -246,9 +252,10 @@
 			width: 100%;
 			margin: 0;
     		padding: 1.5rem 0;
+    		border: 0;
 
 			h2 {
-				margin-bottom: 2rem;
+				margin-bottom: 1rem;
 				padding: 0 1.5rem;
 				font-size: 2rem;
 				font-weight: normal;
@@ -274,6 +281,11 @@
 				margin-bottom: 3rem;
 				padding: 0 1.5rem;
 				font-size: 1.4rem;
+
+				p {
+					font-size: 1.6rem;
+					line-height: 2.2rem;
+				}
 			}
 
 			.lawyer-link {

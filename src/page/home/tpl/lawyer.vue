@@ -33,6 +33,9 @@
 			}
 		},
 		mounted: function () {
+			if(localStorage.getItem("lang") != null) {
+				this.lang = localStorage.getItem("lang")
+			}
 			this.columnID = this.$route.params.columnID
 			this.loadLawyer()
 		},
@@ -41,7 +44,9 @@
 		},
 		methods: {
 			changeLang: function() {
-				this.lang = this.$store.getters.lang
+				if(localStorage.getItem("lang") != null) {
+					this.lang = localStorage.getItem("lang")
+				}
 				this.loadLawyer()
 			},
 			loadLawyer: function() {
@@ -116,4 +121,60 @@
 			}
 		}
 	}
+
+@media only screen and (max-width: 480px) {
+	.lawyer {
+		padding: 1.66666667rem 0;
+
+		h2 {
+			margin-bottom: 0.83333333rem;
+			padding: 0 1.25rem;
+			font-size: 1.8rem;
+		}
+
+		h3 {
+			margin-bottom: 0.83333333rem;
+			padding: 0 1.25rem;
+			font-size: 1.2rem;
+		}
+
+		ul {
+			margin-bottom: 1.66666667rem;
+			padding: 0;
+
+			li {
+				float: left;
+				width: 50%;
+				margin-bottom: 1.66666667rem;
+				padding: 0 1.25rem;
+
+				a {
+					display: block;
+					width: 100%;
+					height: 5rem;
+					padding-top: 1rem;
+					background-color: #f5f5f5;
+					text-align: center;
+
+					.name {
+						font-size: 1.4rem;
+						margin-bottom: 0.5rem;
+					}
+
+					.duty {
+						font-size: 1rem;
+						color: #999999;
+					}
+				}
+			}
+		}
+
+		.lawyer {
+
+			li {
+				width: 50%;
+			}
+		}
+	}
+}
 </style>

@@ -40,7 +40,9 @@
 		},
 		methods: {
 			init: function() {
-				this.lang = this.$store.getters.lang
+				if(localStorage.getItem("lang") != null) {
+					this.lang = localStorage.getItem("lang")
+				}
 				this.columnID = this.$route.params.columnID
 				this.lawyerID = this.$route.query.id
 				this.loadLawyerInfo()
@@ -129,4 +131,67 @@
 			}
 		}
 	}
+
+@media only screen and (max-width: 480px) {
+	.lawyer-detail {
+		padding: 1.66666667rem 1.25rem;
+
+		.lawyer-detail-left {
+			float: initial;
+			width: 100%;
+
+			.lawyer-name {
+				margin-bottom: 0.83333333rem;
+				font-size: 1.8rem;
+				font-weight: 400;
+			}
+
+			.lawyer-duty {
+				margin-bottom: 1.25rem;
+				font-size: 1.2rem;
+				color: #999999;
+			}
+
+			.lawyer-info {
+				margin-bottom: 1.66666667rem;
+				border-bottom: solid 0.08333333rem #E6E6E6;
+				font-size: 1.4rem;
+				color: #666666;
+			}
+
+			.lawyer-report {
+				font-size: 1.4rem;
+
+				.lawyer-report-title {
+					margin-bottom: 1.5rem;
+				}
+				
+				ul {
+
+					li {
+						margin-bottom: 1.5rem;
+						overflow: hidden;
+						white-space: nowrap;
+						text-overflow: ellipsis;
+						color: #df001f;
+
+						a {
+							color: #df001f;
+						}
+					}
+				}
+			}
+		}
+
+		.lawyer-detail-right {
+			display: none;
+			float: right;
+			width: 40%;
+
+			img {
+				width: 100%;
+			}
+		}
+	}
+}
 </style>

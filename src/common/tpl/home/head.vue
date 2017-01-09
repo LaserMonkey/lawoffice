@@ -42,8 +42,8 @@
 				</ul>
 				<ul>
 					<li>
-    					<router-link :to="{name: 'about', params:{columnID: 2}, query: {id: 3}}" @click.native="changeColumnID(2)">联系我们</router-link>
-    					<router-link :to="{name: 'about', params:{columnID: 2}, query: {id: 4}}" @click.native="changeColumnID(2)">加入陆通</router-link>
+    					<router-link :to="{name: 'about', params:{columnID: 2}, query: {id: 4}}" @click.native="changeColumnID(2)">联系我们</router-link>
+    					<router-link :to="{name: 'about', params:{columnID: 2}, query: {id: 3}}" @click.native="changeColumnID(2)">加入陆通</router-link>
 					</li>
 				</ul>
 				<ul class="language">
@@ -82,6 +82,7 @@
 				this.$store.commit('changeColumnID', this.$route.params.columnID)
 				this.columnID = this.$route.params.columnID
 			}
+			this.lang = localStorage.getItem("lang")
 			this.getHeadData()
 		},
 		methods: {
@@ -117,7 +118,6 @@
 					this.lang = 1
 					this.getHeadData()
 				}
-				this.$store.commit('changeLang', langType)
 				this.closeCoverMenu()
 			},
 			changeColumnID: function(columnID) {
@@ -191,23 +191,23 @@
 @media only screen and (max-width: 480px) {
 	.head {
 		position: relative;
-		height: 5.5rem;
-		padding: 1.5rem 2rem;
+		height: 5rem;
+		padding: 1.25rem 1.66666667rem;
 		line-height: 2.5rem;
 		font-size: 1.8rem;
 		text-align: center;
 
 		label {
-			font-size: 1.8rem;
+			font-size: 2rem;
 		}
 
 		.column-btn {
 			position: absolute;
-			top: 1.8rem;
-			left: 2rem;
-			width: 2rem;
-			height: 2rem;
-			line-height: 0.9rem;
+			top: 1.6rem;
+			left: 1.66666667rem;
+			width: 1.66666667rem;
+			height: 1.66666667rem;
+			line-height: 0.6rem;
 			border-top: solid 0.2rem #df001f;
 			border-bottom: solid 0.2rem #df001f;
 
@@ -242,22 +242,22 @@
 		}
 
 		.column-list {
-			padding: 1rem 3rem;
+			padding: 0.83333333rem 2.5rem;
 			font-size: 1.8rem;
 			color: white;
 
 			ul {
-				margin-bottom: 2rem;
+				margin-bottom: 1.66666667rem;
 				border-bottom: solid 0.1rem rgba(255, 255, 255, 0.2);
 
 				li {
 					display: block;
 					margin-right: 0;
-    				margin-bottom: 2rem;
+    				margin-bottom: 1.66666667rem;
     				text-align: left;
 
     				a {
-    					margin-right: 2rem;
+    					margin-right: 1.66666667rem;
     					color: white;
     				}
 				}

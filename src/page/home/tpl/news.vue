@@ -1,5 +1,5 @@
 <template>
-	<div class="new-list z-clearfix">
+	<div class="new-list" :class="!mobile ? 'z-clearfix' : ''">
 		<ul class="menu">
 			<li v-for="type in typeList" :class="typeID == type.id ? 'action' : ''">
 				<router-link :to="{name: 'news', params: {columnID: columnID}, query: {type: type.id}}">{{type.name}}</router-link>
@@ -18,7 +18,7 @@
 			<div class="z-page-prev" @click="goPage(pageNow-1)" v-show="pageNow != 1">上一页</div>
 			<div class="z-page-num" v-for="pageBtn in pageBtnList" :class="pageBtn == pageNow ? 'action' : ''" @click="goPage(pageBtn)">{{pageBtn}}</div>
 			<div class="z-page-next" @click="goPage(pageNow+1)" v-show="pageNow != pageCount">下一页</div>
-			<div class="z-page-jump"><label>跳转到第</label><input type="number" min="1" :max="pageCount" v-model="pageInput" @keyup.enter="goPage(pageInput)"><label>页，共{{pageCount}}页</label></div>
+			<div class="z-page-jump" v-if="!mobile"><label>跳转到第</label><input type="number" min="1" :max="pageCount" v-model="pageInput" @keyup.enter="goPage(pageInput)"><label>页，共{{pageCount}}页</label></div>
 		</div>
 	</div>
 </template>
@@ -41,9 +41,15 @@
 				pageNext: false,
 				totals: 2,
 				pageBtnList: [],
+				mobile: false,
 			}
 		},
 		mounted: function () {
+			if(navigator.userAgent.match(/(phone|pod|iPhone|iPod|ios|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)){
+				this.mobile = true
+			} else {
+				this.mobile = false
+			}
 			this.init()
 		},
 		watch: {
@@ -52,7 +58,9 @@
 		},
 		methods: {
 			init: function() {
-				this.lang = this.$store.getters.lang
+				if(localStorage.getItem("lang") != null) {
+					this.lang = localStorage.getItem("lang")
+				}
 				this.columnID = this.$route.params.columnID
 				this.typeID = this.$route.query.type
 				this.loadNews()
@@ -116,75 +124,163 @@
 </script>
 
 <style lang="sass">
-.new-list {
-	.menu {
-		float: left;
-		width: 30%;
-		padding: 2.5rem 4.16666666rem 2.5rem 5rem;
+	.new-list {
+		.menu {
+			float: left;
+			width: 30%;
+			padding: 2.5rem 4.16666666rem 2.5rem 5rem;
 
-		li {
-			width: 100%;
-			height: 5.83333333rem;
-			margin-bottom: 0.83333333rem;
-			line-height: 5.83333333rem;
-			text-align: center;
-			font-size: 2rem;
-			cursor: pointer;
+			li {
+				width: 100%;
+				height: 5.83333333rem;
+				margin-bottom: 0.83333333rem;
+				line-height: 5.83333333rem;
+				text-align: center;
+				font-size: 2rem;
+				cursor: pointer;
 
-			a {
-				display: block;
-			}
-		}
-
-		.action {
-			background-color: #df001f;
-			color: white;
-			cursor: default;
-		}
-	}
-
-	.news {
-		float: right;
-		width: 70%;
-		margin-top: 2.5rem;
-		margin-bottom: 2.5rem;
-		border-left: solid 0.08333333rem rgba(0, 0, 0, 0.1);
-
-		li {
-			padding: 3.33333333rem 6.35% 1.66666667rem;
-
-			h2 {
-				margin-bottom: 2rem;
-				font-size: 2.8rem;
-				font-weight: normal;
-				color: #444444;
+				a {
+					display: block;
+				}
 			}
 
-			p {
-				margin-bottom: 1.66666667rem;
-				line-height: 2rem;
-				font-size: 1.6rem;
-				color: #666666;
-			}
+			.action {
+				background-color: #df001f;
+				cursor: default;
 
-			time {
-				display: block;
-				font-size: 1.4rem;
-				color: #999999;
-			}
-
-			&:hover {
-				background-color: #FAFAFA;
-
-				h2 {
-					color: #df001f;
+				a {
+					color: white;
 				}
 			}
 		}
+
+		.news {
+			float: right;
+			width: 70%;
+			margin-top: 2.5rem;
+			margin-bottom: 2.5rem;
+			border-left: solid 0.08333333rem rgba(0, 0, 0, 0.1);
+
+			li {
+				padding: 3.33333333rem 6.35% 1.66666667rem;
+	
+				h2 {
+					margin-bottom: 2rem;
+					font-size: 2.8rem;
+					font-weight: normal;
+					color: #444444;
+				}
+
+				p {
+					margin-bottom: 1.66666667rem;
+					line-height: 2rem;
+					font-size: 1.6rem;
+					color: #666666;
+				}
+
+				time {
+					display: block;
+					font-size: 1.4rem;
+					color: #999999;
+				}
+
+				&:hover {
+					background-color: #FAFAFA;
+
+					h2 {
+						color: #df001f;
+					}
+				}
+			}
+		}
+
+		.z-page-ctrl {
+			float: right;
+		}
 	}
 
-	.z-page-ctrl {
-		float: right;
+@media only screen and (max-width: 480px) {
+	.new-list {
+		.menu {
+			float: initial;
+			width: 100%;
+    		padding: 1rem;
+    		border-bottom: solid 0.1rem rgba(0, 0, 0, 0.1);
+			overflow-x: scroll;
+			overflow-y: hidden;
+
+			li {
+				display: inline-block;
+				width: auto;
+				height: auto;
+				margin-bottom: 0;
+				padding: 1rem 2.3rem;
+				line-height: initial;
+				font-size: 1.4rem;
+				cursor: pointer;
+			}
+
+			.action {
+				background-color: #df001f;
+				cursor: default;
+
+				a {
+					color: white;
+				}
+			}
+		}
+
+		.news {
+			float: initial;
+			width: 100%;
+			margin: 0;
+    		padding: 2rem 1.5rem 0 1.5rem;
+
+			li {
+				margin-bottom: 2rem;
+				padding: 0;
+	
+				h2 {
+					margin-bottom: 0.41666667rem;
+					font-size: 1.8rem;
+					font-weight: normal;
+					color: #444444;
+				}
+
+				p {
+					margin-top: 0;
+					margin-bottom: 0.41666667rem;
+					line-height: 2.5rem;
+					font-size: 1.6rem;
+					color: #666666;
+				}
+
+				time {
+					display: block;
+					font-size: 1.4rem;
+					color: #999999;
+				}
+
+				&:hover {
+					background-color: #FAFAFA;
+
+					h2 {
+						color: #df001f;
+					}
+				}
+			}
+		}
+
+		.z-page-ctrl {
+			float: initial;
+			width: 100%;
+			text-align: center;
+
+			div {
+				display: inline-block;
+				float: initial;
+			}
+		}
 	}
 }
 </style>
