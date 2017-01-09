@@ -9,4 +9,10 @@
 		font-size: 1.2rem;
 		color: #999999;
 	}
+
+@media only screen and (max-width: 480px) {
+	.foot {
+		padding: 1.3rem 4.5rem;
+	}
+}
 </style>

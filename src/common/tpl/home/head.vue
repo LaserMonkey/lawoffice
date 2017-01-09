@@ -1,5 +1,5 @@
 <template>
-	<div class="head">
+	<div class="head" v-if="!mobile">
 		<div class="z-clearfix setting">
 			<ul class="about-us">
 				<li>联系我们</li>
@@ -22,6 +22,40 @@
 			</li>
 		</ul>
 	</div>
+	<div class="head" v-else-if="mobile">
+		<div class="column-btn" @click="openCoverMenu()"><div></div></div>
+		<label v-for="column in columnList" v-if="column.id == columnID">{{column.name}}</label>
+		<div class="cover-menu" v-if="showCoverMenu">
+			<div class="head">
+				<div class="column-btn" @click="closeCoverMenu()"><div></div></div>
+			</div>
+			<div class="column-list">
+				<ul class="column">
+					<li v-for="(column, index) in columnList">
+    					<router-link v-if="column.id==1" :to="{name: 'home', params:{columnID:column.id}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
+    					<router-link v-else-if="column.id==2" :to="{name: 'about', params:{columnID: column.id}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
+    					<router-link v-else-if="column.id==3" :to="{name: 'practice', params:{columnID:column.id}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
+    					<router-link v-else-if="column.id==4" :to="{name: 'lawyer', params:{columnID:column.id}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
+    					<router-link v-else-if="column.id==5" :to="{name: 'news', params: {columnID: column.id}, query: {type: column.type}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
+    					<router-link v-else :to="{name: 'column', params:{columnID:column.id}, query: {type: column.type}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
+					</li>
+				</ul>
+				<ul>
+					<li>
+    					<router-link :to="{name: 'about', params:{columnID: 2}, query: {id: 3}}" @click.native="changeColumnID(2)">联系我们</router-link>
+    					<router-link :to="{name: 'about', params:{columnID: 2}, query: {id: 4}}" @click.native="changeColumnID(2)">加入陆通</router-link>
+					</li>
+				</ul>
+				<ul class="language">
+					<li>
+						<a @click="changeLang(1)">中文简体</a>
+						<a @click="changeLang(2)">中文繁體</a>
+						<a @click="changeLang(3)">ENGLISH</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
 </template>
 
 <script type="text/javascript">
@@ -31,9 +65,16 @@
 				columnList: [],
 				columnID: 1,
 				lang: 1,
+				mobile: false,
+				showCoverMenu: false,
 			}
 		},
 		mounted: function () {
+			if(navigator.userAgent.match(/(phone|pod|iPhone|iPod|ios|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)){
+				this.mobile = true
+			} else {
+				this.mobile = false
+			}
 			if(parseInt(this.$route.params.columnID) !== parseInt(this.$route.params.columnID)) {
 				this.$store.commit('changeColumnID', 1)
 				window.location.href="/home#/1"
@@ -77,10 +118,18 @@
 					this.getHeadData()
 				}
 				this.$store.commit('changeLang', langType)
+				this.closeCoverMenu()
 			},
 			changeColumnID: function(columnID) {
 				this.$store.commit('changeColumnID', columnID)
 				this.columnID = columnID
+				this.closeCoverMenu()
+			},
+			openCoverMenu: function() {
+				this.showCoverMenu = true
+			},
+			closeCoverMenu: function() {
+				this.showCoverMenu = false
 			}
 		}
 	}
@@ -138,4 +187,86 @@
 			}
 		}
 	}
+
+@media only screen and (max-width: 480px) {
+	.head {
+		position: relative;
+		height: 5.5rem;
+		padding: 1.5rem 2rem;
+		line-height: 2.5rem;
+		font-size: 1.8rem;
+		text-align: center;
+
+		label {
+			font-size: 1.8rem;
+		}
+
+		.column-btn {
+			position: absolute;
+			top: 1.8rem;
+			left: 2rem;
+			width: 2rem;
+			height: 2rem;
+			line-height: 0.9rem;
+			border-top: solid 0.2rem #df001f;
+			border-bottom: solid 0.2rem #df001f;
+
+			div {
+				display: inline-block;
+				width: 100%;
+				height: 0;
+				border-top: solid 0.2rem #df001f;
+			}
+		}
+	}
+
+	.cover-menu {
+		position: fixed;
+		top: 0;
+		left: 0;
+		height: 100%;
+		width: 100%;
+		background-color: rgba(0, 0, 0, 0.85);
+		z-index: 9;
+
+		.head {
+
+			.column-btn {
+				border-top: solid 0.2rem white;
+				border-bottom: solid 0.2rem white;
+
+				div {
+					border-top: solid 0.2rem white;
+				}
+			}
+		}
+
+		.column-list {
+			padding: 1rem 3rem;
+			font-size: 1.8rem;
+			color: white;
+
+			ul {
+				margin-bottom: 2rem;
+				border-bottom: solid 0.1rem rgba(255, 255, 255, 0.2);
+
+				li {
+					display: block;
+					margin-right: 0;
+    				margin-bottom: 2rem;
+    				text-align: left;
+
+    				a {
+    					margin-right: 2rem;
+    					color: white;
+    				}
+				}
+			}
+
+			.language {
+				border-bottom: 0;
+			}
+		}
+	}
+}
 </style>

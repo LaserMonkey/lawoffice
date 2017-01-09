@@ -1,5 +1,5 @@
 <template>
-	<div class="article-list z-clearfix">
+	<div class="article-list" :class="!mobile ? 'z-clearfix' : ''">
 		<ul class="menu">
 			<li v-for="type in typeList" :class="typeID == type.id ? 'action' : ''">
 				<router-link :to="{name: 'news', params: {columnID: columnID}, query: {type: type.id}}">{{type.name}}</router-link>
@@ -41,6 +41,7 @@
 				source: "",
 				title: "",
 				lang: 1,
+				mobile: false,
 			}
 		},
 		mounted: function () {
@@ -52,6 +53,11 @@
 		},
 		methods: {
 			init: function() {
+				if(navigator.userAgent.match(/(phone|pod|iPhone|iPod|ios|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)){
+					this.mobile = true
+				} else {
+					this.mobile = false
+				}
 				this.lang = this.$store.getters.lang
 				this.columnID = this.$route.params.columnID
 				this.typeID = this.$route.query.type
@@ -98,104 +104,213 @@
 </script>
 
 <style lang="sass">
-.article-list {
-	.menu {
-		float: left;
-		width: 30%;
-		padding: 2.5rem 4.16666666rem 2.5rem 5rem;
+	.article-list {
+		.menu {
+			float: left;
+			width: 30%;
+			padding: 2.5rem 4.16666666rem 2.5rem 5rem;
 
-		li {
-			width: 100%;
-			height: 5.83333333rem;
-			margin-bottom: 0.83333333rem;
-			line-height: 5.83333333rem;
-			text-align: center;
-			font-size: 2rem;
-			cursor: pointer;
+			li {
+				width: 100%;
+				height: 5.83333333rem;
+				margin-bottom: 0.83333333rem;
+				line-height: 5.83333333rem;
+				text-align: center;
+				font-size: 2rem;
+				cursor: pointer;
 
-			a {
-				display: block;
+				a {
+					display: block;
+				}
+			}
+
+			.action {
+				background-color: #df001f;
+				color: white;
+				cursor: default;
 			}
 		}
 
-		.action {
-			background-color: #df001f;
-			color: white;
-			cursor: default;
+		.article {
+			float: right;
+			width: 70%;
+			margin-top: 2.5rem;
+			margin-bottom: 2.5rem;
+			padding: 2.5rem 0;
+			border-left: solid 0.08333333rem rgba(0, 0, 0, 0.1);
+
+			h2 {
+				margin-bottom: 2rem;
+				padding: 0 5rem;
+				font-size: 3rem;
+				font-weight: normal;
+				color: #444444;
+			}
+
+			.article-info {
+				margin-bottom: 2.5rem;
+				padding: 0 5rem;
+				font-size: 1.4rem;
+				color: #999999;
+
+				label {
+					margin-right: 0;
+				}
+
+				span {
+					margin-right: 2.5rem;
+				}
+			}
+		
+			.article-content {
+				margin-bottom: 2.5rem;
+				padding: 0 5rem;
+				font-size: 1.8rem;
+			}
+
+			.lawyer-link {
+
+				h3 {
+					margin-bottom: 1.66666667rem;
+					padding: 0 5rem;
+					font-size: 2.4rem;
+				}
+
+				ul {
+					margin-bottom: 1.66666667rem;
+					padding: 0 4.16666667rem;
+
+					li {
+						float: left;
+						width: 33.33333333%;
+						margin-bottom: 1.66666667rem;
+						padding: 0 0.83333333rem;
+
+						a {
+							display: block;
+							width: 100%;
+							height: 10rem;
+							padding-top: 2.5rem;
+							background-color: #f5f5f5;
+							text-align: center;
+
+							.name {
+								font-size: 2.0rem;
+								margin-bottom: 1.66666667rem;
+							}
+
+							.duty {
+								font-size: 1.6rem;
+								color: #999999;
+							}
+						}
+					}
+				}
+			}
 		}
 	}
+	
+@media only screen and (max-width: 480px) {
+	.article-list {
+		.menu {
+			float: initial;
+			width: 100%;
+    		padding: 1rem;
+    		border-bottom: solid 0.1rem rgba(0, 0, 0, 0.1);
+			overflow-x: scroll;
+			overflow-y: hidden;
 
-	.article {
-		float: right;
-		width: 70%;
-		margin-top: 2.5rem;
-		margin-bottom: 2.5rem;
-		padding: 2.5rem 0;
-		border-left: solid 0.08333333rem rgba(0, 0, 0, 0.1);
-
-		h2 {
-			margin-bottom: 2rem;
-			padding: 0 5rem;
-			font-size: 3rem;
-			font-weight: normal;
-			color: #444444;
-		}
-
-		.article-info {
-			margin-bottom: 2.5rem;
-			padding: 0 5rem;
-			font-size: 1.4rem;
-			color: #999999;
-
-			label {
-				margin-right: 0;
+			li {
+				display: inline-block;
+				width: auto;
+				height: auto;
+				margin-bottom: 0;
+				padding: 1rem 2.3rem;
+				line-height: initial;
+				font-size: 1.4rem;
+				cursor: pointer;
 			}
 
-			span {
-				margin-right: 2.5rem;
+			.action {
+				background-color: #df001f;
+				cursor: default;
+
+				a {
+					color: white;
+				}
 			}
 		}
+
+		.article {
+			float: initial;
+			width: 100%;
+			margin: 0;
+    		padding: 1.5rem 0;
+
+			h2 {
+				margin-bottom: 2rem;
+				padding: 0 1.5rem;
+				font-size: 2rem;
+				font-weight: normal;
+				color: #444444;
+			}
+
+			.article-info {
+				margin-bottom: 2rem;
+				padding: 0 1.5rem;
+				font-size: 1.2rem;
+				color: #999999;
+
+				label {
+					margin-right: 0;
+				}
+
+				span {
+					margin-right: 2rem;
+				}
+			}
 		
-		.article-content {
-			margin-bottom: 2.5rem;
-			padding: 0 5rem;
-			font-size: 1.8rem;
-		}
-
-		.lawyer-link {
-
-			h3 {
-				margin-bottom: 1.66666667rem;
-				padding: 0 5rem;
-				font-size: 2.4rem;
+			.article-content {
+				margin-bottom: 3rem;
+				padding: 0 1.5rem;
+				font-size: 1.4rem;
 			}
 
-			ul {
-				margin-bottom: 1.66666667rem;
-				padding: 0 4.16666667rem;
+			.lawyer-link {
 
-				li {
-					float: left;
-					width: 33.33333333%;
-					margin-bottom: 1.66666667rem;
-					padding: 0 0.83333333rem;
+				h3 {
+					margin-bottom: 1rem;
+					padding: 0 1.5rem;
+					font-size: 1.6rem;
+				}
 
-					a {
-						display: block;
-						width: 100%;
-						height: 10rem;
-						padding-top: 2.5rem;
-						background-color: #f5f5f5;
-						text-align: center;
+				ul {
+					margin-bottom: 1rem;
+					padding: 0 1.25rem;
 
-						.name {
-							font-size: 2.0rem;
-							margin-bottom: 1.66666667rem;
-						}
+					li {
+						float: left;
+						width: 33.33333333%;
+						margin-bottom: 1rem;
+						padding: 0 0.25rem;
 
-						.duty {
-							font-size: 1.6rem;
-							color: #999999;
+						a {
+							display: block;
+							width: 100%;
+							height: 10rem;
+							padding-top: 2.5rem;
+							background-color: #f5f5f5;
+							text-align: center;
+
+							.name {
+								font-size: 2.0rem;
+								margin-bottom: 1.66666667rem;
+							}
+
+							.duty {
+								font-size: 1.6rem;
+								color: #999999;
+							}
 						}
 					}
 				}
@@ -203,5 +318,4 @@
 		}
 	}
 }
-	
 </style>
