@@ -34,6 +34,7 @@
 </template>
 
 <script type="text/javascript">
+	import $ from 'jquery'
 	import Editor from 'tpl/manage/editor.vue'
 	import FileUpload from 'vue-upload-component'
 
@@ -47,12 +48,9 @@
 				articleTypeList: [],
 				articleTypeID: '0',
 				lang: 1,
-				// input content to editor
 				inputContent: '',
-				// output content from editor
 				outputContent: '',
-				// set image upload api url
-				uploadUrl: 'http://www.lutong.com/upload'
+				uploadUrl: '/upload',
 			}
 		},
 		components: {

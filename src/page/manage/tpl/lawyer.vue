@@ -27,6 +27,7 @@
 </template>
 
 <script type="text/javascript">
+	import $ from 'jquery'
 	import Editor from 'tpl/manage/editor.vue'
 	import FileUpload from 'vue-upload-component'
 
@@ -40,12 +41,9 @@
 				lawyerTypeList: [],
 				lawyerTypeID: 1,
 				lang: 1,
-				// input content to editor
 				inputContent: '',
-				// output content from editor
 				outputContent: '',
-				// set image upload api url
-				uploadUrl: '/api/v1/help/upload/wangEditorH5File'
+				uploadUrl: '/upload',
 			}
 		},
 		components: {

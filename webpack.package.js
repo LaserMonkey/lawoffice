@@ -80,9 +80,16 @@ var config = {
 	},
 
 	plugins: [
-		new webpack.HotModuleReplacementPlugin(),
-
-		new UglifyJsPlugin()
+		new webpack.DefinePlugin({
+			"process.env": {
+				NODE_ENV: JSON.stringify("production")
+			}
+		}),
+		new UglifyJsPlugin({
+			compress: {
+				warnings: false
+			}
+		})
 	],
  
 	vue: {
@@ -92,7 +99,8 @@ var config = {
 	},
 
 	externals: {
-		'UE': 'UE',
+		wangEditor: 'wangEditor',
+		jquery: 'window.$'
 	}
 
 }

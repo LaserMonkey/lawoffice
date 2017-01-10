@@ -52,6 +52,8 @@ var config = {
 		    tpl: path.join(SRC_PATH, './common/tpl'),
 		    store: path.join(SRC_PATH, './common/store'),
 		    swiper: path.join(SRC_PATH, './asset/tool/swiper'),
+		    jquery: path.join(SRC_PATH, './asset/tool/jquery'),
+		    editor: path.join(SRC_PATH, './asset/tool/editor'),
 		},
 		extensions: ['', '.js', '.css', '.scss','.vue', '.html'],
 		modulesDirectories: ['node_modules']
@@ -104,7 +106,8 @@ var config = {
 	},
 
 	externals: {
-		'UE': 'UE',
+		jquery: 'window.$',
+		wangEditer: 'wangEditer'
 	}
 }
 
