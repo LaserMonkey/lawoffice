@@ -20,6 +20,7 @@
 				columnID: 4,
 				practiceList: [],
 				lang: 1,
+				groupNum: 4,
 			}
 		},
 		mounted: function () {
@@ -46,7 +47,33 @@
 					const data = response.data
 					const status = response.data.status
     				if(status === 1) {
-    					_self.practiceList = data.list
+    					let dataList = data.list
+    					if(dataList.length != 0) {
+    						for(let i = 0; i < dataList.length; i++) {
+    							if(dataList[i].list.length != 0) {
+    								let dataGroupList = dataList[i].list
+    								let groupList = []
+    								let group = []
+    								for(let j = 0; j < dataGroupList.length; j++) {
+    									if(j == 0 || (j != 0 && j%_self.groupNum !=0)) {
+    										group.push(dataGroupList[j])
+    									} else {
+    										groupList.push(group)
+    										group = []
+    										group.push(dataGroupList[j])
+    									}
+    									if(j == dataGroupList.length-1) {
+    										groupList.push(group)
+    									}
+    								}
+    								console.log(dataList[i])
+    								console.log(groupList)
+    								dataList[i].push('groupList', groupList)
+    							}
+    						}
+    					}
+    					_self.practiceList = dataList
+    					console.log(_self.practiceList)
     				} else {
     					alert('status: ' + status)
     				}
