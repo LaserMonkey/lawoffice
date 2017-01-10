@@ -99,8 +99,8 @@ var config = {
 	},
 
 	externals: {
-		wangEditor: 'wangEditor',
-		jquery: 'window.$'
+		jquery: 'window.$',
+		wangEditer: 'wangEditer'
 	}
 
 }

@@ -27,7 +27,6 @@
 </template>
 
 <script type="text/javascript">
-	import $ from 'jquery'
 	import Editor from 'tpl/manage/editor.vue'
 	import FileUpload from 'vue-upload-component'
 

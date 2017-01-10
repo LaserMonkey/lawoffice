@@ -22,7 +22,6 @@
 </template>
 
 <script type="text/javascript">
-	import $ from 'jquery'
 	import Editor from 'tpl/manage/editor.vue'
 
 	export default {
