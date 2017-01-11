@@ -92,7 +92,7 @@
 			},
 			showPracticeDetail: function(groudListID, practiceID) {
 				if(this.practiceID != practiceID) {
-    				this.content = ""
+    				this.content = "等待数据加载中..."
 					this.groudListID = groudListID
 					this.practiceID = practiceID
 					this.loadPracticeDetail()

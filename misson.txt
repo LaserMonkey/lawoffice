@@ -3,3 +3,21 @@
 
 后：
 上传
+
+			const _self = this
+				const options = {
+					emulateJSON: true,
+					user_id: this.studentUsername,
+					password: this.studentPassword,
+					grade_code: this.schoolCode,
+					remember: Number(this.rememberStudent)
+				}
+				this.$http.post('/student/login', options).then((response) => {
+					if(response.data.code == 0) {
+						window.location.href="/module/studentmainindex.html"
+					} else {
+						_self.errorStudent = response.data.message
+					}
+				}, (response) => {
+					_self.errorStudent = response.data.message
+				})
