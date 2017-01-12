@@ -17,9 +17,12 @@
 		</div>
 		<v-editor :input-content="inputContent" :upload-url="uploadUrl" v-model="outputContent"></v-editor>
 		<div class="z-margin-bottom z-padding-top">
-			<label>口口口口：</label>
-			<file-upload title="点击此处添加附件(可不上传)"></file-upload>
+			<label>图片上传：</label>
+			<file-upload title="点击此处添加附件(可不上传)" post-action="./upload" :events="events" :name="name" :accept="accept" :multiple="false" :size="1024 * 1024 * 10" ref="upload" :files="files"></file-upload>
 		</div>
+		<ul>
+			<li v-for="(file, index) in files">{{file.name}}</li>
+		</ul>
 		<div class="z-margin-bottom z-padding-top">
 			<button @click="saveLawyer()">保存</button>
 		</div>
@@ -43,6 +46,32 @@
 				inputContent: '',
 				outputContent: '',
 				uploadUrl: '/upload',
+
+				events: {
+					add(file, component) {
+						console.log('add')
+						console.log(component)
+						console.log(component.active)
+						component.active = true;
+						console.log(file)
+						file.headers['X-Filename'] = encodeURIComponent(file.name)
+						file.data.finename = file.name
+						// file.putAction = 'xxx'
+						// file.postAction = 'xxx'
+					},
+					progress(file, component) {
+						console.log('progress ' + file.progress);
+					},
+					after(file, component) {
+						console.log('after');
+					},
+					before(file, component) {
+						console.log('before');
+					},
+				},
+				name: "name",
+				accept: 'image/*',
+				files: [],
 			}
 		},
 		components: {

@@ -21,3 +21,7 @@
 				}, (response) => {
 					_self.errorStudent = response.data.message
 				})
+
+https://github.com/marchFantasy/vue-file-upload
+https://github.com/lian-yue/vue-upload-component/
+https://github.com/kfei/vue-s3-dropzone
