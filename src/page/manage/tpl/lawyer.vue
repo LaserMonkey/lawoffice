@@ -18,7 +18,7 @@
 		<v-editor :input-content="inputContent" :upload-url="uploadUrl" v-model="outputContent"></v-editor>
 		<div class="z-margin-bottom z-padding-top">
 			<label>图片上传：</label>
-			<file-upload title="点击此处添加附件(可不上传)" :post-action="uploadUrl" :events="events" :name="name" :accept="accept" :multiple="false" :size="1024 * 1024 * 10" ref="upload" :files="files"></file-upload>
+			<file-upload title="点击此处添加附件(可不上传)" :post-action="uploadUrl" :events="events" :name="typeName" :accept="accept" :multiple="false" :size="1024 * 1024 * 10" ref="upload" :files="files"></file-upload>
 			<!-- <input type="file" v-on:change="uploadFile"></input><button @click="uploadFileAction()">上传</button> -->
 		</div>
 		<ul>
@@ -46,8 +46,7 @@
 				lang: 1,
 				inputContent: '',
 				outputContent: '',
-				uploadUrl: '../admin/index.php?c=article&m=upload_attachment&token=' + this.$store.getters.token,
-
+				uploadUrl: '/admin/index.php?c=sys&m=update_img&token=' + this.$store.getters.token,
 				events: {
 					add(file, component) {
 						console.log('add')
@@ -72,7 +71,7 @@
 						console.log(component)
 					},
 				},
-				name: "img",
+				typeName: "img",
 				accept: 'image/*',
 				files: [],
 
