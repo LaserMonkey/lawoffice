@@ -1,34 +1,22 @@
 <template>
-	<div class="aboutlist z-main-right">
-		<div class="about-type">
-			<label>口口：</label>
-			<select name="aboutLang" v-model="lang" @change="getAboutList()">
-				<option value="1">简体</option>
-				<option value="2">繁體</option>
-				<option value="3">ENGLISH</option>
-			</select>
-			<input placeholder="按标题模糊查询" v-model="search" @keyup.enter="getAboutList()">
-		</div>
-		<div class="add-about">
-			<button @click="$router.push('/about')">新增</button>
+	<div class="accountlist z-main-right">
+		<div class="add-account">
+			<button @click="openPopAccount()">新建账户</button>
 		</div>
 		<ul class="z-table">
 			<li class="z-table-first">
-				<h3 class="about-title">标题</h3>
-				<time>最后修改时间</time>
-				<div>操作</div>
+				<h3 class="account-title">用户名</h3>
+				<div>新增时间</div>
+				<time>最后登录时间</time>
+				<div class="options">操作</div>
 			</li>
-			<li v-for="(about, index) in aboutList">
-				<h3 class="about-title">{{about.title}}</h3>
-				<time :datetime="about.dateline | dateFormat('yyyy年MM月dd日')">{{about.dateline | dateFormat('yyyy年MM月dd日')}}</time>
+			<li v-for="(account, index) in accountList">
+				<h3 class="account-title">{{account.username}}</h3>
+				<time :datetime="account.jointime | dateFormat('yyyy年MM月dd日')">{{account.jointime | dateFormat('yyyy年MM月dd日')}}</time>
+				<time :datetime="account.logintime | dateFormat('yyyy年MM月dd日')">{{account.logintime | dateFormat('yyyy年MM月dd日')}}</time>
 				<div class="options">
-					<div :class="about.disable == '0' ? 'z-blockup-li z-clearfix' : 'z-using-li z-clearfix'">
-						<span class="able" @click="blockup(about.id, about.disable, index, 1)">启用</span>
-						<span class="disable" @click="blockup(about.id, about.disable, index, 0)">禁用</span>
-					</div>
-					<router-link :to="{name: 'about', query: {aboutid: about.id}}">编辑</router-link>
-					<span @click="openPopSort(about.id, about.sort)">排序</span>
-					<span @click="openPopDel(about.id)">删除</span>
+					<span @click="openPopInit(account.uid)">密码重置</span>
+					<span @click="openPopDel(account.uid)">删除</span>
 				</div>
 			</li>
 		</ul>
@@ -38,14 +26,23 @@
 			<div class="z-page-next" @click="goPage(pageNow+1)" v-show="pageNow != pageCount">下一页</div>
 			<div class="z-page-jump"><label>跳转到第</label><input type="number" min="1" :max="pageCount" v-model="pageInput" @keyup.enter="goPage(pageInput)"><label>页，共{{pageCount}}页</label></div>
 		</div>
-		<div class="z-pop z-pop-sort" v-show="showPopSort">
-			<div class="z-sort">
-				<label>设置排序：</label>
-				<input type="number" min="0" v-model="aboutSort">
+		<div class="z-pop pop-account" v-show="showPopAccount">
+			<div class="pop-blank">
+				<input type="text" placeholder="请输入新建的用户名" v-model="username">
+			</div>
+			<div class="pop-blank">注：初始密码同用户名</div>
+			<div class="z-pop-action z-clearfix">
+				<button @click="addAccount()">确定</button>
+				<button class="z-pop-cancel" @click="closePopAccount()">取消</button>
+			</div>
+		</div>
+		<div class="z-pop z-pop-del" v-show="showPopInit">
+			<div class="pop-blank">
+				此账号密码将会被初始化，与用户名相同！
 			</div>
 			<div class="z-pop-action z-clearfix">
-				<button @click="updateSort()">确定</button>
-				<button class="z-pop-cancel" @click="closePopSort()">取消</button>
+				<button @click="pwdInit()">确定</button>
+				<button class="z-pop-cancel" @click="closePopInit()">取消</button>
 			</div>
 		</div>
 		<div class="z-pop z-pop-del" v-show="showPopDel">
@@ -65,13 +62,21 @@
 	export default {
 		data: function() {
 			return {
-				aboutList: [],
+				accountList: [],
+				accountTypeList: [],
+				accountTypeID: 1,
 				lang: 1,
 				search: "",
-				aboutSort: "0",
-				showPopSort: false,
-				showCover: false,
+				accountID: "",
+				username: "",
+				oldPwd: "",
+				newPwd: "",
+				showPopAccount : false,
+				showAdd: false,
+				showChangePwd: false,
+				showPopInit: false,
 				showPopDel: false,
+				showCover: false,
 				pageCount: 1,
 				pageNow: 1,
 				perpage: 10,
@@ -84,18 +89,18 @@
 		},
 		mounted: function () {
 			this.$nextTick(function () {
-				this.getAboutList()
+				this.getAccountList()
 			})
 		},
 		methods: {
-			getAboutList: function() {
+			getAccountList: function() {
 				const _self = this
-				this.$http.get('http://www.lutong.com/admin/index.php?c=about&m=index&page=' + _self.pageNow + '&name=' + _self.search + '&lang=' + _self.lang + '&token=' + _self.$store.getters.token,
+				this.$http.get('http://www.lutong.com/admin/index.php?c=admin&m=index&page=' + _self.pageNow + '&token=' + _self.$store.getters.token,
 				).then((response) => {
 					const data = response.data
 					const status = response.data.status
     				if(status === 1) {
-    					_self.aboutList = data.list
+    					_self.accountList = data.list
     					_self.pageCount = data.pages
     					_self.pageNow = data.page
     					_self.totals = data.totals
@@ -109,46 +114,20 @@
     				// TODO 错误toast提示
   				})
 			},
-			blockup: function(aboutID, aboutDisable, index, action) {
-				if(aboutDisable == action || (aboutDisable > '0' && action> '0')) {
-					return
-				}
-				const _self = this
-				this.$http.get('http://www.lutong.com/admin/index.php?c=about&m=disable_about&token=' + _self.$store.getters.token + '&id=' + aboutID,
-				).then((response) => {
-					const data = response.data
-					const status = response.data.status
-    				if(status === 1) {
-    					if(aboutDisable == '0') {
-    						aboutDisable = new Date().getTime()
-    					} else {
-    						aboutDisable = '0'
-    					}
-    					_self.aboutList[index].disable = aboutDisable
-    				} else if(status === 403) {
-    					_self.$router.push('/login')
-    				} else {
-    					alert('status: ' + status)
-    				}
-  				}, (response) => {
-    				// TODO 错误toast提示
-  				})
-			},
-			openPopSort: function(aboutID, aboutSort) {
-				this.aboutID = aboutID
-				this.aboutSort = aboutSort
+			openPopAccount: function() {
+				this.username = ""
 				this.showCover = true
-				this.showPopSort = true
+				this.showPopAccount = true
 			},
-			updateSort: function() {
+			addAccount: function() {
 				const _self = this
-				this.$http.get('http://www.lutong.com/admin/index.php?c=about&m=sort_about&token=' + _self.$store.getters.token + '&id=' + _self.aboutID + '&sort=' + _self.aboutSort,
+				this.$http.get('http://www.lutong.com/admin/index.php?c=admin&m=add_admin&token=' + _self.$store.getters.token + "&username=" + _self.username,
 				).then((response) => {
 					const data = response.data
 					const status = response.data.status
     				if(status === 1) {
-    					_self.getAboutList()
-    					_self.closePopSort()
+    					_self.closePopAccount()
+    					_self.getAccountList()
     				} else if(status === 403) {
     					_self.$router.push('/login')
     				} else {
@@ -158,23 +137,50 @@
     				// TODO 错误toast提示
   				})
 			},
-			closePopSort: function() {
-				this.showPopSort = false
+			closePopAccount: function() {
+				this.showPopAccount = false
 				this.showCover = false
 			},
-			openPopDel: function(aboutID) {
-				this.aboutID = aboutID
+			openPopInit: function(accountID) {
+				this.accountID = accountID
+				this.showCover = true
+				this.showPopInit = true
+			},
+			pwdInit: function() {
+				const _self = this
+				this.$http.get('http://www.lutong.com/admin/index.php?c=admin&m=init_password&token=' + _self.$store.getters.token + '&uid=' + _self.accountID,
+				).then((response) => {
+					const data = response.data
+					const status = response.data.status
+    				if(status === 1) {
+    					alert("重置密码成功！")
+    					_self.closePopInit()
+    				} else if(status === 403) {
+    					_self.$router.push('/login')
+    				} else {
+    					alert('status: ' + status)
+    				}
+  				}, (response) => {
+    				// TODO 错误toast提示
+  				})
+			},
+			closePopInit: function() {
+				this.showPopInit = false
+				this.showCover = false
+			},
+			openPopDel: function(accountID) {
+				this.accountID = accountID
 				this.showCover = true
 				this.showPopDel = true
 			},
 			del: function() {
 				const _self = this
-				this.$http.get('http://www.lutong.com/admin/index.php?c=about&m=del_about&token=' + _self.$store.getters.token + '&id=' + _self.aboutID,
+				this.$http.get('http://www.lutong.com/admin/index.php?c=admin&m=del_admin&token=' + _self.$store.getters.token + '&uid=' + _self.accountID,
 				).then((response) => {
 					const data = response.data
 					const status = response.data.status
     				if(status === 1) {
-    					_self.getAboutList()
+    					_self.getAccountList()
     					_self.closePopDel()
     				} else if(status === 403) {
     					_self.$router.push('/login')
@@ -192,7 +198,7 @@
 			goPage: function(pageNow) {
 				if(pageNow >= 1 && pageNow <= this.pageCount && pageNow != this.pageNow) {
 					this.pageNow = pageNow
-					this.getAboutList()
+					this.getAccountList()
 				}
 			},
 			getPageBtnList: function() {
@@ -222,7 +228,7 @@
 						}
 					}
 				}
-			}
+			},
 		},
 		filters: {
 			dateFormat: function(value, fmt) {
@@ -246,14 +252,15 @@
 </script>
 
 <style lang="sass">
-	.aboutlist {
+	.accountlist {
+		padding-top: 20px;
 		padding-bottom: 20px;
 		
-		.about-type {
+		.account-type {
 			padding: 30px 40px 20px;
 		}
 		
-		.add-about {
+		.add-account {
 			padding: 0 20px 15px;
 		}
 
@@ -262,18 +269,22 @@
 			li {
 
 				h3 {
-					width: 20%;
-				}
-
-				div {
-					width: 50%;
+					width: 15%;
 				}
 
 				time {
-					width: 30%;
+					width: 20%;
 				}
 
+				.options {
+					width: 45%;
+				}
 			}
+		}
+
+		.pop-account {
+			margin-top: -100px;
+			margin-left: -210px;
 		}
 	}
 </style>

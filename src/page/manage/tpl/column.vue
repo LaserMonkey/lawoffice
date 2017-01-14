@@ -17,7 +17,7 @@
 				<h3 class="column-name">{{column.name2}}</h3>
 				<h3 class="column-name">{{column.name3}}</h3>
 				<div>{{column.type_name == "" ? "固定栏目" : column.type_name}}</div>
-				<time :datetime="getMyDate(column.dateline)">{{getMyDate(column.dateline)}}</time>
+				<time :datetime="column.dateline | dateFormat('yyyy年MM月dd日')">{{column.dateline | dateFormat('yyyy年MM月dd日')}}</time>
 				<div>
 					<span @click="openPopSort(column.id, column.sort)">排序</span>
 					<span @click="openPopColumn(index, column.id)" v-if="column.fixed == 0">编辑</span>
@@ -116,9 +116,6 @@
   				}, (response) => {
     				// TODO 错误toast提示
   				})
-			},
-			getMyDate: function(time) {
-				return (new Date(parseInt(time) * 1000)).toLocaleString()
 			},
 			openPopColumn: function(index, columnID) {
 				this.columnID = columnID
@@ -252,7 +249,25 @@
 				this.showPopDel = false
 				this.showCover = false
 			},
-		}
+		},
+		filters: {
+			dateFormat: function(value, fmt) {
+				let date = new Date(value * 1000)
+				let o = {
+					"M+": date.getMonth() + 1, //月份 
+					"d+": date.getDate(), //日 
+					"h+": date.getHours(), //小时 
+					"m+": date.getMinutes(), //分 
+					"s+": date.getSeconds(), //秒 
+					"q+": Math.floor((date.getMonth() + 3) / 3), //季度 
+					"S": date.getMilliseconds() //毫秒 
+				};
+				if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (date.getFullYear() + "").substr(4 - RegExp.$1.length));
+				for (let k in o)
+					if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+				return fmt
+			}
+		},
 	}
 </script>
 

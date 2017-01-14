@@ -23,6 +23,7 @@ import PracticeType from './tpl/practicetype.vue'
 import AboutList from './tpl/aboutlist.vue'
 import About from './tpl/about.vue'
 import ArticleType from './tpl/articletype.vue'
+import Account from './tpl/account.vue'
 
 const routes = [{
 	path: '/',
@@ -133,6 +134,14 @@ const routes = [{
 	name: 'about',
     components: {
 		default: About,
+		head: Head,
+		menu: Menu
+	}
+}, {
+	path: '/account',
+	name: 'account',
+    components: {
+		default: Account,
 		head: Head,
 		menu: Menu
 	}

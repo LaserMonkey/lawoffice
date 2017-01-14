@@ -26,7 +26,7 @@
 			<li v-for="(article, index) in articleList">
 				<h3 class="article-title">{{article.title}}</h3>
 				<div class="article-list-type">{{article.type_name}}</div>
-				<time :datetime="getMyDate(article.dateline)" :alt="getMyDate(article.dateline)">{{getMyDate(article.dateline)}}</time>
+				<time :datetime="article.dateline | dateFormat('yyyy年MM月dd日')">{{article.dateline | dateFormat('yyyy年MM月dd日')}}</time>
 				<div class="options">
 					<div :class="article.disable == '0' ? 'z-blockup-li z-clearfix' : 'z-using-li z-clearfix'">
 						<span class="able" @click="blockup(article.id, article.disable, index, 1)">启用</span>
@@ -155,9 +155,6 @@
   				}, (response) => {
     				// TODO 错误toast提示
   				})
-			},
-			getMyDate: function(time) {
-				return (new Date(parseInt(time) * 1000)).toLocaleString()
 			},
 			blockup: function(articleID, articleDisable, index, action) {
 				if(articleDisable == action || (articleDisable > '0' && action> '0')) {
@@ -300,7 +297,25 @@
 				this.showPopLawyer = false
 				this.showCover = false
 			},
-		}
+		},
+		filters: {
+			dateFormat: function(value, fmt) {
+				let date = new Date(value * 1000)
+				let o = {
+					"M+": date.getMonth() + 1, //月份 
+					"d+": date.getDate(), //日 
+					"h+": date.getHours(), //小时 
+					"m+": date.getMinutes(), //分 
+					"s+": date.getSeconds(), //秒 
+					"q+": Math.floor((date.getMonth() + 3) / 3), //季度 
+					"S": date.getMilliseconds() //毫秒 
+				};
+				if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (date.getFullYear() + "").substr(4 - RegExp.$1.length));
+				for (let k in o)
+					if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+				return fmt
+			}
+		},
 	}
 </script>
 

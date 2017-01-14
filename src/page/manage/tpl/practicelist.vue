@@ -26,7 +26,7 @@
 			<li v-for="(practice, index) in practiceList">
 				<h3 class="practice-title">{{practice.title}}</h3>
 				<div>{{practice.type_name}}</div>
-				<time :datetime="getMyDate(practice.dateline)" :alt="getMyDate(practice.dateline)">{{getMyDate(practice.dateline)}}</time>
+				<time :datetime="practice.dateline | dateFormat('yyyy年MM月dd日')">{{practice.dateline | dateFormat('yyyy年MM月dd日')}}</time>
 				<div class="options">
 					<div :class="practice.disable == '0' ? 'z-blockup-li z-clearfix' : 'z-using-li z-clearfix'">
 						<span class="able" @click="blockup(practice.id, practice.disable, index, 1)">启用</span>
@@ -117,9 +117,6 @@
   				}, (response) => {
     				// TODO 错误toast提示
   				})
-			},
-			getMyDate: function(time) {
-				return (new Date(parseInt(time) * 1000)).toLocaleString()
 			},
 			blockup: function(practiceID, practiceDisable, index, action) {
 				if(practiceDisable == action || (practiceDisable > '0' && action> '0')) {
@@ -235,7 +232,25 @@
 					}
 				}
 			}
-		}
+		},
+		filters: {
+			dateFormat: function(value, fmt) {
+				let date = new Date(value * 1000)
+				let o = {
+					"M+": date.getMonth() + 1, //月份 
+					"d+": date.getDate(), //日 
+					"h+": date.getHours(), //小时 
+					"m+": date.getMinutes(), //分 
+					"s+": date.getSeconds(), //秒 
+					"q+": Math.floor((date.getMonth() + 3) / 3), //季度 
+					"S": date.getMilliseconds() //毫秒 
+				};
+				if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (date.getFullYear() + "").substr(4 - RegExp.$1.length));
+				for (let k in o)
+					if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+				return fmt
+			}
+		},
 	}
 </script>
 

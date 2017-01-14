@@ -5,7 +5,7 @@
 				<label>用户名：</label><input placeholder="用户名" v-model="username">
 			</div>
 			<div class="login-input">
-				<label>密码：</label><input type="password" placeholder="密码" v-model="password">
+				<label>密码：</label><input type="password" placeholder="密码" v-model="password" @keyup.enter="login()">
 				<span class="z-error" v-show="loginErr">{{loginErrMsg}}</span>
 			</div>
 			<button @click="login()">登录</button>
@@ -33,15 +33,16 @@
 			login: function() {
 				this.loginErr = false
 				const _self = this
-				this.$http.get('http://www.lutong.com/admin/index.php?c=user&m=user_login&username=' + _self.username + '&password=' + _self.password,
-					// TODO	上线修改
-					// {
-					// 	c: 'user',
-					// 	m: 'user_login',
-					// 	username: _self.username,
-					// 	password: _self.password
-					// }
-				).then((response) => {
+				const options = {
+					username: this.username,
+					password: this.password
+				}
+				this.$http({
+                		url: '/admin/index.php?c=user&m=user_login',
+						method: 'POST',
+						body: options,
+						emulateJSON:true
+					}).then((response) => {
 					const data = response.data
 					const status = data.status
     				if(status === -1) {

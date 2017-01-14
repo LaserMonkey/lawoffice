@@ -4,28 +4,19 @@
 后：
 上传
 
-			const _self = this
-				const options = {
-					emulateJSON: true,
-					user_id: this.studentUsername,
-					password: this.studentPassword,
-					grade_code: this.schoolCode,
-					remember: Number(this.rememberStudent)
+post请求
+			const options = {
+					username: this.username,
+					password: this.password
 				}
-				this.$http.post('/student/login', options).then((response) => {
-					if(response.data.code == 0) {
-						window.location.href="/module/studentmainindex.html"
-					} else {
-						_self.errorStudent = response.data.message
-					}
-				}, (response) => {
-					_self.errorStudent = response.data.message
-				})
+				this.$http({
+                		url: '/admin/index.php?c=user&m=user_login',
+						method: 'POST',
+						body: options,
+						emulateJSON:true
+					}).then((response) => {
 
-https://github.com/marchFantasy/vue-file-upload
-https://github.com/lian-yue/vue-upload-component/
-https://github.com/kfei/vue-s3-dropzone
-
+事件过滤器
 	{{tpl.createtime | dateFormat('yyyy年MM月dd日')}}
 	filters:{
 		dateFormat: function(value,fmt){

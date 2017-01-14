@@ -8,7 +8,6 @@
 				<h3 class="practicetype-name">简体名称</h3>
 				<h3 class="practicetype-name">繁体名称</h3>
 				<h3 class="practicetype-name">英文名称</h3>
-				<div>栏目类型</div>
 				<time>最后修改时间</time>
 				<div class="options">操作</div>
 			</li>
@@ -16,8 +15,7 @@
 				<h3 class="practicetype-name">{{practiceType.name1}}</h3>
 				<h3 class="practicetype-name">{{practiceType.name2}}</h3>
 				<h3 class="practicetype-name">{{practiceType.name3}}</h3>
-				<div>{{practiceType.type_name == "" ? "固定栏目" : practiceType.type_name}}</div>
-				<time :datetime="getMyDate(practiceType.dateline)">{{getMyDate(practiceType.dateline)}}</time>
+				<time :datetime="practiceType.dateline | dateFormat('yyyy年MM月dd日')">{{practiceType.dateline | dateFormat('yyyy年MM月dd日')}}</time>
 				<div class="options">
 					<div :class="practiceType.disable == '0' ? 'z-blockup-li z-clearfix' : 'z-using-li z-clearfix'">
 						<span class="able" @click="blockup(practiceType.id, practiceType.disable, index, 1)">启用</span>
@@ -109,9 +107,6 @@
   				}, (response) => {
     				// TODO 错误toast提示
   				})
-			},
-			getMyDate: function(time) {
-				return (new Date(parseInt(time) * 1000)).toLocaleString()
 			},
 			openPopPracticeType: function(index, practiceTypeID) {
 				this.practiceTypeID = practiceTypeID
@@ -249,7 +244,25 @@
 				this.showPopDel = false
 				this.showCover = false
 			},
-		}
+		},
+		filters: {
+			dateFormat: function(value, fmt) {
+				let date = new Date(value * 1000)
+				let o = {
+					"M+": date.getMonth() + 1, //月份 
+					"d+": date.getDate(), //日 
+					"h+": date.getHours(), //小时 
+					"m+": date.getMinutes(), //分 
+					"s+": date.getSeconds(), //秒 
+					"q+": Math.floor((date.getMonth() + 3) / 3), //季度 
+					"S": date.getMilliseconds() //毫秒 
+				};
+				if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (date.getFullYear() + "").substr(4 - RegExp.$1.length));
+				for (let k in o)
+					if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+				return fmt
+			}
+		},
 	}
 </script>
 
@@ -270,16 +283,12 @@
 					width: 15%;
 				}
 
-				div {
-					width: 15%;
-				}
-
 				time {
 					width: 20%;
 				}
 				
 				.options {
-					width: 20%;
+					width: 35%;
 				}
 			}
 		}

@@ -10,6 +10,7 @@
 			<li><router-link to="/practicelist">业务列表</router-link></li>
 			<li><router-link to="/practicetype">业务类型</router-link></li>
 			<li><router-link to="/aboutlist">关于我们</router-link></li>
+			<li><router-link to="/account">账号管理</router-link></li>
 		</ul>
 	</div>
 </template>
