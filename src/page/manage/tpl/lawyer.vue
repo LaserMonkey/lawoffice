@@ -16,10 +16,13 @@
 			</select>
 		</div>
 		<v-editor :input-content="inputContent" :upload-url="uploadUrl" v-model="outputContent"></v-editor>
+		<ul class="upload">
+			<li v-show="imgUrl != ''">已传图片：{{imgUrl}}</li>
+		</ul>
 		<div class="z-margin-bottom z-padding-top">
 			<label>图片上传：</label>
 			<file-upload title="点击此处添加附件(可不上传)" :post-action="uploadUrl" :events="events" :name="typeName" :accept="accept" :multiple="false" :size="1024 * 1024 * 10" ref="upload" :files="files"></file-upload>
-			<!-- <input type="file" v-on:change="uploadFile"></input><button @click="uploadFileAction()">上传</button> -->
+			<label>上传进度：</label><span>{{uploadProgress}}</span>
 		</div>
 		<ul>
 			<li v-for="(file, index) in files">{{file.name}}</li>
@@ -48,34 +51,33 @@
 				outputContent: '',
 				uploadUrl: '/admin/index.php?c=sys&m=update_img&token=' + this.$store.getters.token,
 				events: {
+					_self: this,
 					add(file, component) {
-						console.log('add')
-						console.log(component)
-						console.log(component.active)
 						component.active = true;
-						console.log(file)
 						file.headers['X-Filename'] = encodeURIComponent(file.name)
 						file.data.finename = file.name
-						// file.putAction = 'xxx'
-						// file.postAction = 'xxx'
-					},
-					progress(file, component) {
-						console.log('progress ' + file.progress)
-					},
-					after(file, component) {
-						console.log('after')
 					},
 					before(file, component) {
-						console.log('before')
-						console.log(file)
-						console.log(component)
+						this._self.uploadProgress = "等待上传"
+					},
+					progress(file, component) {
+						this._self.uploadProgress = parseInt(file.progress) - 1 + '%'
+					},
+					after(file, component) {
+						if(file.response.status == 1) {
+							this._self.uploadProgress = "上传完毕"
+							this._self.imgUrl = file.response.img
+						} else {
+							alert("上传图片失败！")
+						}
 					},
 				},
 				typeName: "img",
 				accept: 'image/*',
 				files: [],
-
 				uploadFile: [],
+				imgUrl: "",
+				uploadProgress: "等待上传",
 			}
 		},
 		components: {
@@ -98,8 +100,20 @@
 			},
 			addLawyer: function() {
 				const _self = this
-				this.$http.get('http://www.lutong.com/admin/index.php?c=lawyers&m=add_lawyers&token=' + _self.$store.getters.token + '&type=' + _self.lawyerTypeID + '&lang=' + _self.lang + '&name=' + _self.lawyerName + '&content=' + _self.outputContent,
-				).then((response) => {
+				const options = {
+					token: this.$store.getters.token,
+					type: this.lawyerTypeID,
+					lang: this.lang,
+					name: this.lawyerName,
+					content: this.outputContent,
+					img: this.imgUrl
+				}
+				this.$http({
+                		url: '/admin/index.php?c=lawyers&m=add_lawyers',
+						method: 'POST',
+						body: options,
+						emulateJSON:true
+					}).then((response) => {
 					const data = response.data
 					const status = response.data.status
     				if(status === 1) {
@@ -115,8 +129,22 @@
 			},
 			editLawyer: function() {
 				const _self = this
-				this.$http.get('http://www.lutong.com/admin/index.php?c=lawyers&m=update_about&token=' + _self.$store.getters.token + '&type=' + _self.lawyerTypeID + '&lang=' + _self.lang + '&name=' + _self.lawyerName + '&content=' + _self.outputContent + '&id=' + _self.lawyerID,
-				).then((response) => {
+				const options = {
+					token: this.$store.getters.token,
+					type: this.lawyerTypeID,
+					lang: this.lang,
+					name: this.lawyerName,
+					content: this.outputContent,
+					img: this.imgUrl,
+					id: this.lawyerID,
+					img: this.imgUrl
+				}
+				this.$http({
+                		url: '/admin/index.php?c=lawyers&m=update_about',
+						method: 'POST',
+						body: options,
+						emulateJSON:true
+					}).then((response) => {
 					const data = response.data
 					const status = response.data.status
     				if(status === 1) {
@@ -142,6 +170,7 @@
     					_self.lang = data.info.lang
     					_self.inputContent = data.info.content
     					_self.outputContent = data.info.content
+    					_self.imgUrl = data.info.img
     				} else if(status === 403) {
     					_self.$router.push('/login')
     				} else {
@@ -151,30 +180,6 @@
     				// TODO 错误toast提示
   				})
 			},
-			uploadFileAction: function() {
-				const _self = this
-				const options = {
-					emulateJSON: true,
-					c: 'article',
-					m: 'upload_attachment',
-					token: this.$store.getters.token,
-					attachment: this.uploadFile
-				}
-				this.$http.post('http://www.lutong.com/admin/index.php', options).then((response) => {
-					const data = response.data
-					const status = response.data.status
-    				console.log(response)
-    				if(status === 1) {
-    					console.log(data)
-    				} else if(status === 403) {
-    					_self.$router.push('/login')
-    				} else {
-    					alert('status: ' + status)
-    				}
-  				}, (response) => {
-    				// TODO 错误toast提示
-  				})
-			}
 		}
 	}
 </script>
@@ -192,6 +197,10 @@
 			input {
 				font-size: 0;
 			}
+		}
+
+		.upload {
+			font-size: 1.4rem;
 		}
 	}
 </style>
