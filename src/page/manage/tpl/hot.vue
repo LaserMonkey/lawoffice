@@ -2,7 +2,7 @@
 	<div class="hot z-main-right">
 		<ul>
 			<li v-for="(hot, index) in hotList">
-				<div :style="'background-image:url(' + hot.img + ')'" @click="openPopHhot(index, hot.id)" class="hotImg">
+				<div :style="'background-image:url(' + hot.img + ')'" @click="openPopHot(index, hot.id)" class="hotImg">
 					<h3>{{hot.title}}</h3>
 					<div class="z-del-btn" @click.stop="openPopDelHot(hot.id)">+</div>
 				</div>
@@ -53,6 +53,17 @@
 				<label>英文链接：</label>
 				<input type="text" placeholder="请输入英文文章链接地址" v-model="hotLink3">
 			</div>
+			<ul class="upload">
+				<li v-show="imgUrl != ''">已传图片：{{imgUrl}}</li>
+			</ul>
+			<div class="z-margin-bottom z-padding-top">
+				<label>背景图片：</label>
+				<file-upload title="点击此处添加附件(可不上传)" :post-action="uploadUrl" :events="events" :name="typeName" :accept="accept" :multiple="false" :size="1024 * 1024 * 10" ref="upload" :files="files"></file-upload>
+				<label>上传进度：</label><span>{{uploadProgress}}</span>
+			</div>
+			<ul>
+				<li v-for="(file, index) in files">{{file.name}}</li>
+			</ul>
 			<div class="z-pop-action z-clearfix">
 				<button @click="addHot()" v-show="showHotAddBtn">确定</button>
 				<button @click="editHot()" v-show="showHotEditBtn">确定</button>
@@ -105,6 +116,35 @@
 				showPopDelHot: false,
 				hotSort: 0,
 				showPopSortHot: false,
+				uploadUrl: '/admin/index.php?c=sys&m=update_img&token=' + this.$store.getters.token,
+				events: {
+					_self: this,
+					add(file, component) {
+						component.active = true;
+						file.headers['X-Filename'] = encodeURIComponent(file.name)
+						file.data.finename = file.name
+					},
+					before(file, component) {
+						this._self.uploadProgress = "等待上传"
+					},
+					progress(file, component) {
+						this._self.uploadProgress = parseInt(file.progress) - 1 + '%'
+					},
+					after(file, component) {
+						if(file.response.status == 1) {
+							this._self.uploadProgress = "上传完毕"
+							this._self.imgUrl = file.response.img
+						} else {
+							alert("上传图片失败！")
+						}
+					},
+				},
+				typeName: "img",
+				accept: 'image/*',
+				files: [],
+				uploadFile: [],
+				imgUrl: "",
+				uploadProgress: "等待上传",
 			}
 		},
 		components: {
@@ -148,6 +188,7 @@
 					this.hotTitle3 = ""
 					this.hotLink3 = ""
 					this.hotDescribe3 = ""
+					this.imgUrl = ""
 					this.showHotEditBtn = false
 					this.showHotAddBtn = true
 				} else {
@@ -161,6 +202,7 @@
 					this.hotLink3 = this.hotList[index].url3
 					this.hotDescribe3 = this.hotList[index].describe3
 					this.hotSort = this.hotList[index].sort
+					this.imgUrl = this.hotList[index].img
 					this.showHotAddBtn = false
 					this.showHotEditBtn = true
 				}
@@ -169,7 +211,7 @@
 			},
 			addHot: function(index) {
 				const _self = this
-				this.$http.get('http://www.lutong.com/admin/index.php?c=sys&m=add_custom&token=' + _self.$store.getters.token + '&title1=' + _self.hotTitle1 + '&url1=' + _self.hotLink1 + '&describe1=' + _self.hotDescribe1 + '&title2=' + _self.hotTitle2 + '&url2=' + _self.hotLink2 + '&describe2=' + _self.hotDescribe2 + '&title3=' + _self.hotTitle3 + '&url3=' + _self.hotLink3 + '&describe3=' + _self.hotDescribe3,
+				this.$http.get('http://www.lutong.com/admin/index.php?c=sys&m=add_custom&token=' + _self.$store.getters.token + '&title1=' + _self.hotTitle1 + '&url1=' + _self.hotLink1 + '&describe1=' + _self.hotDescribe1 + '&title2=' + _self.hotTitle2 + '&url2=' + _self.hotLink2 + '&describe2=' + _self.hotDescribe2 + '&title3=' + _self.hotTitle3 + '&url3=' + _self.hotLink3 + '&describe3=' + _self.hotDescribe3 + '&img=' + _self.imgUrl,
 				).then((response) => {
 					const data = response.data
 					const status = response.data.status
@@ -187,7 +229,7 @@
 			},
 			editHot: function() {
 				const _self = this
-				this.$http.get('http://www.lutong.com/admin/index.php?c=sys&m=update_custom&token=' + _self.$store.getters.token + '&id=' + _self.hotID + '&title1=' + _self.hotTitle1 + '&url1=' + _self.hotLink1 + '&describe1=' + _self.hotDescribe1 + '&title2=' + _self.hotTitle2 + '&url2=' + _self.hotLink2 + '&describe2=' + _self.hotDescribe2 + '&title3=' + _self.hotTitle3 + '&url3=' + _self.hotLink3 + '&describe3=' + _self.hotDescribe3,
+				this.$http.get('http://www.lutong.com/admin/index.php?c=sys&m=update_custom&token=' + _self.$store.getters.token + '&id=' + _self.hotID + '&title1=' + _self.hotTitle1 + '&url1=' + _self.hotLink1 + '&describe1=' + _self.hotDescribe1 + '&title2=' + _self.hotTitle2 + '&url2=' + _self.hotLink2 + '&describe2=' + _self.hotDescribe2 + '&title3=' + _self.hotTitle3 + '&url3=' + _self.hotLink3 + '&describe3=' + _self.hotDescribe3 + '&img=' + _self.imgUrl,
 				).then((response) => {
 					const data = response.data
 					const status = response.data.status

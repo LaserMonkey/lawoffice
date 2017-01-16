@@ -80,10 +80,9 @@
 			const swiperHomeBanner = new Swiper('.home-banner', {
 				nextButton: '.swiper-button-next',
 				prevButton: '.swiper-button-prev',
-				slidesPerView: 1,
+				slidesPerView: 'auto',
 				spaceBetween: 0,
 				loop: true,
-				lang: 1,
 			})
 			const swiperHomeHot = new Swiper('.home-hot', {
 				nextButton: '.swiper-button-next',
@@ -119,6 +118,7 @@
 
 <style lang="sass">
 	.home-banner {
+		width: 100%;
 		height: 41.66666666rem;
 		
 		.swiper-slide {
@@ -219,4 +219,42 @@
 			left: 0;
 		}
 	}
+
+@media only screen and (max-width: 480px) {
+	.home-banner {
+		height: 20rem;
+
+		.swiper-slide {
+			
+			h2 {
+				top: 85%;
+				width: 84%;
+				font-size: 1.5rem;
+			}
+		}
+
+		.swiper-button {
+			bottom: 18%;
+			width: 60%;
+			margin: 0 auto;
+
+			.swiper-button-next, .swiper-button-prev {
+				width: 1.66666667rem;
+				height: 1.66666667rem;
+				background-color: black;
+				-moz-background-size: 1.16666666rem 2rem;
+				-webkit-background-size: 1.16666666rem 2rem;
+				background-size: 1.16666666rem 2rem;
+			}
+
+			.swiper-button-next {
+				right: 0;
+			}
+
+			.swiper-button-prev {
+				left: 0;
+			}
+		}
+	}
+}
 </style>

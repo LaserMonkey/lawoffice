@@ -25,6 +25,7 @@ export default {
                 '|', 'link', 'unlink', 'table', 'img', 'video', 'insertcode', '|', 'undo', 'redo', 'fullscreen'
             ]
             editor.config.uploadImgUrl = this.uploadUrl
+            editor.config.uploadImgFileName = 'img'
             editor.onchange = function() {
                 self.formatContent(this.$txt.html())
             }

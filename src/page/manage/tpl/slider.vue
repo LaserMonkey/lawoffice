@@ -40,10 +40,17 @@
 				<label>链接地址：</label>
 				<input type="text" placeholder="请输入链接地址" v-model="sliderLink">
 			</div>
+			<ul class="upload">
+				<li v-show="imgUrl != ''">已传图片：{{imgUrl}}</li>
+			</ul>
 			<div class="z-margin-bottom z-padding-top">
 				<label>背景图片：</label>
-				<file-upload title="点击此处添加附件(可不上传)"></file-upload>
+				<file-upload title="点击此处添加附件(可不上传)" :post-action="uploadUrl" :events="events" :name="typeName" :accept="accept" :multiple="false" :size="1024 * 1024 * 10" ref="upload" :files="files"></file-upload>
+				<label>上传进度：</label><span>{{uploadProgress}}</span>
 			</div>
+			<ul>
+				<li v-for="(file, index) in files">{{file.name}}</li>
+			</ul>
 			<div class="z-pop-action z-clearfix">
 				<button @click="addSlider()" v-show="showSliderAddBtn">确定</button>
 				<button @click="editSlider()" v-show="showSliderEditBtn">确定</button>
@@ -91,6 +98,35 @@
 				showPopDelSlider: false,
 				sliderSort: 0,
 				showPopSortSlider: false,
+				uploadUrl: '/admin/index.php?c=sys&m=update_img&token=' + this.$store.getters.token,
+				events: {
+					_self: this,
+					add(file, component) {
+						component.active = true;
+						file.headers['X-Filename'] = encodeURIComponent(file.name)
+						file.data.finename = file.name
+					},
+					before(file, component) {
+						this._self.uploadProgress = "等待上传"
+					},
+					progress(file, component) {
+						this._self.uploadProgress = parseInt(file.progress) - 1 + '%'
+					},
+					after(file, component) {
+						if(file.response.status == 1) {
+							this._self.uploadProgress = "上传完毕"
+							this._self.imgUrl = file.response.img
+						} else {
+							alert("上传图片失败！")
+						}
+					},
+				},
+				typeName: "img",
+				accept: 'image/*',
+				files: [],
+				uploadFile: [],
+				imgUrl: "",
+				uploadProgress: "等待上传",
 			}
 		},
 		components: {
@@ -128,6 +164,7 @@
 					this.sliderLang = 1
 					this.sliderTitle = ""
 					this.sliderLink = ""
+					this.imgUrl = ""
 					this.showSliderEditBtn = false
 					this.showSliderAddBtn = true
 				} else {
@@ -135,6 +172,7 @@
 					this.sliderTitle = this.sliderList[index].title
 					this.sliderLink = this.sliderList[index].url
 					this.sliderSort = this.sliderList[index].sort
+					this.imgUrl = this.sliderList[index].img
 					this.showSliderAddBtn = false
 					this.showSliderEditBtn = true
 				}
@@ -143,7 +181,7 @@
 			},
 			addSlider: function(index) {
 				const _self = this
-				this.$http.get('http://www.lutong.com/admin/index.php?c=sys&m=add_carousel&token=' + _self.$store.getters.token + '&lang=' + _self.sliderLang + '&title=' + _self.sliderTitle + '&url=' + _self.sliderLink,
+				this.$http.get('http://www.lutong.com/admin/index.php?c=sys&m=add_carousel&token=' + _self.$store.getters.token + '&lang=' + _self.sliderLang + '&title=' + _self.sliderTitle + '&url=' + _self.sliderLink + '&img=' + _self.imgUrl,
 				).then((response) => {
 					const data = response.data
 					const status = response.data.status
@@ -161,7 +199,7 @@
 			},
 			editSlider: function() {
 				const _self = this
-				this.$http.get('http://www.lutong.com/admin/index.php?c=sys&m=update_carousel&token=' + _self.$store.getters.token + '&id=' + _self.sliderID + '&lang=' + _self.sliderLang + '&title=' + _self.sliderTitle + '&url=' + _self.sliderLink,
+				this.$http.get('http://www.lutong.com/admin/index.php?c=sys&m=update_carousel&token=' + _self.$store.getters.token + '&id=' + _self.sliderID + '&lang=' + _self.sliderLang + '&title=' + _self.sliderTitle + '&url=' + _self.sliderLink + '&img=' + _self.imgUrl,
 				).then((response) => {
 					const data = response.data
 					const status = response.data.status

@@ -15,7 +15,7 @@
 				<option value="3">ENGLISH</option>
 			</select>
 		</div>
-		<v-editor :input-content="inputContent" :upload-url="uploadUrl" v-model="outputContent"></v-editor>
+		<v-editor :input-content="inputContent" :upload-url="uploadUrlForEditor" v-model="outputContent"></v-editor>
 		<ul class="upload">
 			<li v-show="imgUrl != ''">已传图片：{{imgUrl}}</li>
 		</ul>
@@ -49,7 +49,8 @@
 				lang: 1,
 				inputContent: '',
 				outputContent: '',
-				uploadUrl: '/admin/index.php?c=sys&m=update_img&token=' + this.$store.getters.token,
+				uploadUrl: '/admin/index.php?c=sys&m=update_img&type=1&token=' + this.$store.getters.token,
+				uploadUrlForEditor: '/admin/index.php?c=sys&m=update_img&token=' + this.$store.getters.token,
 				events: {
 					_self: this,
 					add(file, component) {

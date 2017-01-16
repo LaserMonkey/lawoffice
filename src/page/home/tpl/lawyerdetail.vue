@@ -12,7 +12,7 @@
 			</div>
 		</div>
 		<div class="lawyer-detail-right">
-			<img :src="lawyerImg">
+			<img :src="'/uploads' + lawyerImg">
 		</div>
 	</div>
 </template>
@@ -124,7 +124,7 @@
 
 		.lawyer-detail-right {
 			float: right;
-			width: 40%;
+			width: 38%;
 
 			img {
 				width: 100%;
@@ -185,12 +185,6 @@
 
 		.lawyer-detail-right {
 			display: none;
-			float: right;
-			width: 40%;
-
-			img {
-				width: 100%;
-			}
 		}
 	}
 }
