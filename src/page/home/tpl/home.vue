@@ -2,12 +2,15 @@
 	<div class="home">
 		<div class="swiper-container home-banner">
         	<div class="swiper-wrapper">
-            	<div class="swiper-slide" style="background-image:url(http://photo.enterdesk.com/2009-5-5/enterdesk.com-3916291CA374F2BFED3FC636EE5CFBF7.jpg)">
-        			<h2>陆通联合律师当选欧洲竞争与规制学院法律委员</h2>
-        		</div>
-            	<div class="swiper-slide" style="background-image:url(http://desk.fd.zol-img.com.cn/t_s960x600c5/g3/M03/0D/03/Cg-4V1S_EOWIMyUCAAhG5zFfIHUAATsVQNFKM0ACEb_770.jpg)">
-            		<h2>陆通联合律师当选欧洲竞争</h2>
-            	</div>
+				<div class="swiper-slide" v-for="slider in sliderList" :style="'background-image:url(' + slider.img + ')'">
+					<a :href="slider.url"><h2>{{slider.title}}</h2></a>
+				</div>
+				<!-- <div class="swiper-slide" style="background-image:url(http://photo.enterdesk.com/2009-5-5/enterdesk.com-3916291CA374F2BFED3FC636EE5CFBF7.jpg)">
+					<h2>陆通联合律师当选欧洲竞争与规制学院法律委员</h2>
+				</div>
+				<div class="swiper-slide" style="background-image:url(http://desk.fd.zol-img.com.cn/t_s960x600c5/g3/M03/0D/03/Cg-4V1S_EOWIMyUCAAhG5zFfIHUAATsVQNFKM0ACEb_770.jpg)">
+					<h2>陆通联合律师当选欧洲竞争</h2>
+				</div> -->
         	</div>
         	<div class="swiper-button">
         		<div class="swiper-button-next swiper-button-white"></div>
@@ -16,53 +19,13 @@
     	</div>
 		<div class="swiper-container home-hot">
         	<div class="swiper-wrapper">
-            	<div class="swiper-slide">
-            		<div style="background-image:url(http://photo.enterdesk.com/2009-5-5/enterdesk.com-3916291CA374F2BFED3FC636EE5CFBF7.jpg)">
-            			<span>路通历史</span>
-            		</div>
-            		<h3>陆通联合律师当选欧洲竞争与规制学院法律委员</h3>
-            	</div>
-            	<div class="swiper-slide">
-					<div style="background-image:url(http://desk.fd.zol-img.com.cn/t_s960x600c5/g3/M03/0D/03/Cg-4V1S_EOWIMyUCAAhG5zFfIHUAATsVQNFKM0ACEb_770.jpg)">
-            			<span>新闻动态</span>
-            		</div>
-            		<h3>陆通上海律师为某知名生物科技公司成功提供反舞弊法律服务</h3>
-            	</div>
-            	<div class="swiper-slide">
-            		<div style="background-image:url(http://photo.enterdesk.com/2009-5-5/enterdesk.com-3916291CA374F2BFED3FC636EE5CFBF7.jpg)">
-            			<span>路通历史</span>
-            		</div>
-            		<h3>陆通联合律师当选欧洲竞争与规制学院法律委员</h3>
-            	</div>
-            	<div class="swiper-slide">
-					<div style="background-image:url(http://desk.fd.zol-img.com.cn/t_s960x600c5/g3/M03/0D/03/Cg-4V1S_EOWIMyUCAAhG5zFfIHUAATsVQNFKM0ACEb_770.jpg)">
-            			<span>新闻动态</span>
-            		</div>
-            		<h3>陆通上海律师为某知名生物科技公司成功提供反舞弊法律服务</h3>
-            	</div>
-            	<div class="swiper-slide">
-            		<div style="background-image:url(http://photo.enterdesk.com/2009-5-5/enterdesk.com-3916291CA374F2BFED3FC636EE5CFBF7.jpg)">
-            			<span>路通历史</span>
-            		</div>
-            		<h3>陆通联合律师当选欧洲竞争与规制学院法律委员</h3>
-            	</div>
-            	<div class="swiper-slide">
-					<div style="background-image:url(http://desk.fd.zol-img.com.cn/t_s960x600c5/g3/M03/0D/03/Cg-4V1S_EOWIMyUCAAhG5zFfIHUAATsVQNFKM0ACEb_770.jpg)">
-            			<span>新闻动态</span>
-            		</div>
-            		<h3>陆通上海律师为某知名生物科技公司成功提供反舞弊法律服务</h3>
-            	</div>
-            	<div class="swiper-slide">
-            		<div style="background-image:url(http://photo.enterdesk.com/2009-5-5/enterdesk.com-3916291CA374F2BFED3FC636EE5CFBF7.jpg)">
-            			<span>路通历史</span>
-            		</div>
-            		<h3>陆通联合律师当选欧洲竞争与规制学院法律委员</h3>
-            	</div>
-            	<div class="swiper-slide">
-					<div style="background-image:url(http://desk.fd.zol-img.com.cn/t_s960x600c5/g3/M03/0D/03/Cg-4V1S_EOWIMyUCAAhG5zFfIHUAATsVQNFKM0ACEb_770.jpg)">
-            			<span>新闻动态</span>
-            		</div>
-            		<h3>陆通上海律师为某知名生物科技公司成功提供反舞弊法律服务</h3>
+            	<div class="swiper-slide" v-for="hot in hotList">
+            		<a :href="hot.url">
+            			<div :style="'background-image:url(' + hot.img + ')'">
+            				<span>{{hot.title}}</span>
+            			</div>
+            			<h3>{{hot.describe}}</h3>
+            		</a>
             	</div>
         	</div>
         	<div class="swiper-button-next swiper-button-white"></div>
@@ -76,34 +39,17 @@
 	import Swiper from 'swiper/swiper.js'
 
 	export default {
-		mounted () {
-			const swiperHomeBanner = new Swiper('.home-banner', {
-				nextButton: '.swiper-button-next',
-				prevButton: '.swiper-button-prev',
-				slidesPerView: 'auto',
-				spaceBetween: 0,
-				loop: true,
-			})
-			const swiperHomeHot = new Swiper('.home-hot', {
-				nextButton: '.swiper-button-next',
-				prevButton: '.swiper-button-prev',
-				slidesPerView: 1,
-				spaceBetween: 1,
-				breakpoints: {
-					1920: {
-						slidesPerView: 4
-					},
-					1366: {
-						slidesPerView: 3
-					},
-					1024: {
-						slidesPerView: 2
-					}
-				}
-			})
+		data: function() {
+			return {
+				sliderList: [],
+				hotList: [],
+			}
+		},
+		mounted: function() {
 			if(localStorage.getItem("lang") != null) {
 				this.lang = localStorage.getItem("lang")
 			}
+			this.loadAllList()
 		},
 		watch: {
 			'$store.getters.lang': 'changeLang'
@@ -111,6 +57,51 @@
 		methods: {
 			changeLang: function() {
 				this.lang = this.$store.getters.lang
+			},
+			loadAllList: function() {
+				const _self = this
+				this.$http.get('http://www.lutong.com/api/index.php?c=home&m=index&token=' + _self.$store.getters.token + '&lang=' + _self.lang,
+				).then((response) => {
+					const data = response.data
+					const status = response.data.status
+    				if(status === 1) {
+    					_self.sliderList = data.carousel
+    					_self.hotList = data.custom
+						_self.$nextTick(function () {
+							_self.initSwiper()
+						})
+    				} else {
+    					alert('status: ' + status)
+    				}
+  				}, (response) => {
+    				// TODO 错误toast提示
+  				})
+			},
+			initSwiper: function() {
+				const swiperHomeBanner = new Swiper('.home-banner', {
+					nextButton: '.swiper-button-next',
+					prevButton: '.swiper-button-prev',
+					slidesPerView: 'auto',
+					spaceBetween: 0,
+					loop: true,
+				})
+				const swiperHomeHot = new Swiper('.home-hot', {
+					nextButton: '.swiper-button-next',
+					prevButton: '.swiper-button-prev',
+					slidesPerView: 1,
+					spaceBetween: 1,
+					breakpoints: {
+						1920: {
+							slidesPerView: 4
+						},
+						1366: {
+							slidesPerView: 3
+						},
+						1024: {
+							slidesPerView: 2
+						}
+					}
+				})
 			},
 		}
 	}
@@ -126,27 +117,35 @@
 			background-repeat: no-repeat;
 			background-size: cover;
 			
-			h2 {
-				position: relative;
-				top: 78%;
-				width: 50%;
-				margin: 0 auto;
-				text-align: center;
-				font-size: 3rem;
-				font-weight: normal;
-				color: white;
+			a {
+				display: block;
+				height: 100%;
+
+				h2 {
+					position: relative;
+					top: 78%;
+					width: 50%;
+					margin: 0 auto;
+					text-align: center;
+					font-size: 3rem;
+					font-weight: normal;
+					color: white;
+				}
 			}
 		}
 
 		.swiper-button {
-			position: relative;
-			bottom: 18%;
+			position: absolute;
+			top: 78%;
+			bottom: auto;
 			width: 60%;
 			margin: 0 auto;
+			margin-left: 20%;
 
 			.swiper-button-next, .swiper-button-prev {
 				width: 3.33333333rem;
 				height: 3.33333333rem;
+				margin-top: 0.16666667rem;
 				background-color: black;
 				-moz-background-size: 1.16666666rem 2rem;
 				-webkit-background-size: 1.16666666rem 2rem;
@@ -226,25 +225,30 @@
 
 		.swiper-slide {
 			
-			h2 {
-				top: 85%;
-				width: 84%;
-				font-size: 1.5rem;
+			a {
+
+				h2 {
+					top: 75%;
+					width: 70%;
+					font-size: 1.5rem;
+				}
 			}
 		}
 
 		.swiper-button {
-			bottom: 18%;
-			width: 60%;
+			position: absolute;
+			top: 75%;
+			width: 85%;
 			margin: 0 auto;
+			margin-left: 7.5%;
 
 			.swiper-button-next, .swiper-button-prev {
+				top: 0;
 				width: 1.66666667rem;
 				height: 1.66666667rem;
-				background-color: black;
-				-moz-background-size: 1.16666666rem 2rem;
-				-webkit-background-size: 1.16666666rem 2rem;
-				background-size: 1.16666666rem 2rem;
+				-moz-background-size: 1rem 1rem;
+				-webkit-background-size: 1rem 1rem;
+				background-size: 1rem 1rem;
 			}
 
 			.swiper-button-next {
@@ -254,6 +258,37 @@
 			.swiper-button-prev {
 				left: 0;
 			}
+		}
+	}
+
+	.home-hot {
+		height: 25rem;
+
+		.swiper-slide {
+
+			div {
+				height: 12.5rem;
+
+				span {
+					bottom: -1rem;
+					padding: 0.5rem 2rem;
+					font-size: 1rem;
+				}
+			}
+
+			h3 {
+				padding: 2rem;
+				line-height: 1.2rem;
+				font-size: 1rem;
+			}
+		}
+
+		.swiper-button-next, .swiper-button-prev {
+			width: 1.5rem;
+			height: 25rem;
+			-moz-background-size: 1rem 1rem;
+			-webkit-background-size: 1rem 1rem;
+			background-size: 1rem 1rem;
 		}
 	}
 }

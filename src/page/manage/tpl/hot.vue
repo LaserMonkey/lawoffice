@@ -116,7 +116,7 @@
 				showPopDelHot: false,
 				hotSort: 0,
 				showPopSortHot: false,
-				uploadUrl: '/admin/index.php?c=sys&m=update_img&token=' + this.$store.getters.token,
+				uploadUrl: '/admin/index.php?c=sys&m=update_img&type=3&token=' + this.$store.getters.token,
 				events: {
 					_self: this,
 					add(file, component) {
@@ -211,8 +211,25 @@
 			},
 			addHot: function(index) {
 				const _self = this
-				this.$http.get('http://www.lutong.com/admin/index.php?c=sys&m=add_custom&token=' + _self.$store.getters.token + '&title1=' + _self.hotTitle1 + '&url1=' + _self.hotLink1 + '&describe1=' + _self.hotDescribe1 + '&title2=' + _self.hotTitle2 + '&url2=' + _self.hotLink2 + '&describe2=' + _self.hotDescribe2 + '&title3=' + _self.hotTitle3 + '&url3=' + _self.hotLink3 + '&describe3=' + _self.hotDescribe3 + '&img=' + _self.imgUrl,
-				).then((response) => {
+				const options = {
+					token: this.$store.getters.token,
+					title1: this.hotTitle1,
+					url1: this.hotLink1,
+					describe1: this.hotDescribe1,
+					title2: this.hotTitle2,
+					url2: this.hotLink2,
+					describe2: this.hotDescribe2,
+					title3: this.hotTitle3,
+					url3: this.hotLink3,
+					describe3: this.hotDescribe3,
+					img: this.imgUrl,
+				}
+				this.$http({
+                		url: '/admin/index.php?c=sys&m=add_custom_info',
+						method: 'POST',
+						body: options,
+						emulateJSON:true
+					}).then((response) => {
 					const data = response.data
 					const status = response.data.status
     				if(status === 1) {
@@ -229,8 +246,26 @@
 			},
 			editHot: function() {
 				const _self = this
-				this.$http.get('http://www.lutong.com/admin/index.php?c=sys&m=update_custom&token=' + _self.$store.getters.token + '&id=' + _self.hotID + '&title1=' + _self.hotTitle1 + '&url1=' + _self.hotLink1 + '&describe1=' + _self.hotDescribe1 + '&title2=' + _self.hotTitle2 + '&url2=' + _self.hotLink2 + '&describe2=' + _self.hotDescribe2 + '&title3=' + _self.hotTitle3 + '&url3=' + _self.hotLink3 + '&describe3=' + _self.hotDescribe3 + '&img=' + _self.imgUrl,
-				).then((response) => {
+				const options = {
+					token: this.$store.getters.token,
+					id: this.hotID,
+					title1: this.hotTitle1,
+					url1: this.hotLink1,
+					describe1: this.hotDescribe1,
+					title2: this.hotTitle2,
+					url2: this.hotLink2,
+					describe2: this.hotDescribe2,
+					title3: this.hotTitle3,
+					url3: this.hotLink3,
+					describe3: this.hotDescribe3,
+					img: this.imgUrl,
+				}
+				this.$http({
+                		url: '/admin/index.php?c=sys&m=update_custom_info',
+						method: 'POST',
+						body: options,
+						emulateJSON:true
+					}).then((response) => {
 					const data = response.data
 					const status = response.data.status
     				if(status === 1) {
@@ -256,7 +291,7 @@
 			},
 			delHot: function() {
 				const _self = this
-				this.$http.get('http://www.lutong.com/admin/index.php?c=sys&m=del_custom&token=' + _self.$store.getters.token + '&id=' + _self.hotID,
+				this.$http.get('http://www.lutong.com/admin/index.php?c=sys&m=del_custom_info&token=' + _self.$store.getters.token + '&id=' + _self.hotID,
 				).then((response) => {
 					const data = response.data
 					const status = response.data.status
@@ -281,7 +316,7 @@
 					return
 				}
 				const _self = this
-				this.$http.get('http://www.lutong.com/admin/index.php?c=sys&m=disable_custom&token=' + _self.$store.getters.token + '&id=' + hotID,
+				this.$http.get('http://www.lutong.com/admin/index.php?c=sys&m=disable_custom_info&token=' + _self.$store.getters.token + '&id=' + hotID,
 				).then((response) => {
 					const data = response.data
 					const status = response.data.status
@@ -309,7 +344,7 @@
 			},
 			updateSort: function() {
 				const _self = this
-				this.$http.get('http://www.lutong.com/admin/index.php?c=sys&m=sort_custom&token=' + _self.$store.getters.token + '&id=' + _self.hotID + '&sort=' + _self.hotSort,
+				this.$http.get('http://www.lutong.com/admin/index.php?c=sys&m=sort_custom_info&token=' + _self.$store.getters.token + '&id=' + _self.hotID + '&sort=' + _self.hotSort,
 				).then((response) => {
 					const data = response.data
 					const status = response.data.status
@@ -351,6 +386,7 @@
 			
 			li {
 				width: 20%;
+				max-width: 200px;
 				margin-right: 20px;
 				margin-bottom: 20px;
 
@@ -395,7 +431,7 @@
 		}
 
 		.pop-add-hot {
-			margin-top: -150px;
+			margin-top: -250px;
 			margin-left: -230px;
 
 			.pop-blank {

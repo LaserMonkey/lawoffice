@@ -98,7 +98,7 @@
 				showPopDelSlider: false,
 				sliderSort: 0,
 				showPopSortSlider: false,
-				uploadUrl: '/admin/index.php?c=sys&m=update_img&token=' + this.$store.getters.token,
+				uploadUrl: '/admin/index.php?c=sys&m=update_img&type=2&token=' + this.$store.getters.token,
 				events: {
 					_self: this,
 					add(file, component) {
@@ -132,7 +132,7 @@
 		components: {
 			FileUpload
 		},
-		mounted: function () {
+		mounted: function() {
 			this.$nextTick(function () {
 				this.getSliderList()
 			})
@@ -181,8 +181,19 @@
 			},
 			addSlider: function(index) {
 				const _self = this
-				this.$http.get('http://www.lutong.com/admin/index.php?c=sys&m=add_carousel&token=' + _self.$store.getters.token + '&lang=' + _self.sliderLang + '&title=' + _self.sliderTitle + '&url=' + _self.sliderLink + '&img=' + _self.imgUrl,
-				).then((response) => {
+				const options = {
+					token: this.$store.getters.token,
+					lang: this.sliderLang,
+					title: this.sliderTitle,
+					url: this.sliderLink,
+					img: this.imgUrl,
+				}
+				this.$http({
+                		url: '/admin/index.php?c=sys&m=add_carousel',
+						method: 'POST',
+						body: options,
+						emulateJSON:true
+					}).then((response) => {
 					const data = response.data
 					const status = response.data.status
     				if(status === 1) {
@@ -199,8 +210,20 @@
 			},
 			editSlider: function() {
 				const _self = this
-				this.$http.get('http://www.lutong.com/admin/index.php?c=sys&m=update_carousel&token=' + _self.$store.getters.token + '&id=' + _self.sliderID + '&lang=' + _self.sliderLang + '&title=' + _self.sliderTitle + '&url=' + _self.sliderLink + '&img=' + _self.imgUrl,
-				).then((response) => {
+				const options = {
+					token: this.$store.getters.token,
+					lang: this.sliderLang,
+					id: this.sliderID,
+					title: this.sliderTitle,
+					url: this.sliderLink,
+					img: this.imgUrl,
+				}
+				this.$http({
+                		url: '/admin/index.php?c=sys&m=update_carousel',
+						method: 'POST',
+						body: options,
+						emulateJSON:true
+					}).then((response) => {
 					const data = response.data
 					const status = response.data.status
     				if(status === 1) {

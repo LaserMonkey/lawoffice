@@ -23,11 +23,11 @@
 		</ul>
 	</div>
 	<div class="head" v-else-if="mobile">
-		<div class="column-btn" @click="openCoverMenu()"><div></div></div>
+		<div class="column-btn" @click="openCoverMenu()"><div class="dash"></div><div class="dash"></div><div class="dash"></div></div>
 		<label v-for="column in columnList" v-if="column.id == columnID">{{column.name}}</label>
 		<div class="cover-menu" v-if="showCoverMenu">
 			<div class="head">
-				<div class="column-btn" @click="closeCoverMenu()"><div></div></div>
+				<div class="column-btn" @click="closeCoverMenu()"><div class="dash"></div><div class="dash"></div><div class="dash"></div></div>
 			</div>
 			<div class="column-list">
 				<ul class="column">
@@ -207,14 +207,9 @@
 			left: 1.66666667rem;
 			width: 1.66666667rem;
 			height: 1.66666667rem;
-			line-height: 0.6rem;
-			border-top: solid 0.2rem #df001f;
-			border-bottom: solid 0.2rem #df001f;
 
-			div {
-				display: inline-block;
-				width: 100%;
-				height: 0;
+			.dash {
+				height: 0.8rem;
 				border-top: solid 0.2rem #df001f;
 			}
 		}
@@ -232,10 +227,8 @@
 		.head {
 
 			.column-btn {
-				border-top: solid 0.2rem white;
-				border-bottom: solid 0.2rem white;
 
-				div {
+				.dash {
 					border-top: solid 0.2rem white;
 				}
 			}

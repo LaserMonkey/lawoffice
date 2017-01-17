@@ -135,6 +135,7 @@ pages.forEach(function(page, index){
 	config.plugins.push(new HtmlWebpackPlugin({
 		template: path.join(PAGE_PATH, '/', page) + '.html',
 		filename: page + '.html',
+		favicon: SRC_PATH + '/asset/img/favicon.ico',
 		chunks: ['commons', page, 'webpack-dev-server'],
 		inject: 'body'
 	}));
