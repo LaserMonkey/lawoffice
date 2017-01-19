@@ -18,15 +18,22 @@
 		</div>
 		<div class="z-margin-bottom z-padding-top"><label>文章简要</label></div>
 		<textarea placeholder="请在这里写下文章简介" v-model="articleBrief"></textarea>
-		<v-editor :input-content="inputContent" :upload-url="uploadUrl" v-model="outputContent"></v-editor>
+		<v-editor :input-content="inputContent" :upload-url="uploadUrlForEditor" v-model="outputContent"></v-editor>
 		<div class="z-margin-bottom">
 			<label>文章来源：</label>
 			<input placeholder="请写信息来源" v-model="articleSource">
 		</div>
+		<ul class="upload" v-show="attachmentList.length >= 1">
+			<li v-for="attachment in attachmentList">已传图片：{{attachment.url}}</li>
+		</ul>
 		<div class="z-margin-bottom z-padding-top">
-			<label>文件上传：</label>
-			<file-upload title="点击此处添加附件(可不上传)"></file-upload>
+			<label>图片上传：</label>
+			<file-upload title="点击此处添加附件(可不上传)" :post-action="uploadUrl" :events="events" :name="typeName" :accept="accept" :multiple="true" :size="1024 * 1024 * 10" ref="upload" :files="files"></file-upload>
+			<label>上传进度：</label><span>{{uploadProgress}}</span>
 		</div>
+		<ul>
+			<li v-for="(file, index) in files">{{file.name}}</li>
+		</ul>
 		<div class="z-margin-bottom z-padding-top">
 			<button @click="saveArticle()">保存</button>
 		</div>
@@ -49,7 +56,40 @@
 				lang: 1,
 				inputContent: '',
 				outputContent: '',
-				uploadUrl: '/upload',
+				uploadUrl: '/admin/index.php?c=article&m=upload_attachment&token=' + this.$store.getters.token,
+				uploadUrlForEditor: '/admin/index.php?c=sys&m=update_img&token=' + this.$store.getters.token,
+				attachmentList: [],
+				attachment: [],
+				events: {
+					_self: this,
+					add(file, component) {
+						console.log(file)
+						console.log(component)
+						component.active = true;
+						file.headers['X-Filename'] = encodeURIComponent(file.name)
+						file.data.finename = file.name
+					},
+					before(file, component) {
+						this._self.uploadProgress = "等待上传"
+						this._self.attachmentList = []
+					},
+					progress(file, component) {
+						this._self.uploadProgress = parseInt(file.progress) - 1 + '%'
+					},
+					after(file, component) {
+						if(file.response.status == 1) {
+							this._self.uploadProgress = "上传完毕"
+							this._self.attachment.push(file.response.id)
+						} else {
+							alert("上传图片失败！")
+						}
+					},
+				},
+				typeName: "attachment",
+				accept: '*',
+				files: [],
+				uploadFile: [],
+				uploadProgress: "等待上传",
 			}
 		},
 		components: {
@@ -91,8 +131,22 @@
 			},
 			addArticle: function() {
 				const _self = this
-				this.$http.get('http://www.lutong.com/admin/index.php?c=article&m=add_article&token=' + _self.$store.getters.token + '&type=' + _self.articleTypeID + '&lang=' + _self.lang + '&title=' + _self.articleTitle + '&intro=' + _self.articleBrief + '&content=' + _self.outputContent + '&source=' + _self.articleSource,
-				).then((response) => {
+				const options = {
+					token: this.$store.getters.token,
+					type: this.articleTypeID,
+					lang: this.lang,
+					title: this.articleTitle,
+					intro: this.articleBrief,
+					content: this.outputContent,
+					source: this.articleSource,
+					attachment: this.attachment.join(),
+				}
+				this.$http({
+                		url: '/admin/index.php?c=article&m=add_article',
+						method: 'POST',
+						body: options,
+						emulateJSON:true
+					}).then((response) => {
 					const data = response.data
 					const status = response.data.status
     				if(status === 1) {
@@ -108,8 +162,23 @@
 			},
 			editArticle: function() {
 				const _self = this
-				this.$http.get('http://www.lutong.com/admin/index.php?c=article&m=update_article&token=' + _self.$store.getters.token + '&type=' + _self.articleTypeID + '&lang=' + _self.lang + '&title=' + _self.articleTitle + '&intro=' + _self.articleBrief + '&content=' + _self.outputContent + '&source=' + _self.articleSource + '&id=' + _self.articleID,
-				).then((response) => {
+				const options = {
+					token: this.$store.getters.token,
+					type: this.articleTypeID,
+					lang: this.lang,
+					title: this.articleTitle,
+					intro: this.articleBrief,
+					content: this.outputContent,
+					source: this.articleSource,
+					attachment: this.attachment.join(),
+					id: this.articleID,
+				}
+				this.$http({
+                		url: '/admin/index.php?c=article&m=update_article',
+						method: 'POST',
+						body: options,
+						emulateJSON:true
+					}).then((response) => {
 					const data = response.data
 					const status = response.data.status
     				if(status === 1) {
@@ -137,6 +206,7 @@
     					_self.articleSource = data.info.source
     					_self.inputContent = data.info.content
     					_self.outputContent = data.info.content
+    					_self.attachmentList = data.attachment
     				} else if(status === 403) {
     					_self.$router.push('/login')
     				} else {

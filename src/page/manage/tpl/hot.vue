@@ -431,7 +431,7 @@
 		}
 
 		.pop-add-hot {
-			margin-top: -250px;
+			margin-top: -350px;
 			margin-left: -230px;
 
 			.pop-blank {
