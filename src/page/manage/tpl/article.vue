@@ -63,8 +63,6 @@
 				events: {
 					_self: this,
 					add(file, component) {
-						console.log(file)
-						console.log(component)
 						component.active = true;
 						file.headers['X-Filename'] = encodeURIComponent(file.name)
 						file.data.finename = file.name
