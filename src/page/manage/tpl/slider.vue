@@ -367,6 +367,7 @@
 					h3 {
 						position: absolute;
 						bottom: 0;
+						font-size: 1.6rem;
 						color: white;
 					}
 				}

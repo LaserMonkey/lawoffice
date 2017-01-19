@@ -23,17 +23,18 @@
 			<label>文章来源：</label>
 			<input placeholder="请写信息来源" v-model="articleSource">
 		</div>
-		<ul class="upload" v-show="attachmentList.length >= 1">
-			<li v-for="attachment in attachmentList">已传图片：{{attachment.url}}</li>
+		<ul class="z-upload" v-show="attachmentList.length >= 1">
+			<li>已传附件：</li>
+			<li v-for="(attachment, attachmentIndex) in attachmentList"><span>{{attachment.name}}</span><i class="z-icon-close" @click="delAttachment(attachmentIndex)">+</i></li>
 		</ul>
 		<div class="z-margin-bottom z-padding-top">
-			<label>图片上传：</label>
+			<label>附件上传：</label>
 			<file-upload title="点击此处添加附件(可不上传)" :post-action="uploadUrl" :events="events" :name="typeName" :accept="accept" :multiple="true" :size="1024 * 1024 * 10" ref="upload" :files="files"></file-upload>
 			<label>上传进度：</label><span>{{uploadProgress}}</span>
 		</div>
-		<ul>
+		<!-- <ul>
 			<li v-for="(file, index) in files">{{file.name}}</li>
-		</ul>
+		</ul> -->
 		<div class="z-margin-bottom z-padding-top">
 			<button @click="saveArticle()">保存</button>
 		</div>
@@ -59,17 +60,18 @@
 				uploadUrl: '/admin/index.php?c=article&m=upload_attachment&token=' + this.$store.getters.token,
 				uploadUrlForEditor: '/admin/index.php?c=sys&m=update_img&token=' + this.$store.getters.token,
 				attachmentList: [],
-				attachment: [],
 				events: {
 					_self: this,
 					add(file, component) {
+						this._self.uploadProgress = "等待上传"
+						if(file.size > (1024 * 1024 * 10)) {
+							alert("附件不能大于10M！")
+						}
 						component.active = true;
 						file.headers['X-Filename'] = encodeURIComponent(file.name)
 						file.data.finename = file.name
 					},
 					before(file, component) {
-						this._self.uploadProgress = "等待上传"
-						this._self.attachmentList = []
 					},
 					progress(file, component) {
 						this._self.uploadProgress = parseInt(file.progress) - 1 + '%'
@@ -77,9 +79,13 @@
 					after(file, component) {
 						if(file.response.status == 1) {
 							this._self.uploadProgress = "上传完毕"
-							this._self.attachment.push(file.response.id)
+							let attachment = {
+								name: file.response.name,
+								id: file.response.id
+							}
+							this._self.attachmentList.push(attachment)
 						} else {
-							alert("上传图片失败！")
+							alert("上传附件失败！")
 						}
 					},
 				},
@@ -128,6 +134,12 @@
 				}
 			},
 			addArticle: function() {
+				let attachment = []
+				if(this.attachmentList.length > 0) {
+					for(let i = 0; i < this.attachmentList.length; i++) {
+						attachment.push(this.attachmentList[i].id)
+					}
+				}
 				const _self = this
 				const options = {
 					token: this.$store.getters.token,
@@ -137,7 +149,7 @@
 					intro: this.articleBrief,
 					content: this.outputContent,
 					source: this.articleSource,
-					attachment: this.attachment.join(),
+					attachment: attachment.join(),
 				}
 				this.$http({
                 		url: '/admin/index.php?c=article&m=add_article',
@@ -159,6 +171,12 @@
   				})
 			},
 			editArticle: function() {
+				let attachment = []
+				if(this.attachmentList.length > 0) {
+					for(let i = 0; i < this.attachmentList.length; i++) {
+						attachment.push(this.attachmentList[i].id)
+					}
+				}
 				const _self = this
 				const options = {
 					token: this.$store.getters.token,
@@ -168,7 +186,7 @@
 					intro: this.articleBrief,
 					content: this.outputContent,
 					source: this.articleSource,
-					attachment: this.attachment.join(),
+					attachment: attachment.join(),
 					id: this.articleID,
 				}
 				this.$http({
@@ -213,6 +231,9 @@
   				}, (response) => {
     				// TODO 错误toast提示
   				})
+			},
+			delAttachment: function(attachmentIndex) {
+				this.attachmentList.splice(attachmentIndex, 1)
 			},
 		}
 	}

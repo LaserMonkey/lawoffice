@@ -11,9 +11,14 @@
 			</select>
 		</div>
 		<v-editor :input-content="inputContent" :upload-url="uploadUrl" v-model="outputContent"></v-editor>
+		<ul class="z-upload" v-show="attachmentList.length >= 1">
+			<li>已传附件：</li>
+			<li v-for="(attachment, attachmentIndex) in attachmentList"><span>{{attachment.name}}</span><i class="z-icon-close" @click="delAttachment(attachmentIndex)">+</i></li>
+		</ul>
 		<div class="z-margin-bottom z-padding-top">
-			<label>口口口口：</label>
-			<file-upload title="点击此处添加附件(可不上传)"></file-upload>
+			<label>附件上传：</label>
+			<file-upload title="点击此处添加附件(可不上传)" :post-action="uploadUrl" :events="events" :name="typeName" :accept="accept" :multiple="true" :size="1024 * 1024 * 10" ref="upload" :files="files"></file-upload>
+			<label>上传进度：</label><span>{{uploadProgress}}</span>
 		</div>
 		<div class="z-margin-bottom z-padding-top">
 			<button @click="saveAbout()">保存</button>
@@ -33,7 +38,43 @@
 				lang: 1,
 				inputContent: '',
 				outputContent: '',
-				uploadUrl: '/upload',
+				uploadUrl: '/admin/index.php?c=article&m=upload_attachment&token=' + this.$store.getters.token,
+				uploadUrlForEditor: '/admin/index.php?c=sys&m=update_img&token=' + this.$store.getters.token,
+				attachmentList: [],
+				events: {
+					_self: this,
+					add(file, component) {
+						this._self.uploadProgress = "等待上传"
+						if(file.size > (1024 * 1024 * 10)) {
+							alert("附件不能大于10M！")
+						}
+						component.active = true;
+						file.headers['X-Filename'] = encodeURIComponent(file.name)
+						file.data.finename = file.name
+					},
+					before(file, component) {
+					},
+					progress(file, component) {
+						this._self.uploadProgress = parseInt(file.progress) - 1 + '%'
+					},
+					after(file, component) {
+						if(file.response.status == 1) {
+							this._self.uploadProgress = "上传完毕"
+							let attachment = {
+								name: file.response.name,
+								id: file.response.id
+							}
+							this._self.attachmentList.push(attachment)
+						} else {
+							alert("上传附件失败！")
+						}
+					},
+				},
+				typeName: "attachment",
+				accept: '*',
+				files: [],
+				uploadFile: [],
+				uploadProgress: "等待上传",
 			}
 		},
 		components: {
@@ -55,9 +96,36 @@
 				}
 			},
 			addAbout: function() {
+				let attachment = []
+				if(this.attachmentList.length > 0) {
+					for(let i = 0; i < this.attachmentList.length; i++) {
+						attachment.push(this.attachmentList[i].id)
+					}
+				}
 				const _self = this
-				this.$http.get('http://www.lutong.com/admin/index.php?c=about&m=add_about&token=' + _self.$store.getters.token + '&lang=' + _self.lang + '&title=' + _self.aboutTitle + '&content=' + _self.outputContent,
-				).then((response) => {
+				const options = {
+					token: this.$store.getters.token,
+					lang: this.lang,
+					title: this.aboutTitle,
+					content: this.outputContent,
+					attachment: attachment.join(),
+				}
+				this.$http({
+                		url: '/admin/index.php?c=about&m=add_about',
+						method: 'POST',
+						body: options,
+						emulateJSON:true
+					}).then((response) => {
+					const data = response.data
+					const status = response.data.status
+    				if(status === 1) {
+    					_self.$router.push('/aboutlist')
+    				} else if(status === 403) {
+    					_self.$router.push('/login')
+    				} else {
+    					alert('status: ' + status)
+    				}
+  				}, (response) => {
 					const data = response.data
 					const status = response.data.status
     				if(status === 1) {
@@ -72,9 +140,27 @@
   				})
 			},
 			editAbout: function() {
+				let attachment = []
+				if(this.attachmentList.length > 0) {
+					for(let i = 0; i < this.attachmentList.length; i++) {
+						attachment.push(this.attachmentList[i].id)
+					}
+				}
 				const _self = this
-				this.$http.get('http://www.lutong.com/admin/index.php?c=about&m=update_about&token=' + _self.$store.getters.token + '&lang=' + _self.lang + '&title=' + _self.aboutTitle + '&content=' + _self.outputContent + '&id=' + _self.aboutID,
-				).then((response) => {
+				const options = {
+					token: this.$store.getters.token,
+					lang: this.lang,
+					title: this.aboutTitle,
+					content: this.outputContent,
+					attachment: attachment.join(),
+					id: this.aboutID,
+				}
+				this.$http({
+                		url: '/admin/index.php?c=about&m=update_about',
+						method: 'POST',
+						body: options,
+						emulateJSON:true
+					}).then((response) => {
 					const data = response.data
 					const status = response.data.status
     				if(status === 1) {
@@ -107,7 +193,10 @@
   				}, (response) => {
     				// TODO 错误toast提示
   				})
-			}
+			},
+			delAttachment: function(attachmentIndex) {
+				this.attachmentList.splice(attachmentIndex, 1)
+			},
 		}
 	}
 </script>
