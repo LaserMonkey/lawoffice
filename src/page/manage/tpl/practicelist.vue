@@ -73,7 +73,7 @@
 			return {
 				practiceList: [],
 				practiceTypeList: [],
-				practiceTypeID: 1,
+				practiceTypeID: 0,
 				lang: 1,
 				search: "",
 				practiceID: 0,
@@ -93,10 +93,29 @@
 		},
 		mounted: function () {
 			this.$nextTick(function () {
-				this.getPracticeList()
+				this.getPracticeTypeList()
 			})
 		},
 		methods: {
+			getPracticeTypeList: function() {
+				const _self = this
+				this.$http.get('http://www.lutong.com/admin/index.php?c=practices&m=get_practices_type_list&token=' + _self.$store.getters.token,
+				).then((response) => {
+					const data = response.data
+					const status = response.data.status
+    				if(status === 1) {
+    					_self.practiceTypeList = data.list
+    					if(data.list != 0) {
+    						_self.practiceTypeID = data.list[0].id
+    					}
+						this.getPracticeList()
+    				} else {
+    					_self.$router.push('/login')
+    				}
+  				}, (response) => {
+    				// TODO 错误toast提示
+  				})
+			},
 			getPracticeList: function() {
 				const _self = this
 				this.$http.get('http://www.lutong.com/admin/index.php?c=practices&m=index&page=' + _self.pageNow + '&title=' + _self.search + '&type=' + _self.practiceTypeID + '&lang=' + _self.lang + '&token=' + _self.$store.getters.token,
@@ -105,7 +124,9 @@
 					const status = response.data.status
     				if(status === 1) {
     					_self.practiceTypeList = data.type
-    					_self.practiceTypeID = data.type[0].id
+    					if(_self.practiceTypeID == 0) {
+    						_self.practiceTypeID = data.type[0].id
+    					}
     					_self.practiceList = data.list
     					_self.pageCount = data.pages
     					_self.pageNow = data.page

@@ -13,7 +13,7 @@
 		<v-editor :input-content="inputContent" :upload-url="uploadUrl" v-model="outputContent"></v-editor>
 		<ul class="z-upload" v-show="attachmentList.length >= 1">
 			<li>已传附件：</li>
-			<li v-for="(attachment, attachmentIndex) in attachmentList"><span>{{attachment.name}}</span><i class="z-icon-close" @click="delAttachment(attachmentIndex)">+</i></li>
+			<li v-for="(attachment, attachmentIndex) in attachmentList"><span>{{attachment.name}}</span><i class="z-icon-close" @click="delAttachment(attachmentIndex, attachment.id)">+</i></li>
 		</ul>
 		<div class="z-margin-bottom z-padding-top">
 			<label>附件上传：</label>
@@ -41,11 +41,14 @@
 				uploadUrl: '/admin/index.php?c=article&m=upload_attachment&token=' + this.$store.getters.token,
 				uploadUrlForEditor: '/admin/index.php?c=sys&m=update_img&token=' + this.$store.getters.token,
 				attachmentList: [],
+				addAttachmentList: [],
+				delAttachmentList: [],
 				events: {
 					_self: this,
 					add(file, component) {
 						this._self.uploadProgress = "等待上传"
 						if(file.size > (1024 * 1024 * 10)) {
+							this._self.uploadProgress = "附件不能大于10M！"
 							alert("附件不能大于10M！")
 						}
 						component.active = true;
@@ -65,6 +68,7 @@
 								id: file.response.id
 							}
 							this._self.attachmentList.push(attachment)
+							this._self.addAttachmentList.push(attachment.id)
 						} else {
 							alert("上传附件失败！")
 						}
@@ -152,8 +156,9 @@
 					lang: this.lang,
 					title: this.aboutTitle,
 					content: this.outputContent,
-					attachment: attachment.join(),
 					id: this.aboutID,
+					add_attachment: this.addAttachmentList.join(),
+					del_attachment: this.delAttachmentList.join(),
 				}
 				this.$http({
                 		url: '/admin/index.php?c=about&m=update_about',
@@ -194,8 +199,9 @@
     				// TODO 错误toast提示
   				})
 			},
-			delAttachment: function(attachmentIndex) {
+			delAttachment: function(attachmentIndex, attachmentID) {
 				this.attachmentList.splice(attachmentIndex, 1)
+				this.delAttachmentList.push(attachmentID)
 			},
 		}
 	}

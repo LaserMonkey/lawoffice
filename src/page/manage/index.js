@@ -46,8 +46,7 @@ const routes = [{
 	name: 'login',
     components: {
 		default: Login,
-		head: Head,
-		menu: Menu
+		head: Head
 	}
 }, {
 	path: '/articlelist',

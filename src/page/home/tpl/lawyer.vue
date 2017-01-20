@@ -1,8 +1,16 @@
 <template>
 	<div class="lawyer">
 		<h2>路通律师</h2>
-		<h3>{{partnerList.name}}</h3>
-		<ul class="partner z-clearfix">
+		<h3>{{chiefList.name}}</h3>
+		<ul class="chief z-clearfix" v-if="chiefList.list != 0">
+			<li v-for="chief in chiefList.list">
+				<router-link :to="{name: 'lawyerdetail', params:{columnID:columnID}, query: {id: chief.id}}">
+					<div class="name">{{chief.name}}</div>
+					<div class="duty">首席合伙人</div>
+				</router-link>
+			</li>
+		</ul>
+		<ul class="partner z-clearfix" v-if="partnerList.list != 0">
 			<li v-for="partner in partnerList.list">
 				<router-link :to="{name: 'lawyerdetail', params:{columnID:columnID}, query: {id: partner.id}}">
 					<div class="name">{{partner.name}}</div>
@@ -11,7 +19,7 @@
 			</li>
 		</ul>
 		<h3>{{lawyerList.name}}</h3>
-		<ul class="lawyer z-clearfix">
+		<ul class="lawyer z-clearfix" v-if="lawyerList.list != 0">
 			<li v-for="lawyer in lawyerList.list">
 				<router-link :to="{name: 'lawyerdetail', params:{columnID:columnID}, query: {id: lawyer.id}}">
 					<div class="name">{{lawyer.name}}</div>
@@ -27,6 +35,7 @@
 		data () {
 			return {
 				columnID: 4,
+				chiefList: [],
 				partnerList: [],
 				lawyerList: [],
 				lang: 1,
@@ -56,8 +65,9 @@
 					const data = response.data
 					const status = response.data.status
     				if(status === 1) {
-    					_self.partnerList = data.list[0]
-    					_self.lawyerList = data.list[1]
+    					_self.chiefList = data.list[0]
+    					_self.partnerList = data.list[1]
+    					_self.lawyerList = data.list[2]
     				} else {
     					alert('status: ' + status)
     				}

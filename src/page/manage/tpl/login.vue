@@ -1,5 +1,5 @@
 <template>
-	<div class="login z-main-right">
+	<div class="login">
 		<div class="login-area">
 			<div class="login-input">
 				<label>用户名：</label><input placeholder="用户名" v-model="username">
@@ -83,6 +83,7 @@
 	.login {
 		min-height: 400px;
 		padding-top: 100px;
+		background-color: #fafafa;
 
 		.login-area {
 			width: 380px;
