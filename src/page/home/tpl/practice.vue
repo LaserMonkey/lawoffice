@@ -1,7 +1,7 @@
 <template>
 	<div class="practice">
 		<h2>业务领域</h2>
-		<div v-for="(practiceType, index) in practiceList" v-if="practiceType.list.length != 0">
+		<div v-for="(practiceType, index) in practiceList" v-if="practiceType.list.length != 0" class="practice-line">
 			<h3>{{practiceList[index].name}}</h3>
 			<div v-for="(groupList, groupListIndex) in practiceType.groupList">
 				<ul class="practice z-clearfix">
@@ -65,17 +65,19 @@
     								let groupList = []
     								let group = []
     								for(let j = 0; j < dataGroupList.length; j++) {
-    									if(j == 0 || (j != 0 && j%_self.groupNum !=0)) {
+    									if(j == 0 || (j != 0 && j%_self.groupNum != _self.groupNum-1 && j != dataGroupList.length-1)) {
     										group.push(dataGroupList[j])
-    									} else {
+    									} else if(j == dataGroupList.length-1) {
+    										group.push(dataGroupList[j])
+    										group.id = (i+1)*10 + (j+1)
+    										groupList.push(group)
+    									} else if(j != 0 && j%_self.groupNum == _self.groupNum-1) {
+    										group.push(dataGroupList[j])
     										group.id = (i+1)*10 + (j+1)
     										groupList.push(group)
     										group = []
+    									} else {
     										group.push(dataGroupList[j])
-    									}
-    									if(j == dataGroupList.length-1) {
-    										group.id = (i+1)*10 + (j+1)
-    										groupList.push(group)
     									}
     								}
     								dataList[i].groupList = groupList
@@ -166,6 +168,10 @@
 		.show-detail {
 			display: block;
 		}
+
+		.practice-line {
+			margin-bottom: 2.5rem;
+		}
 	}
 
 @media only screen and (max-width: 480px) {
@@ -204,6 +210,18 @@
 					margin-bottom: 0;
 				}
 			}
+		}
+
+		.show-detail {
+			padding: 1.25rem;
+
+			p {
+				font-size: 1.4rem;
+			}
+		}
+
+		.practice-line {
+			margin-bottom: 2rem;
 		}
 	}
 }
