@@ -201,6 +201,7 @@
     		border-bottom: solid 0.1rem rgba(0, 0, 0, 0.1);
 			overflow-x: scroll;
 			overflow-y: hidden;
+			white-space: nowrap;
 
 			li {
 				display: inline-block;

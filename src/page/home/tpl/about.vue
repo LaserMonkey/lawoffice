@@ -6,6 +6,7 @@
 			</li>
 		</ul>
 		<div class="content" v-html="aboutContent"></div>
+		<iframe allowTransparency="true" style="width:100%;border:none;height:905px" scrolling="no" seamless="seamless" frameborder="0" src="http://f.lingxi360.com/f?token=v1ai6Qko1mBdzQoYuVn0uApw_&embed=1" v-if="$route.query.id == 4"></iframe>
 	</div>
 </template>
 
@@ -151,6 +152,7 @@
     		border-bottom: solid 0.1rem rgba(0, 0, 0, 0.1);
 			overflow-x: scroll;
 			overflow-y: hidden;
+			white-space: nowrap;
 
 			li {
 				display: inline-block;
