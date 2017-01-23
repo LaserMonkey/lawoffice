@@ -4,8 +4,8 @@
 			<label>律师类型：</label>
 			<select name="lawyerType" v-model="lawyerTypeID" @change="getLawyerList()">
 				<option value="1">首席合伙人</option>
-				<option value="2">合伙人</option>
-				<option value="3">律师</option>
+				<option value="3">合伙人</option>
+				<option value="2">律师</option>
 			</select>
 			<label>语言：</label>
 			<select name="lawyerLang" v-model="lang" @change="getLawyerList()">

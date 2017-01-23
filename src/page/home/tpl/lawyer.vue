@@ -1,6 +1,5 @@
 <template>
 	<div class="lawyer">
-		<h2>路通律师</h2>
 		<h3>{{chiefList.name}}</h3>
 		<ul class="chief z-clearfix" v-if="chiefList.list != 0">
 			<li v-for="chief in chiefList.list">

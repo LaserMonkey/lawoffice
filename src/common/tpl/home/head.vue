@@ -1,7 +1,19 @@
 <template>
 	<div class="head" v-if="!mobile">
 		<div class="z-clearfix setting">
-			<ul class="about-us">
+			<ul class="about-us" v-if="lang == 1">
+				<li><router-link :to="{name: 'about', params: {columnID: 2}, query: {id: 4}}" target="_blank">联系我们</router-link></li>
+				<li><router-link :to="{name: 'about', params: {columnID: 2}, query: {id: 3}}" target="_blank">加入陆通</router-link></li>
+			</ul>
+			<ul class="about-us" v-else-if="lang == 2">
+				<li><router-link :to="{name: 'about', params: {columnID: 2}, query: {id: 4}}" target="_blank">聯繫我們</router-link></li>
+				<li><router-link :to="{name: 'about', params: {columnID: 2}, query: {id: 3}}" target="_blank">加入陸通</router-link></li>
+			</ul>
+			<ul class="about-us" v-else-if="lang == 3">
+				<li><router-link :to="{name: 'about', params: {columnID: 2}, query: {id: 4}}" target="_blank">CONTACT US</router-link></li>
+				<li><router-link :to="{name: 'about', params: {columnID: 2}, query: {id: 3}}" target="_blank">JOIN US</router-link></li>
+			</ul>
+			<ul class="about-us" v-else>
 				<li>联系我们</li>
 				<li>加入陆通</li>
 			</ul>

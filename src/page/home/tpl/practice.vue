@@ -1,12 +1,11 @@
 <template>
 	<div class="practice">
-		<h2>业务领域</h2>
 		<div v-for="(practiceType, index) in practiceList" v-if="practiceType.list.length != 0" class="practice-line">
 			<h3>{{practiceList[index].name}}</h3>
 			<div v-for="(groupList, groupListIndex) in practiceType.groupList">
 				<ul class="practice z-clearfix">
-					<li v-for="group in groupList" @click="showPracticeDetail(groupList.id, group.id)">
-						<div class="name">{{group.title}}</div>
+					<li v-for="group in groupList">
+						<div class="name" @click="showPracticeDetail(groupList.id, group.id)" :class="practiceID == group.id ? 'action' : ''">{{group.title}}</div>
 					</li>
 				</ul>
 				<div class="practiceDetail" :class="groupList.id == groudListID ? 'show-detail' : ''" v-html="content"></div>
@@ -142,7 +141,6 @@
 				width: 25%;
 				padding: 0 0.83333333rem;
 				height: 8.33333333rem;
-				cursor: pointer;
 
 				.name {
 					display: block;
@@ -152,6 +150,12 @@
 					text-align: center;
 					font-size: 2.0rem;
 					margin-bottom: 1.66666667rem;
+					cursor: pointer;
+				}
+
+				.action {
+					color: white;
+					background-color: #df001f
 				}
 			}
 		}

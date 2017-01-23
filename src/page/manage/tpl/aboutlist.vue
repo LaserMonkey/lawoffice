@@ -1,7 +1,7 @@
 <template>
 	<div class="aboutlist z-main-right">
 		<div class="about-type">
-			<label>口口：</label>
+			<label>语言：</label>
 			<select name="aboutLang" v-model="lang" @change="getAboutList()">
 				<option value="1">简体</option>
 				<option value="2">繁體</option>

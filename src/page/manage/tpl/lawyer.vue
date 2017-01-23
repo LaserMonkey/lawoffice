@@ -6,8 +6,8 @@
 			<label>人员类型：</label>
 			<select name="lawyerType" v-model="lawyerTypeID">
 				<option value="1">首席合伙人</option>
-				<option value="2">合伙人</option>
-				<option value="3">律师</option>
+				<option value="3">合伙人</option>
+				<option value="2">律师</option>
 			</select>
 			<label>选择语言：</label>
 			<select name="lawyerLang" v-model="lang">

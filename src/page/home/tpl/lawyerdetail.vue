@@ -7,12 +7,14 @@
 			<div class="lawyer-report">
 				<div class="lawyer-report-title" v-if="articleLinkList.length != 0">相关报告</div>
 				<ul>
-					<li v-for="articleLink in articleLinkList">{{articleLink.title}}</li>
+					<li v-for="articleLink in articleLinkList">
+						<router-link :to="{name: 'article', params: {columnID: 5}, query: {type: 1, id: articleLink.id}}" target="_blank">{{articleLink.title}}</router-link>
+					</li>
 				</ul>
 			</div>
 		</div>
 		<div class="lawyer-detail-right">
-			<img :src="'/uploads' + lawyerImg">
+			<img :src="lawyerImg">
 		</div>
 	</div>
 </template>

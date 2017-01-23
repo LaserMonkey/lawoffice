@@ -14,10 +14,10 @@
 			<div class="lawyer-link" v-if="lawyerList.length != 0">
 				<h3>相关律师</h3>
 				<ul>
-					<li v-for="lawyer in lawyerList.list">
-						<router-link :to="{name: 'lawyerdetail', params:{columnID:columnID}, query: {id: lawyer.id}}">
+					<li v-for="lawyer in lawyerList">
+						<router-link :to="{name: 'lawyerdetail', params:{columnID: 4}, query: {id: lawyer.id}}" target="_blank">
 							<div class="name">{{lawyer.name}}</div>
-							<div class="duty">律师</div>
+							<div class="duty">{{lawyer.type}}</div>
 						</router-link>
 					</li>
 				</ul>
