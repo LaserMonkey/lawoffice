@@ -5,12 +5,6 @@
 				<div class="swiper-slide" v-for="slider in sliderList" :style="'background-image:url(' + slider.img + ')'">
 					<a :href="slider.url"><h2>{{slider.title}}</h2></a>
 				</div>
-				<!-- <div class="swiper-slide" style="background-image:url(http://photo.enterdesk.com/2009-5-5/enterdesk.com-3916291CA374F2BFED3FC636EE5CFBF7.jpg)">
-					<h2>陆通联合律师当选欧洲竞争与规制学院法律委员</h2>
-				</div>
-				<div class="swiper-slide" style="background-image:url(http://desk.fd.zol-img.com.cn/t_s960x600c5/g3/M03/0D/03/Cg-4V1S_EOWIMyUCAAhG5zFfIHUAATsVQNFKM0ACEb_770.jpg)">
-					<h2>陆通联合律师当选欧洲竞争</h2>
-				</div> -->
         	</div>
         	<div class="swiper-button">
         		<div class="swiper-button-next swiper-button-white"></div>
@@ -21,7 +15,8 @@
         	<div class="swiper-wrapper">
             	<div class="swiper-slide" v-for="hot in hotList">
             		<a :href="hot.url">
-            			<div :style="'background-image:url(' + hot.img + ')'">
+            			<div>
+            				<img :src="hot.img">
             				<span>{{hot.title}}</span>
             			</div>
             			<h3>{{hot.describe}}</h3>
@@ -174,10 +169,13 @@
 			div {
 				position: relative;
 				width: 100%;
-				height: 24.16666666rem;
 				background-position: center center;
 				background-repeat: no-repeat;
 				background-size: cover;
+
+				img {
+					max-width: 100%;
+				}
 
 				span {
 					display: block;
@@ -216,6 +214,10 @@
 
 		.swiper-button-prev {
 			left: 0;
+		}
+
+		.swiper-button-disabled {
+			opacity: 0 !important;
 		}
 	}
 
@@ -267,7 +269,6 @@
 		.swiper-slide {
 
 			div {
-				height: 12.5rem;
 
 				span {
 					bottom: -1rem;

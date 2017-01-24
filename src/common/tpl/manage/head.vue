@@ -1,6 +1,6 @@
 <template>
 	<div class="head z-clearfix">
-		<!-- <img src="../../../asset/img/logo.png"> -->
+		<img src="../../../asset/img/logo.png">
 		<h1>陆通联合律师事务所后台管理系统</h1>
 		<span class="logout" v-show="isLogin" @click="logout()">登出</span>
 		<span class="changePwd" v-show="isLogin" @click="openPopPwd()">修改密码</span>

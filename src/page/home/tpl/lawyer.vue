@@ -9,6 +9,7 @@
 				</router-link>
 			</li>
 		</ul>
+		<h3>{{partnerList.name}}</h3>
 		<ul class="partner z-clearfix" v-if="partnerList.list != 0">
 			<li v-for="partner in partnerList.list">
 				<router-link :to="{name: 'lawyerdetail', params:{columnID:columnID}, query: {id: partner.id}}">
