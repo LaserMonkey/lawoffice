@@ -87,13 +87,13 @@
 			} else {
 				this.mobile = false
 			}
-			if(parseInt(this.$route.params.columnID) !== parseInt(this.$route.params.columnID)) {
-				this.$store.commit('changeColumnID', 1)
-				window.location.href="/home#/1"
-			} else {
-				this.$store.commit('changeColumnID', this.$route.params.columnID)
-				this.columnID = this.$route.params.columnID
-			}
+			// if(parseInt(this.$route.params.columnID) !== parseInt(this.$route.params.columnID)) {
+			// 	this.$store.commit('changeColumnID', 1)
+			// 	window.location.href="/home#/1"
+			// } else {
+			// 	this.$store.commit('changeColumnID', this.$route.params.columnID)
+			// 	this.columnID = this.$route.params.columnID
+			// }
 			this.lang = localStorage.getItem("lang")
 			this.getHeadData()
 		},

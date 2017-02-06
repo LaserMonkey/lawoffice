@@ -3,6 +3,7 @@
 		<div class="swiper-container home-banner">
         	<div class="swiper-wrapper">
 				<div class="swiper-slide" v-for="slider in sliderList" :style="'background-image:url(' + slider.img + ')'">
+					<img src="../../../asset/img/logo.png">
 					<a :href="slider.url"><h2>{{slider.title}}</h2></a>
 				</div>
         	</div>
@@ -111,6 +112,16 @@
 			background-position: center center;
 			background-repeat: no-repeat;
 			background-size: cover;
+
+			img {
+				display: block;
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				max-width: 400px;
+				margin-left: -200px;
+				margin-top: -70px;
+			}
 			
 			a {
 				display: block;
@@ -118,7 +129,7 @@
 
 				h2 {
 					position: relative;
-					top: 78%;
+					top: 79%;
 					width: 50%;
 					margin: 0 auto;
 					text-align: center;
@@ -226,6 +237,14 @@
 		height: 20rem;
 
 		.swiper-slide {
+
+			img {
+				left: 25%;
+				top: 50%;
+				max-width: 50%;
+				margin-left: 0;
+				margin-top: -2.5rem;
+			}
 			
 			a {
 
