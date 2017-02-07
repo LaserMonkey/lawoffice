@@ -141,6 +141,13 @@
 				font-size: 1.8rem;
 			}
 		}
+
+		iframe {
+			float: right;
+			width: 70% !important;
+			margin-top: -2.5rem;
+			border-left: .08333rem solid rgba(0,0,0,.1) !important;
+		}
 	}
 
 @media only screen and (max-width: 480px) {
