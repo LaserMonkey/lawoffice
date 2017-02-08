@@ -96,7 +96,7 @@
 				margin-bottom: 3.33333333rem;
 				padding-bottom: 0.83333333rem;
 				border-bottom: solid 0.08333333rem #E6E6E6;
-				font-size: 2rem;
+				font-size: 1.6rem;
 				color: #666666;
 			}
 

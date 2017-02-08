@@ -45,7 +45,6 @@
 			if(localStorage.getItem("lang") != null) {
 				this.lang = localStorage.getItem("lang")
 			}
-			this.loadAllList()
 		},
 		watch: {
 			'$store.getters.lang': 'changeLang'
@@ -53,6 +52,7 @@
 		methods: {
 			changeLang: function() {
 				this.lang = this.$store.getters.lang
+				this.loadAllList()
 			},
 			loadAllList: function() {
 				const _self = this

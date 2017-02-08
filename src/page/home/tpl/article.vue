@@ -164,7 +164,7 @@
 			border-left: solid 0.08333333rem rgba(0, 0, 0, 0.1);
 
 			h2 {
-				margin-bottom: 2rem;
+				margin-bottom: 1.8rem;
 				padding: 0 5rem;
 				font-size: 3rem;
 				font-weight: normal;
@@ -189,7 +189,10 @@
 			.article-content {
 				margin-bottom: 2.5rem;
 				padding: 0 5rem;
-				font-size: 1.8rem;
+
+				p {
+					font-size: 1.6rem;
+				}
 			}
 
 			.lawyer-link {
