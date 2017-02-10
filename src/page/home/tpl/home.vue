@@ -45,6 +45,7 @@
 			if(localStorage.getItem("lang") != null) {
 				this.lang = localStorage.getItem("lang")
 			}
+			this.changeLang()
 		},
 		watch: {
 			'$store.getters.lang': 'changeLang'
