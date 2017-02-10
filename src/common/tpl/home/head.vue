@@ -6,12 +6,12 @@
 				<li><router-link :to="{name: 'about', params: {columnID: 2}, query: {id: 3}}" target="_blank">加入陆通</router-link></li>
 			</ul>
 			<ul class="about-us" v-else-if="lang == 2">
-				<li><router-link :to="{name: 'about', params: {columnID: 2}, query: {id: 4}}" target="_blank">聯繫我們</router-link></li>
-				<li><router-link :to="{name: 'about', params: {columnID: 2}, query: {id: 3}}" target="_blank">加入陸通</router-link></li>
+				<li><router-link :to="{name: 'about', params: {columnID: 2}, query: {id: 11}}" target="_blank">聯繫我們</router-link></li>
+				<!-- <li><router-link :to="{name: 'about', params: {columnID: 2}, query: {id: 3}}" target="_blank">加入陸通</router-link></li> -->
 			</ul>
 			<ul class="about-us" v-else-if="lang == 3">
-				<li><router-link :to="{name: 'about', params: {columnID: 2}, query: {id: 4}}" target="_blank">CONTACT US</router-link></li>
-				<li><router-link :to="{name: 'about', params: {columnID: 2}, query: {id: 3}}" target="_blank">JOIN US</router-link></li>
+				<li><router-link :to="{name: 'about', params: {columnID: 2}, query: {id: 6}}" target="_blank">CONTACT US</router-link></li>
+				<!-- <li><router-link :to="{name: 'about', params: {columnID: 2}, query: {id: 3}}" target="_blank">JOIN US</router-link></li> -->
 			</ul>
 			<ul class="about-us" v-else>
 				<li>联系我们</li>
@@ -114,21 +114,25 @@
 					localStorage.setItem("lang", langType)
 					this.lang = langType
 					this.getHeadData()
+					window.location.href="/home#/1"
 				} else if(langType === 2) {
 					this.$store.commit('changeLang', langType)
 					localStorage.setItem("lang", langType)
 					this.lang = langType
 					this.getHeadData()
+					window.location.href="/home#/1"
 				} else if(langType === 3) {
 					this.$store.commit('changeLang', langType)
 					localStorage.setItem("lang", langType)
 					this.lang = langType
 					this.getHeadData()
+					window.location.href="/home#/1"
 				} else {
 					this.$store.commit('changeLang', 1)
 					localStorage.setItem("lang", 1)
 					this.lang = 1
 					this.getHeadData()
+					window.location.href="/home#/1"
 				}
 				this.closeCoverMenu()
 			},

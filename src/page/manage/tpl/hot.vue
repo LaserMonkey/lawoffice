@@ -197,7 +197,7 @@
 					this.hotDescribe1 = this.hotList[index].describe1
 					this.hotTitle2 = this.hotList[index].title2
 					this.hotLink2 = this.hotList[index].url2
-					this.hotDescribe2 = this.hotList[index].describe3
+					this.hotDescribe2 = this.hotList[index].describe2
 					this.hotTitle3 = this.hotList[index].title3
 					this.hotLink3 = this.hotList[index].url3
 					this.hotDescribe3 = this.hotList[index].describe3

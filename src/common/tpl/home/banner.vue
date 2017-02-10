@@ -27,7 +27,7 @@
 	.banner {
 		position: relative;
 		width: 100%;
-		height: 16.66666666rem;
+		height: 12.5rem;
 		background-color: white;
 		background-position: right center;
 		background-repeat: no-repeat;
@@ -36,9 +36,9 @@
 		img {
 			display: block;
 			position: absolute;
-			top: 50px;
-			left: 50px;
-			max-height: 100px;
+			top: 3.125rem;
+			left: 4.16666667rem;
+			max-height: 6.25rem;
 		}
 	}
 

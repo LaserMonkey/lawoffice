@@ -82,13 +82,13 @@
 
 			.lawyer-name {
 				margin-bottom: 2.5rem;
-				font-size: 3.6rem;
+				font-size: 3rem;
 				font-weight: 600;
 			}
 
 			.lawyer-duty {
 				margin-bottom: 4.16666667rem;
-				font-size: 2rem;
+				font-size: 1.8rem;
 				color: #999999;
 			}
 
@@ -98,6 +98,10 @@
 				border-bottom: solid 0.08333333rem #E6E6E6;
 				font-size: 1.6rem;
 				color: #666666;
+
+				p {
+					font-size: 1.6rem !important;
+				}
 			}
 
 			.lawyer-report {
@@ -159,6 +163,14 @@
 				border-bottom: solid 0.08333333rem #E6E6E6;
 				font-size: 1.4rem;
 				color: #666666;
+
+				p {
+					font-size: 1.4rem !important;
+
+					font {
+						font-size: 1.4rem;
+					}
+				}
 			}
 
 			.lawyer-report {
