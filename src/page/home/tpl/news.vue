@@ -154,8 +154,11 @@
 				margin-bottom: 0.83333333rem;
 				line-height: 5.83333333rem;
 				text-align: center;
-				font-size: 2rem;
+				font-size: 1.8rem;
 				cursor: pointer;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
 
 				a {
 					display: block;
@@ -184,7 +187,7 @@
 	
 				h2 {
 					margin-bottom: 2rem;
-					font-size: 2.8rem;
+					font-size: 2.2rem;
 					font-weight: normal;
 					color: #444444;
 				}

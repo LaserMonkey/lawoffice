@@ -5,7 +5,9 @@
 			<li v-for="chief in chiefList.list">
 				<router-link :to="{name: 'lawyerdetail', params:{columnID:columnID}, query: {id: chief.id}}">
 					<div class="name">{{chief.name}}</div>
-					<div class="duty">首席合伙人</div>
+					<div class="duty" v-if="lang==2">首席合夥人</div>
+					<div class="duty" v-else-if="lang==3">Principal Partner</div>
+					<div class="duty" v-else>首席合伙人</div>
 				</router-link>
 			</li>
 		</ul>
@@ -14,7 +16,9 @@
 			<li v-for="partner in partnerList.list">
 				<router-link :to="{name: 'lawyerdetail', params:{columnID:columnID}, query: {id: partner.id}}">
 					<div class="name">{{partner.name}}</div>
-					<div class="duty">合伙人</div>
+					<div class="duty" v-if="lang==2">合夥人</div>
+					<div class="duty" v-else-if="lang==3">Partner</div>
+					<div class="duty" v-else>合伙人</div>
 				</router-link>
 			</li>
 		</ul>
@@ -23,7 +27,9 @@
 			<li v-for="lawyer in lawyerList.list">
 				<router-link :to="{name: 'lawyerdetail', params:{columnID:columnID}, query: {id: lawyer.id}}">
 					<div class="name">{{lawyer.name}}</div>
-					<div class="duty">律师</div>
+					<div class="duty" v-if="lang==2">律師</div>
+					<div class="duty" v-else-if="lang==3">Lawyer</div>
+					<div class="duty" v-else>律师</div>
 				</router-link>
 			</li>
 		</ul>

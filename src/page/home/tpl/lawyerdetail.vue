@@ -5,7 +5,9 @@
 			<div class="lawyer-duty">{{type}}</div>
 			<div class="lawyer-info" v-html="content"></div>
 			<div class="lawyer-report">
-				<div class="lawyer-report-title" v-if="articleLinkList.length != 0">相关报告</div>
+				<div class="lawyer-report-title" v-if="articleLinkList.length != 0 && lang==2">相關新聞和研究成果</div>
+				<div class="lawyer-report-title" v-else-if="articleLinkList.length != 0 && lang==3">Related News & Publications</div>
+				<div class="lawyer-report-title" v-else-if="articleLinkList.length != 0">相关新闻和研究成果</div>
 				<ul>
 					<li v-for="articleLink in articleLinkList">
 						<router-link :to="{name: 'article', params: {columnID: 5}, query: {type: 1, id: articleLink.id}}" target="_blank">{{articleLink.title}}</router-link>

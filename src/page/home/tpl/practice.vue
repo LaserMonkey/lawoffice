@@ -151,6 +151,9 @@
 					font-size: 2.0rem;
 					margin-bottom: 1.66666667rem;
 					cursor: pointer;
+					white-space: nowrap;
+					overflow: hidden;
+					text-overflow: ellipsis;
 				}
 
 				.action {

@@ -6,7 +6,7 @@
 			</li>
 		</ul>
 		<div class="content" v-html="aboutContent"></div>
-		<iframe allowTransparency="true" style="width:100%;border:none;height:905px" scrolling="no" seamless="seamless" frameborder="0" src="http://f.lingxi360.com/f?token=v1ai6Qko1mBdzQoYuVn0uApw_&embed=1" v-if="$route.query.id == 4"></iframe>
+		<iframe allowTransparency="true" style="width:100%;border:none;height:905px" scrolling="no" seamless="seamless" frameborder="0" src="http://f.lingxi360.com/f?token=v1ai6Qko1mBdzQoYuVn0uApw_&embed=1" v-if="$route.query.id == 4 || $route.query.id == 11 || $route.query.id == 15"></iframe>
 	</div>
 </template>
 
@@ -107,8 +107,11 @@
 				margin-bottom: 0.83333333rem;
 				line-height: 5.83333333rem;
 				text-align: center;
-				font-size: 2rem;
+				font-size: 1.8rem;
 				cursor: pointer;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
 			}
 
 			.action {

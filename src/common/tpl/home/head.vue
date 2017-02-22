@@ -7,11 +7,11 @@
 			</ul>
 			<ul class="about-us" v-else-if="lang == 2">
 				<li><router-link :to="{name: 'about', params: {columnID: 2}, query: {id: 11}}" target="_blank">聯繫我們</router-link></li>
-				<!-- <li><router-link :to="{name: 'about', params: {columnID: 2}, query: {id: 3}}" target="_blank">加入陸通</router-link></li> -->
+				<li><router-link :to="{name: 'about', params: {columnID: 2}, query: {id: 14}}" target="_blank">加入陸通</router-link></li>
 			</ul>
 			<ul class="about-us" v-else-if="lang == 3">
-				<li><router-link :to="{name: 'about', params: {columnID: 2}, query: {id: 6}}" target="_blank">CONTACT US</router-link></li>
-				<!-- <li><router-link :to="{name: 'about', params: {columnID: 2}, query: {id: 3}}" target="_blank">JOIN US</router-link></li> -->
+				<li><router-link :to="{name: 'about', params: {columnID: 2}, query: {id: 15}}" target="_blank">CONTACT US</router-link></li>
+				<li><router-link :to="{name: 'about', params: {columnID: 2}, query: {id: 3}}" target="_blank">CAREERS</router-link></li>
 			</ul>
 			<ul class="about-us" v-else>
 				<li>联系我们</li>

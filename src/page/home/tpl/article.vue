@@ -136,8 +136,11 @@
 				margin-bottom: 0.83333333rem;
 				line-height: 5.83333333rem;
 				text-align: center;
-				font-size: 2rem;
+				font-size: 1.8rem;
 				cursor: pointer;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
 
 				a {
 					display: block;

@@ -203,7 +203,7 @@
 			h3 {
 				padding: 3.33333333rem 4.16666666rem;
 				line-height: 2.666666666rem;
-				font-size: 2.4rem;
+				font-size: 2rem;
 				font-weight: normal;
 				color: #ccc;
 			}
