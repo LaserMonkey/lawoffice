@@ -216,6 +216,11 @@
 					font-size: 1.4rem;
 					margin-bottom: 0;
 				}
+
+				.action {
+					color: white;
+					background-color: #df001f
+				}
 			}
 		}
 

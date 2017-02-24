@@ -139,9 +139,9 @@
 			}
 
 			p {
-				margin-bottom: 2.5rem;
-				line-height: 2.5rem;
-				font-size: 1.8rem;
+				margin: 0;
+				line-height: 2rem;
+				font-size: 1.6rem;
 			}
 		}
 

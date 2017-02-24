@@ -94,6 +94,7 @@
 						_self.source = data.info[0].source,
 						_self.title = data.info[0].title,
     					_self.lawyerList = data.lawyers
+    					document.title = _self.title
     				} else {
     					alert('status: ' + status)
     				}
@@ -194,6 +195,8 @@
 				padding: 0 5rem;
 
 				p {
+					margin: 0;
+					line-height: 2rem;
 					font-size: 1.6rem;
 				}
 			}
