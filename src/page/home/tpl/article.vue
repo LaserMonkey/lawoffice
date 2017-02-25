@@ -13,7 +13,7 @@
 			<div class="article-content" v-html="content"></div>
 			<div class="lawyer-link" v-if="lawyerList.length != 0">
 				<h3>相关律师</h3>
-				<ul>
+				<ul class="z-clearfix">
 					<li v-for="lawyer in lawyerList">
 						<router-link :to="{name: 'lawyerdetail', params:{columnID: 4}, query: {id: lawyer.id}}" target="_blank">
 							<div class="name">{{lawyer.name}}</div>
@@ -196,7 +196,7 @@
 
 				p {
 					margin: 0;
-					line-height: 2rem;
+					line-height: 2.6rem;
 					font-size: 1.6rem;
 				}
 			}

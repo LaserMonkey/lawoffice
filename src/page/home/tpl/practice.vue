@@ -5,7 +5,7 @@
 			<div v-for="(groupList, groupListIndex) in practiceType.groupList">
 				<ul class="practice z-clearfix">
 					<li v-for="group in groupList">
-						<div class="name" @click="showPracticeDetail(groupList.id, group.id)" :class="practiceID == group.id ? 'action' : ''">{{group.title}}</div>
+						<div class="name" @click="showPracticeDetail(groupList.id, group.id)" :class="practiceID == group.id ? 'action' : ''"><div class="practice-title">{{group.title}}</div></div>
 					</li>
 				</ul>
 				<div class="practiceDetail" :class="groupList.id == groudListID ? 'show-detail' : ''" v-html="content"></div>
@@ -151,9 +151,12 @@
 					font-size: 2.0rem;
 					margin-bottom: 1.66666667rem;
 					cursor: pointer;
-					white-space: nowrap;
-					overflow: hidden;
-					text-overflow: ellipsis;
+
+					.practice-title {
+						display: inline-block;
+						line-height: initial;
+						vertical-align: middle;
+					}
 				}
 
 				.action {

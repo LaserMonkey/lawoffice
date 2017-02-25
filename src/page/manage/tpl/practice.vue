@@ -76,8 +76,19 @@
 			},
 			addPractice: function() {
 				const _self = this
-				this.$http.get('http://www.lutong.com/admin/index.php?c=practices&m=add_practices&token=' + _self.$store.getters.token + '&type=' + _self.practiceTypeID + '&lang=' + _self.lang + '&title=' + _self.practiceTitle + '&content=' + _self.outputContent,
-				).then((response) => {
+				const options = {
+					token: this.$store.getters.token,
+					type: this.practiceTypeID,
+					lang: this.lang,
+					title: this.practiceTitle,
+					content: this.outputContent,
+				}
+				this.$http({
+                	url: '/admin/index.php?c=practices&m=add_practices',
+					method: 'POST',
+					body: options,
+					emulateJSON:true
+				}).then((response) => {
 					const data = response.data
 					const status = response.data.status
     				if(status === 1) {
@@ -93,8 +104,20 @@
 			},
 			editPractice: function() {
 				const _self = this
-				this.$http.get('http://www.lutong.com/admin/index.php?c=practices&m=update_practices&token=' + _self.$store.getters.token + '&type=' + _self.practiceTypeID + '&lang=' + _self.lang + '&title=' + _self.practiceTitle + '&content=' + _self.outputContent + '&id=' + _self.practiceID,
-				).then((response) => {
+				const options = {
+					token: this.$store.getters.token,
+					type: this.practiceTypeID,
+					lang: this.lang,
+					title: this.practiceTitle,
+					content: this.outputContent,
+					id: this.practiceID,
+				}
+				this.$http({
+                	url: '/admin/index.php?c=practices&m=update_practices',
+					method: 'POST',
+					body: options,
+					emulateJSON:true
+				}).then((response) => {
 					const data = response.data
 					const status = response.data.status
     				if(status === 1) {
