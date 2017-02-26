@@ -201,10 +201,17 @@
 			}
 
 			p {
-				margin-bottom: 2.5rem;
+				margin: 0;
 				line-height: 2.5rem;
 				font-size: 1.6rem;
 			}
+		}
+
+		iframe {
+			float: initial;
+			width: 100% !important;
+			margin: 0 auto;
+			border-left: 0 !important;
 		}
 	}
 }

@@ -13,13 +13,16 @@
 					<time>{{article.addtime | dateFormat('yyyy年MM月dd日&nbsp;&nbsp;hh:mm:ss')}}</time>
 				</router-link>
 			</li>
-		</ul>
+			<li class="page-ctrl">
+				
 		<div class="z-page-ctrl z-clearfix">
 			<div class="z-page-prev" @click="goPage(pageNow-1)" v-show="pageNow != 1">上一页</div>
 			<div class="z-page-num" v-for="pageBtn in pageBtnList" :class="pageBtn == pageNow ? 'action' : ''" @click="goPage(pageBtn)">{{pageBtn}}</div>
 			<div class="z-page-next" @click="goPage(pageNow+1)" v-show="pageNow != pageCount">下一页</div>
 			<div class="z-page-jump" v-if="!mobile"><label>跳转到第</label><input type="number" min="1" :max="pageCount" v-model="pageInput" @keyup.enter="goPage(pageInput)"><label>页，共{{pageCount}}页</label></div>
 		</div>
+			</li>
+		</ul>
 	</div>
 </template>
 
@@ -211,6 +214,19 @@
 					h2 {
 						color: #df001f;
 					}
+				}
+			}
+
+			.page-ctrl {
+				text-align: center;
+
+				&:hover {
+					background-color: white;
+				}
+
+				.z-page-ctrl {
+					width: auto;
+					display: inline-block;
 				}
 			}
 		}
