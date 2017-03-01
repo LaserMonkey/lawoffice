@@ -28,7 +28,7 @@
 				<router-link :to="{name: 'lawyerdetail', params:{columnID:columnID}, query: {lang: lang, id: lawyer.id}}">
 					<div class="name">{{lawyer.name}}</div>
 					<div class="duty" v-if="lang==2">律師</div>
-					<div class="duty" v-else-if="lang==3">Lawyer</div>
+					<div class="duty" v-else-if="lang==3">Attorney</div>
 					<div class="duty" v-else>律师</div>
 				</router-link>
 			</li>
