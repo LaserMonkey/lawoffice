@@ -3,7 +3,7 @@
 		<h3>{{chiefList.name}}</h3>
 		<ul class="chief z-clearfix" v-if="chiefList.list != 0">
 			<li v-for="chief in chiefList.list">
-				<router-link :to="{name: 'lawyerdetail', params:{columnID:columnID}, query: {id: chief.id}}">
+				<router-link :to="{name: 'lawyerdetail', params:{columnID:columnID}, query: {lang: lang, id: chief.id}}">
 					<div class="name">{{chief.name}}</div>
 					<div class="duty" v-if="lang==2">首席合夥人</div>
 					<div class="duty" v-else-if="lang==3">Principal Partner</div>
@@ -14,7 +14,7 @@
 		<h3>{{partnerList.name}}</h3>
 		<ul class="partner z-clearfix" v-if="partnerList.list != 0">
 			<li v-for="partner in partnerList.list">
-				<router-link :to="{name: 'lawyerdetail', params:{columnID:columnID}, query: {id: partner.id}}">
+				<router-link :to="{name: 'lawyerdetail', params:{columnID:columnID}, query: {lang: lang, id: partner.id}}">
 					<div class="name">{{partner.name}}</div>
 					<div class="duty" v-if="lang==2">合夥人</div>
 					<div class="duty" v-else-if="lang==3">Partner</div>
@@ -25,7 +25,7 @@
 		<h3>{{lawyerList.name}}</h3>
 		<ul class="lawyer z-clearfix" v-if="lawyerList.list != 0">
 			<li v-for="lawyer in lawyerList.list">
-				<router-link :to="{name: 'lawyerdetail', params:{columnID:columnID}, query: {id: lawyer.id}}">
+				<router-link :to="{name: 'lawyerdetail', params:{columnID:columnID}, query: {lang: lang, id: lawyer.id}}">
 					<div class="name">{{lawyer.name}}</div>
 					<div class="duty" v-if="lang==2">律師</div>
 					<div class="duty" v-else-if="lang==3">Lawyer</div>

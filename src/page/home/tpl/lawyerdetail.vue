@@ -10,7 +10,7 @@
 				<div class="lawyer-report-title" v-else-if="articleLinkList.length != 0">相关新闻和研究成果</div>
 				<ul>
 					<li v-for="articleLink in articleLinkList">
-						<router-link :to="{name: 'article', params: {columnID: 5}, query: {type: 1, id: articleLink.id}}" target="_blank">{{articleLink.title}}</router-link>
+						<router-link :to="{name: 'article', params: {columnID: 5}, query: {lang: lang, type: 1, id: articleLink.id}}" target="_blank">{{articleLink.title}}</router-link>
 					</li>
 				</ul>
 			</div>

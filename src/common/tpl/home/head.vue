@@ -2,16 +2,16 @@
 	<div class="head" v-if="!mobile">
 		<div class="z-clearfix setting">
 			<ul class="about-us" v-if="lang == 1">
-				<li><router-link :to="{name: 'about', params: {columnID: 2}, query: {id: 4}}" target="_blank">联系我们</router-link></li>
-				<li><router-link :to="{name: 'about', params: {columnID: 2}, query: {id: 3}}" target="_blank">加入陆通</router-link></li>
+				<li><router-link :to="{name: 'about', params: {columnID: 2}, query: {lang: lang, id: 4}}" target="_blank">联系我们</router-link></li>
+				<li><router-link :to="{name: 'about', params: {columnID: 2}, query: {lang: lang, id: 3}}" target="_blank">加入陆通</router-link></li>
 			</ul>
 			<ul class="about-us" v-else-if="lang == 2">
-				<li><router-link :to="{name: 'about', params: {columnID: 2}, query: {id: 11}}" target="_blank">聯繫我們</router-link></li>
-				<li><router-link :to="{name: 'about', params: {columnID: 2}, query: {id: 14}}" target="_blank">加入陸通</router-link></li>
+				<li><router-link :to="{name: 'about', params: {columnID: 2}, query: {lang: lang, id: 11}}" target="_blank">聯繫我們</router-link></li>
+				<li><router-link :to="{name: 'about', params: {columnID: 2}, query: {lang: lang, id: 14}}" target="_blank">加入陸通</router-link></li>
 			</ul>
 			<ul class="about-us" v-else-if="lang == 3">
-				<li><router-link :to="{name: 'about', params: {columnID: 2}, query: {id: 15}}" target="_blank">CONTACT US</router-link></li>
-				<li><router-link :to="{name: 'about', params: {columnID: 2}, query: {id: 3}}" target="_blank">CAREERS</router-link></li>
+				<li><router-link :to="{name: 'about', params: {columnID: 2}, query: {lang: lang, id: 15}}" target="_blank">CONTACT US</router-link></li>
+				<li><router-link :to="{name: 'about', params: {columnID: 2}, query: {lang: lang, id: 3}}" target="_blank">CAREERS</router-link></li>
 			</ul>
 			<ul class="about-us" v-else>
 				<li>联系我们</li>
@@ -25,12 +25,12 @@
 		</div>
 		<ul class="column">
 			<li v-for="(column, index) in columnList" :class="columnID == column.id ? 'action' : ''">
-    			<router-link v-if="column.id==1" :to="{name: 'home', params:{columnID:column.id}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
-    			<router-link v-else-if="column.id==2" :to="{name: 'about', params:{columnID: column.id}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
-    			<router-link v-else-if="column.id==3" :to="{name: 'practice', params:{columnID:column.id}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
-    			<router-link v-else-if="column.id==4" :to="{name: 'lawyer', params:{columnID:column.id}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
-    			<router-link v-else-if="column.id==5" :to="{name: 'news', params: {columnID: column.id}, query: {type: column.type}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
-    			<router-link v-else :to="{name: 'column', params:{columnID:column.id}, query: {type: column.type}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
+    			<router-link v-if="column.id==1" :to="{name: 'home', params:{columnID:column.id}, query: {lang: lang}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
+    			<router-link v-else-if="column.id==2" :to="{name: 'about', params:{columnID: column.id}, query: {lang: lang}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
+    			<router-link v-else-if="column.id==3" :to="{name: 'practice', params:{columnID:column.id}, query: {lang: lang}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
+    			<router-link v-else-if="column.id==4" :to="{name: 'lawyer', params:{columnID:column.id}, query: {lang: lang}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
+    			<router-link v-else-if="column.id==5" :to="{name: 'news', params: {columnID: column.id}, query: {lang: lang, type: column.type}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
+    			<router-link v-else :to="{name: 'column', params:{columnID:column.id}, query: {lang: lang, type: column.type}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
 			</li>
 		</ul>
 	</div>
@@ -44,18 +44,18 @@
 			<div class="column-list">
 				<ul class="column">
 					<li v-for="(column, index) in columnList">
-    					<router-link v-if="column.id==1" :to="{name: 'home', params:{columnID:column.id}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
-    					<router-link v-else-if="column.id==2" :to="{name: 'about', params:{columnID: column.id}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
-    					<router-link v-else-if="column.id==3" :to="{name: 'practice', params:{columnID:column.id}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
-    					<router-link v-else-if="column.id==4" :to="{name: 'lawyer', params:{columnID:column.id}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
-    					<router-link v-else-if="column.id==5" :to="{name: 'news', params: {columnID: column.id}, query: {type: column.type}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
-    					<router-link v-else :to="{name: 'column', params:{columnID:column.id}, query: {type: column.type}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
+    					<router-link v-if="column.id==1" :to="{name: 'home', params:{columnID:column.id}, query: {lang: lang}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
+    					<router-link v-else-if="column.id==2" :to="{name: 'about', params:{columnID: column.id}, query: {lang: lang}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
+    					<router-link v-else-if="column.id==3" :to="{name: 'practice', params:{columnID:column.id}, query: {lang: lang}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
+    					<router-link v-else-if="column.id==4" :to="{name: 'lawyer', params:{columnID:column.id}, query: {lang: lang}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
+    					<router-link v-else-if="column.id==5" :to="{name: 'news', params: {columnID: column.id}, query: {lang: lang, type: column.type}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
+    					<router-link v-else :to="{name: 'column', params:{columnID:column.id}, query: {lang: lang, type: column.type}}" @click.native="changeColumnID(column.id)">{{ column.name }}</router-link>
 					</li>
 				</ul>
 				<ul>
 					<li>
-    					<router-link :to="{name: 'about', params:{columnID: 2}, query: {id: 4}}" @click.native="changeColumnID(2)">联系我们</router-link>
-    					<router-link :to="{name: 'about', params:{columnID: 2}, query: {id: 3}}" @click.native="changeColumnID(2)">加入陆通</router-link>
+    					<router-link :to="{name: 'about', params:{columnID: 2}, query: {lang: lang, id: 4}}" @click.native="changeColumnID(2)">联系我们</router-link>
+    					<router-link :to="{name: 'about', params:{columnID: 2}, query: {lang: lang, id: 3}}" @click.native="changeColumnID(2)">加入陆通</router-link>
 					</li>
 				</ul>
 				<ul class="language">
@@ -94,7 +94,15 @@
 			// 	this.$store.commit('changeColumnID', this.$route.params.columnID)
 			// 	this.columnID = this.$route.params.columnID
 			// }
-			this.lang = localStorage.getItem("lang")
+			if(this.$route.query.lang != undefined) {
+				this.lang = this.$route.query.lang
+				localStorage.setItem('lang', this.$route.query.lang)
+			} else if(localStorage.getItem("lang") == null) {
+				this.lang = 1
+				localStorage.setItem('lang', 1)
+			} else {
+				this.lang = localStorage.getItem("lang")
+			}
 			this.getHeadData()
 		},
 		methods: {

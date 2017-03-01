@@ -2,7 +2,7 @@
 	<div class="about-list" :class="!mobile ? 'z-clearfix' : ''">
 		<ul class="menu">
 			<li v-for="about in aboutList" :class="about.id == aboutID ? 'action' : ''" @click="getAboutDetail(about.id)">
-				<router-link :to="{name: 'about', params:{columnID: columnID}, query: {id: about.id}}"><div class="about-title">{{about.title}}</div></router-link>
+				<router-link :to="{name: 'about', params:{columnID: columnID}, query: {lang: lang, id: about.id}}"><div class="about-title">{{about.title}}</div></router-link>
 			</li>
 		</ul>
 		<div class="content" v-html="aboutContent"></div>

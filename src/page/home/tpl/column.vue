@@ -2,12 +2,12 @@
 	<div class="column-list" :class="!mobile ? 'z-clearfix' : ''">
 		<ul class="menu">
 			<li v-for="type in typeList" :class="typeID == type.id ? 'action' : ''">
-				<router-link :to="{name: 'news', params: {columnID: columnID}, query: {type: type.id}}">{{type.name}}</router-link>
+				<router-link :to="{name: 'news', params: {columnID: columnID}, query: {lang: lang, type: type.id}}">{{type.name}}</router-link>
 			</li>
 		</ul>
 		<ul class="news">
 			<li v-for="article in articleList">
-				<router-link :to="{name: 'article', params: {columnID: columnID}, query: {type: typeID, id: article.id}}">
+				<router-link :to="{name: 'article', params: {columnID: columnID}, query: {lang: lang, type: typeID, id: article.id}}">
 					<h2>{{article.title}}</h2>
 					<p>{{article.intro}}</p>
 					<time>{{article.addtime | dateFormat('yyyy年MM月dd日&nbsp;&nbsp;hh:mm:ss')}}</time>

@@ -2,7 +2,7 @@
 	<div class="article-list" :class="!mobile ? 'z-clearfix' : ''">
 		<ul class="menu">
 			<li v-for="type in typeList" :class="typeID == type.id ? 'action' : ''">
-				<router-link :to="{name: 'news', params: {columnID: columnID}, query: {type: type.id}}">{{type.name}}</router-link>
+				<router-link :to="{name: 'news', params: {columnID: columnID}, query: {lang: lang, type: type.id}}">{{type.name}}</router-link>
 			</li>
 		</ul>
 		<div class="article">
@@ -15,7 +15,7 @@
 				<h3>相关律师</h3>
 				<ul class="z-clearfix">
 					<li v-for="lawyer in lawyerList">
-						<router-link :to="{name: 'lawyerdetail', params:{columnID: 4}, query: {id: lawyer.id}}" target="_blank">
+						<router-link :to="{name: 'lawyerdetail', params:{columnID: 4}, query: {lang: lang, id: lawyer.id}}" target="_blank">
 							<div class="name">{{lawyer.name}}</div>
 							<div class="duty">{{lawyer.type}}</div>
 						</router-link>
