@@ -14,7 +14,7 @@
 					<span class="action-sort" @click="openPopSortHot(hot.id, hot.sort)">排序</span>
 				</div>
 			</li>
-			<li class="add-btn" @click="openPopHot(-1, 0)" v-show="hotList.length < 8">+</li>
+			<li class="add-btn" @click="openPopHot(-1, 0)" v-show="hotList.length < 20">+</li>
 		</ul>
 		<div class="z-pop pop-add-hot" v-show="showPopHot">
 			<div class="pop-blank">
