@@ -21,7 +21,7 @@
 					<span class="action-sort" @click="openPopSort(slider.id, slider.sort)">排序</span>
 				</div>
 			</li>
-			<li class="add-btn" @click="openPopSlider(-1, 0)" v-show="sliderList.length < 8">+</li>
+			<li class="add-btn" @click="openPopSlider(-1, 0)" v-show="sliderList.length < 20">+</li>
 		</ul>
 		<div class="z-pop pop-add-slider" v-show="showPopSlider">
 			<div class="pop-blank">
