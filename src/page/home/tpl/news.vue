@@ -70,7 +70,7 @@
 			},
 			loadNews: function() {
 				const _self = this
-				this.$http.get('http://www.lutong.com/api/index.php?c=article&m=index&lang=' + _self.lang + '&id=' + _self.typeID + '&page=' + _self.page,
+				this.$http.get('http://www.lutong.com/api/index.php?c=article&m=index&lang=' + _self.lang + '&id=' + _self.typeID + '&page=' + _self.pageNow,
 				).then((response) => {
 					const data = response.data
 					const status = response.data.status
@@ -89,7 +89,9 @@
   				})
 			},
 			goPage: function(pageNow) {
+				console.log(123)
 				if(pageNow >= 1 && pageNow <= this.pageCount && pageNow != this.pageNow) {
+					console.log(321)
 					this.pageNow = pageNow
 					this.loadNews()
 				}

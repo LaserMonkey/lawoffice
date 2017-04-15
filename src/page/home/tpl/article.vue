@@ -11,6 +11,14 @@
 				<label>来源：</label><span>{{source}}</span><time>{{addTime | dateFormat('yyyy年MM月dd日&nbsp;&nbsp;hh:mm:ss')}}</time>
 			</div>
 			<div class="article-content" v-html="content"></div>
+			<div class="lawyer-link" v-if="attachmentList.length != 0">
+				<h3>相关附件</h3>
+				<ul class="z-clearfix">
+					<li v-for="attachment in attachmentList" class="attachment">
+						<a :href="'/uploads' + attachment.url">{{attachment.name}}</a>
+					</li>
+				</ul>
+			</div>
 			<div class="lawyer-link" v-if="lawyerList.length != 0">
 				<h3>相关律师</h3>
 				<ul class="z-clearfix">
@@ -42,6 +50,7 @@
 				title: "",
 				lang: 1,
 				mobile: false,
+				attachmentList: [],
 			}
 		},
 		mounted: function () {
@@ -94,6 +103,7 @@
 						_self.source = data.info[0].source,
 						_self.title = data.info[0].title,
     					_self.lawyerList = data.lawyers
+    					_self.attachmentList = data.attachment
     					document.title = _self.title
     				} else {
     					alert('status: ' + status)
@@ -236,6 +246,23 @@
 								font-size: 1.6rem;
 								color: #999999;
 							}
+						}
+					}
+
+					.attachment {
+						float: none;
+						width: 100%;
+						margin-bottom: 1rem;
+						padding: 0 0.83333333rem;
+
+						a {
+							display: inline;
+							width: 100%;
+							padding-top: 1rem;
+							background-color: #f5f5f5;
+							text-align: left;
+							font-size: 1.6rem;
+							color: blueviolet;
 						}
 					}
 				}
