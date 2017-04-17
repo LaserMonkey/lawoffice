@@ -259,7 +259,7 @@
 							display: inline;
 							width: 100%;
 							padding-top: 1rem;
-							background-color: #f5f5f5;
+							background-color: width;
 							text-align: left;
 							font-size: 1.6rem;
 							color: blueviolet;
