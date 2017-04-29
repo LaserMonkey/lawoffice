@@ -141,7 +141,7 @@
 			},
 			loadLawyer: function() {
 				const _self = this
-				this.$http.get('http://www.lutong.com/admin/index.php?c=lawyers&m=get_lawyers_list_all&token=' + _self.$store.getters.token,
+				this.$http.get('http://www.lutong.com/admin/index.php?c=lawyers&m=get_lawyers_list_all&token=' + _self.$store.getters.token + '&lang=' + _self.lang,
 				).then((response) => {
 					const data = response.data
 					const status = response.data.status
