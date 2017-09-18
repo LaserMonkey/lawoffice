@@ -6,7 +6,7 @@
 				<router-link :to="{name: 'lawyerdetail', params:{columnID:columnID}, query: {lang: lang, id: chief.id}}">
 					<div class="name">{{chief.name}}</div>
 					<div class="duty" v-if="lang==2">首席合夥人</div>
-					<div class="duty" v-else-if="lang==3">Principal Partner</div>
+					<div class="duty" v-else-if="lang==3">Managing Partner</div>
 					<div class="duty" v-else>首席合伙人</div>
 				</router-link>
 			</li>
