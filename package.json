@@ -1,21 +1,22 @@
 {
-	"name": "lutong",
-	"version": "1.0.0",
-	"description": "law office",
-	"author": "dingyi",
-	"license": "ISC",
+    "name": "lutong",
+    "version": "1.0.0",
+    "description": "law office",
+    "author": "dingyi",
+    "license": "ISC",
     "scripts": {
         "dev": "webpack-dev-server --inline --hot",
         "build": "webpack -p"
     },
-	"dependencies": {
+    "dependencies": {
+        "html-loader": "^0.5.5",
         "vue": "^2.1.5",
         "vue-resource": "^1.0.3",
         "vue-router": "^2.1.1",
         "vue-template-compiler": "^2.1.5",
         "vue-upload-component": "^2.0.0-beta.5",
         "vuex": "^2.0.0"
-	},
+    },
     "devDependencies": {
         "babel-core": "^6.0.0",
         "babel-loader": "^6.0.0",
