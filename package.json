@@ -9,13 +9,13 @@
         "build": "webpack -p"
     },
     "dependencies": {
-        "html-loader": "^0.5.5",
-        "vue": "^2.1.5",
-        "vue-resource": "^1.0.3",
-        "vue-router": "^2.1.1",
-        "vue-template-compiler": "^2.1.5",
-        "vue-upload-component": "^2.0.0-beta.5",
-        "vuex": "^2.0.0"
+        "html-loader": "0.5.5",
+        "vue": "2.1.5",
+        "vue-resource": "1.0.3",
+        "vue-router": "2.1.1",
+        "vue-template-compiler": "2.1.5",
+        "vue-upload-component": "2.0.0-beta.5",
+        "vuex": "2.0.0"
     },
     "devDependencies": {
         "babel-core": "^6.0.0",
